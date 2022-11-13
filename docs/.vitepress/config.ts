@@ -13,9 +13,18 @@ export default defineConfig({
   },
   head: [
     [
+        "script",
+        {
+          src: "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js",
+          crossorigin: "",
+        //   onload: "initCanvas && initCanvas()",
+        },
+      ],
+    [
       "script",
       {},
-      `const div = document.createElement("div");
+      `window.onload = function(){
+        const div = document.createElement("div");
     div.style.cssText = 'position: fixed; top:0; left:0; width: 100vw; height: 100vh; z-index: 0;';
     div.id = "particlesJS_canvas";
     document.body.append(div);
@@ -30,22 +39,16 @@ export default defineConfig({
         ); 
       }
     };
+    if (window.particlesJS) init()
     window.initCanvas = init;
 
     const originFn = window.localStorage.setItem;
     window.localStorage.setItem = (key, value) => {
       init();
       originFn.apply(window.localStorage, [key, value]);
-    };`,
-    ],
-    [
-      "script",
-      {
-        src: "https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js",
-        crossorigin: "",
-        onload: "initCanvas()",
-      },
-    ],
+    };
+      }`,
+    ]
   ],
 
   // base:'/mr7ish'
