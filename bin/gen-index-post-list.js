@@ -53,9 +53,9 @@ function getTag(content) {
 
 function genMarkdownContent(postList) {
     return postList.map(item => {
-        const tag = item.tags.map(tag => {
+        const tag = `<div>${item.tags.map(tag => {
             return `<Tag type="info" text="${tag}" />`
-        }).join('')
+        }).join('')}</div>`
         
 
         return `## ${item.title}
