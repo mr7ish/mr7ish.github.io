@@ -24,6 +24,7 @@
     "vitepress": "1.0.0-alpha.28"
   },
   "dependencies": {
+    "deepmerge": "^4.2.2",
     "vue": "^3.2.45"
   }
 }

@@ -1,9 +1,21 @@
-.VPContent .aside{
+.VPContent .aside {
     display: none !important;
 }
-.hide{
+
+.hide {
     display: none;
 }
-.VPBadge{
+
+.VPBadge {
     margin-top: 15px;
+}
+
+.VPContent .content {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.VPContent .content a {
+    pointer-events: auto;
 }

@@ -1,10 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
+  deepmerge: ^4.2.2
   vitepress: 1.0.0-alpha.28
   vue: ^3.2.45
 
 dependencies:
+  deepmerge: 4.2.2
   vue: 3.2.45
 
 devDependencies:
@@ -343,6 +345,11 @@ packages:
 
   /csstype/2.6.21:
     resolution: {integrity: sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==}
+
+  /deepmerge/4.2.2:
+    resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /esbuild-android-64/0.15.13:
     resolution: {integrity: sha512-yRorukXBlokwTip+Sy4MYskLhJsO0Kn0/Fj43s1krVblfwP+hMD37a4Wmg139GEsMLl+vh8WXp2mq/cTA9J97g==}
