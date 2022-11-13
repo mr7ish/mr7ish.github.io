@@ -1,3 +1,9 @@
 .VPContent .aside{
     display: none !important;
 }
+.hide{
+    display: none;
+}
+.VPBadge{
+    margin-top: 15px;
+}

@@ -22,5 +22,8 @@
   "homepage": "https://github.com/Mr7ish/mr7ish#readme",
   "devDependencies": {
     "vitepress": "1.0.0-alpha.28"
+  },
+  "dependencies": {
+    "vue": "^3.2.45"
   }
 }

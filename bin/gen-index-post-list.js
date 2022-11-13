@@ -21,6 +21,7 @@ function getDirFileList(url) {
 }
 
 const snippetsLength = 200
+const tagReg = /%tag%(.+)%tag%/g
 
 
 function getPostSnippets(fileList) {
@@ -28,18 +29,39 @@ function getPostSnippets(fileList) {
         const fileSnippetsData = fs.readFileSync(item.filePath).toString().slice(0, 200)
         return {
             title: item.title,
-            fileName:item.fileName,
+            fileName: item.fileName,
+            tags: getTag(fileSnippetsData),
             snippets: fileSnippetsData.replace(/#/g, '').replace(/[\n\r\-]/g, '')
         }
     })
 }
 
+// %tag%<React,JavaScript>%tag%
+
+
+
+function getTag(content) {
+    const res = tagReg.exec(content)
+    let tags = []
+    if (res) {
+        tagStr = res[1] || ''
+        tags = tagStr.split(/[\, ]/g)
+    }
+    // console.log(tags); 
+    return tags
+}
 
 function genMarkdownContent(postList) {
     return postList.map(item => {
+        const tag = item.tags.map(tag => {
+            return `<Tag type="info" text="${tag}" />`
+        }).join('')
+        
+
         return `## ${item.title}
 
 ${item.snippets}
+${tag}
 
 [阅读更多](./${item.fileName})
 `

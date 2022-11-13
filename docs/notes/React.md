@@ -1,3 +1,5 @@
+<div class="hide">%tag%React,JavaScript%tag%</div>
+
 React用脚手架创建项目用	npx  create-react-app  项目名
 
 npm是本地命令，npx是nodejs集成的远程命令
