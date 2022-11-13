@@ -1,71 +1,77 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require("fs");
+const path = require("path");
 
-const rootDir = path.join(process.cwd(), 'docs')
+const rootDir = path.join(process.cwd(), "docs");
 
 function getDirFileList(url) {
-    const absolutePath = path.resolve(rootDir, url)
-    const stat = fs.statSync(absolutePath)
-    let postList = []
+    const absolutePath = path.resolve(rootDir, url);
+    const stat = fs.statSync(absolutePath);
+    let postList = [];
     if (stat.isDirectory()) {
-        const data = fs.readdirSync(absolutePath)
+        const data = fs.readdirSync(absolutePath);
         postList = data.map((fileName) => {
             return {
-                title: fileName.replace('.md', ''),
+                title: fileName.replace(".md", ""),
                 fileName: `${url}/${fileName}`,
-                filePath: path.resolve(absolutePath, fileName)
-            }
-        })
+                filePath: path.resolve(absolutePath, fileName),
+            };
+        });
     }
-    return postList
+    return postList;
 }
 
-const snippetsLength = 200
-const tagReg = /%tag%(.+)%tag%/g
-
+const snippetsLength = 200;
+const tagReg = /%tag%(.+)%tag%/g;
 
 function getPostSnippets(fileList) {
     return fileList.map((item) => {
-        const fileSnippetsData = fs.readFileSync(item.filePath).toString().slice(0, 200)
+        const fileSnippetsData = fs
+            .readFileSync(item.filePath)
+            .toString()
+            .slice(0, 197) + '...';
         return {
             title: item.title,
             fileName: item.fileName,
             tags: getTag(fileSnippetsData),
-            snippets: fileSnippetsData.replace(/#/g, '').replace(/[\n\r\-]/g, '')
-        }
-    })
+            snippets: fileSnippetsData.replace(/#/g, "").replace(/[\n\r\-]/g, ""),
+        };
+    });
 }
 
 // %tag%<React,JavaScript>%tag%
 
-
-
 function getTag(content) {
-    const res = tagReg.exec(content)
-    let tags = []
+    const res = tagReg.exec(content);
+    let tags = [];
     if (res) {
-        tagStr = res[1] || ''
-        tags = tagStr.split(/[\, ]/g)
+        tagStr = res[1] || "";
+        tags = tagStr.split(/[\, ]/g);
     }
-    // console.log(tags); 
-    return tags
+    // console.log(tags);
+    return tags;
 }
 
 function genMarkdownContent(postList) {
-    return postList.map(item => {
-        const tag = `<div>${item.tags.map(tag => {
-            return `<Tag type="info" text="${tag}" />`
-        }).join('')}</div>`
-        
+    return postList
+        .map((item) => {
+            const tag = `<div>${item.tags
+                .map((tag) => {
+                    return `<Tag type="info" text="${tag}" />`;
+                })
+                .join("")}</div>`;
 
-        return `## ${item.title}
+            return `## ${item.title}
 
 ${item.snippets}
 ${tag}
 
 [阅读更多](./${item.fileName})
-`
-    }).join('\n')
+`;
+        })
+        .join("\n");
 }
 
-fs.writeFileSync(path.resolve(rootDir, 'index.md'), genMarkdownContent(getPostSnippets(getDirFileList('notes'))))
+fs.writeFileSync(
+    path.resolve(rootDir, "index.md"),
+    genMarkdownContent(getPostSnippets(getDirFileList("notes")))
+);
