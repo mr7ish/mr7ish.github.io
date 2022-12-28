@@ -3,7 +3,7 @@ import { type BlogConfig } from 'vitepress-blog'
 // 配置部分
 const config: BlogConfig = {
   title: 'vitepress blog',
-  base: '/easy-blog/',
+  base: '/',
   description: 'Just playing around.',
   theme: 'default',
   filePathToTags: [
