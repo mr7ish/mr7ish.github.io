@@ -2,7 +2,7 @@ import { type BlogConfig } from 'vitepress-blog'
 
 // 配置部分
 const config: BlogConfig = {
-  title: 'vitepress blog',
+  title: 'Mr7ish',
   base: '/',
   description: 'Just playing around.',
   theme: 'default',
