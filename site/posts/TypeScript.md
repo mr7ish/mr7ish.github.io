@@ -1,6 +1,6 @@
 ---
 tags:
-  - markdown
+  - TypeScript
 coverImg: /markdown-guide-og.jpg
 ---
 

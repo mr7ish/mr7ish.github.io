@@ -1,6 +1,6 @@
 ---
 tags:
-  - utils
+  - Utils
 coverImg: /markdown-guide-og.jpg
 ---
 

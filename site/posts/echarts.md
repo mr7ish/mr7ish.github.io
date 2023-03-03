@@ -1,6 +1,6 @@
 ---
 tags:
-  - markdown
+  - Echarts
 coverImg: /markdown-guide-og.jpg
 ---
 
