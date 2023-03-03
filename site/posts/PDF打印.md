@@ -1,3 +1,9 @@
+---
+tags:
+  - utils
+coverImg: /markdown-guide-og.jpg
+---
+
 介绍两种比较简单的打印方法：
 
 ## 一、直接调用 window.print()

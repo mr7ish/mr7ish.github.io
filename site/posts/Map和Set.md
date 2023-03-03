@@ -1,3 +1,9 @@
+---
+tags:
+  - JavaScript
+coverImg: /markdown-guide-og.jpg
+---
+
 ## Map和Set
 
 Map和Set是解决JS中数组和对象无法应对<u>某些情况</u>而存在的数据结构。
