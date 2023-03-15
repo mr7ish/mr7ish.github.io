@@ -1,7 +1,7 @@
 ---
 tags:
   - TypeScript
-coverImg: /markdown-guide-og.jpg
+coverImg: /old-scene.jpg
 ---
 
 ## 

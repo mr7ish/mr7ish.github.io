@@ -1,7 +1,7 @@
 ---
 tags:
   - JavaScript
-coverImg: /markdown-guide-og.jpg
+coverImg: /Exile_1_Words.png
 ---
 
 ## Map和Set

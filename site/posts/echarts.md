@@ -1,7 +1,7 @@
 ---
 tags:
   - Echarts
-coverImg: /markdown-guide-og.jpg
+coverImg: /dogsRun.gif
 ---
 
 

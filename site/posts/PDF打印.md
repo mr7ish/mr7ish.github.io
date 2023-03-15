@@ -1,7 +1,7 @@
 ---
 tags:
   - Utils
-coverImg: /markdown-guide-og.jpg
+coverImg: /山海谣.png
 ---
 
 介绍两种比较简单的打印方法：
