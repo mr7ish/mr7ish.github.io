@@ -1,1 +1,0 @@
-import{_ as a,c as t,a as r,o as s,r as o}from"./posts_ES6_.md.47fa7e43.js";const h=JSON.parse('{"title":"","description":"","frontmatter":{"aside":false},"headers":[],"relativePath":"archives.md"}'),c={name:"archives.md"};function n(i,d,p,_,l,m){const e=o("ArchiveIndex");return s(),t("div",null,[r(e)])}const v=a(c,[["render",n]]);export{h as __pageData,v as default};
