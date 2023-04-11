@@ -4,6 +4,10 @@ tags:
 coverImg: /old-scene.jpg
 ---
 
+[TS教程](https://ts.xcatliu.com/)
+
+[TS官方中文手册](https://www.typescriptlang.org/zh/docs/handbook/typescript-from-scratch.html)
+
 ## 
 
 ### TS是什么？
