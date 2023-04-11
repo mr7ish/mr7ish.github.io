@@ -6,9 +6,9 @@
     <title>PDF打印 | Mr7ish</title>
     <meta name="description" content="Just playing around.">
     <link rel="stylesheet" href="/assets/style.edd93cfe.css">
-    <link rel="modulepreload" href="/assets/posts_ES6_.md.265e0e35.js">
-    <link rel="modulepreload" href="/assets/posts_PDF打印.md.1b6ac954.lean.js">
-    <link rel="modulepreload" href="/assets/app.3d6390b6.js">
+    <link rel="modulepreload" href="/assets/posts_ES6_.md.cc3b8f67.js">
+    <link rel="modulepreload" href="/assets/posts_PDF打印.md.047a80a9.lean.js">
+    <link rel="modulepreload" href="/assets/app.66c421c9.js">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
   <script id="check-dark-light">(()=>{const e=localStorage.getItem("vitepress-theme-appearance")||"",a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
@@ -95,8 +95,8 @@
 <span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#89DDFF;">&lt;</span><span style="color:#F07178;">div</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;">打印的内容...</span><span style="color:#89DDFF;">&lt;</span><span style="color:#F07178;">button</span><span style="color:#89DDFF;"> </span><span style="color:#C792EA;">class</span><span style="color:#89DDFF;">=</span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">print-hide</span><span style="color:#89DDFF;">&quot;</span><span style="color:#89DDFF;">&gt;</span><span style="color:#A6ACCD;">导出</span><span style="color:#89DDFF;">&lt;/</span><span style="color:#F07178;">button</span><span style="color:#89DDFF;">&gt;&lt;/</span><span style="color:#F07178;">div</span><span style="color:#89DDFF;">&gt;</span></span>
 <span class="line"><span style="color:#89DDFF;">&lt;/</span><span style="color:#F07178;">body</span><span style="color:#89DDFF;">&gt;</span></span>
 <span class="line"></span></code></pre></div><p>表格多页断页情况：</p><p>不妨把截断的内容另外当成一个整体调整样式再打印。</p><p>第二页上边距如果太近，可以在最前面加一个空div盒子，加上在打印时才生效的高度样式来调整。</p><h2 id="other-html2canvas-jspdf" tabindex="-1">Other: html2canvas + jspdf <a class="header-anchor" href="#other-html2canvas-jspdf" aria-hidden="true">#</a></h2><p>原理：通过 <code>html2canvas</code> 将 <code>HTML</code> 页面转换成<code>canvas</code>图片，再通过 <code>jspdf</code> 将图片转成 <code>pdf</code>格式文件。</p><p>缺点：</p><ol><li>清晰度不够</li><li>分页时，内容会被截断，不能智能展示完整</li><li>页面内容太长时（宽高限制为 14400），无法打印出内容</li></ol><p>使用说明 ：<a href="https://juejin.cn/post/7090368199291568165#heading-4" target="_blank" rel="noreferrer">https://juejin.cn/post/7090368199291568165#heading-4</a></p><p>还有其他方法，欢迎补充 ~😃</p></div></div></main><!--[--><!--]--><!----><!--[--><!--[--><!--[--><!----><!--]--><!--]--><!--]--></div></div></div></div></div><!----><!--[--><!--]--></div><!--]--></div>
-    <script>__VP_HASH_MAP__ = JSON.parse("{\"posts_es6_.md\":\"265e0e35\",\"archives.md\":\"0bd4217c\",\"index.md\":\"946062d0\",\"tags.md\":\"95bddeec\",\"posts_map和set.md\":\"c2c1b3f3\",\"posts_pdf打印.md\":\"1b6ac954\",\"posts_typescript.md\":\"a178dca4\",\"posts_wechat mini program.md\":\"9b4a8534\",\"posts_echarts.md\":\"00580636\",\"posts_markdown 语法.md\":\"1420d1e8\"}")</script>
-    <script type="module" async src="/assets/app.3d6390b6.js"></script>
+    <script>__VP_HASH_MAP__ = JSON.parse("{\"posts_es6_.md\":\"cc3b8f67\",\"archives.md\":\"2d828370\",\"index.md\":\"ce31ca40\",\"tags.md\":\"8f8cbafe\",\"posts_map和set.md\":\"73efecb4\",\"posts_pdf打印.md\":\"047a80a9\",\"posts_typescript.md\":\"d570868e\",\"posts_wechat mini program.md\":\"7c394371\",\"posts_echarts.md\":\"be78d02f\",\"posts_markdown 语法.md\":\"88f616b4\"}")</script>
+    <script type="module" async src="/assets/app.66c421c9.js"></script>
     
   </body>
 </html>
