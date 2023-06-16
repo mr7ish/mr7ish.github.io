@@ -506,12 +506,3 @@ wx.request({
 ```xml
 <rich-text nodes="{{ contents }}"></rich-text>
 ```
-
-```
-<template v-if="activeKey === 'after'">
-                    <div v-if="info?.correctionReason" class="correct-reason">
-                        更正原因：{{ info?.correctionReason }}
-                    </div>
-                </template>
-```
-
