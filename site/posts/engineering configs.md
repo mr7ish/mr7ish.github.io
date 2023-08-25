@@ -77,3 +77,4 @@ vs code 安装 Prettier 插件，修改 `.vscode/settings.json`
 
 `ESLint` 也可以检查一些代码的格式，所以配合 `Prettier` 时，一般禁用 `ESLint` 的代码格式相关规则
 
+more lints configs reference [code check](https://ts.xcatliu.com/engineering/lint.html)
