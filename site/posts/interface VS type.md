@@ -1,7 +1,7 @@
 ---
 tags:
   - TypeScript
-coverImg: /麦田里的守望者expand.jpg
+coverImg: /the distance.jpg
 ---
 
 ## interface 和 type：

@@ -1,7 +1,7 @@
 ---
 tags:
   - Utils
-coverImg: /山海谣.png
+coverImg: /song of lives .png
 ---
 
 介绍两种比较简单的打印方法：
