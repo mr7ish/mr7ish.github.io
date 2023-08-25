@@ -80,6 +80,8 @@
   .tags-container {
     border-bottom: 1px solid var(--vp-c-divider-light);
     padding: 1rem;
+    flex-wrap: wrap;
+    gap: 10px;
     .tag {
       color: var(--vp-c-text-1);
       display: inline-block;
