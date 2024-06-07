@@ -5,7 +5,7 @@ export default defineConfig({
   title: "bigfish's blog",
   titleTemplate: false,
   description: "a blog site based on vitepress",
-  head: [["link", { rel: "icon", href: "/site/public/favicon.ico" }]],
+  head: [["link", { rel: "icon", href: "/favicon.ico" }]],
   lang: "en",
   base: "/site/",
   cleanUrls: true,
