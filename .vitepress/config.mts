@@ -17,7 +17,7 @@ export default defineConfig({
   lastUpdated: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "/site/public/favicon.ico",
+    logo: "/favicon.ico",
     nav: customNavConfigs,
     sidebar: [
       {
