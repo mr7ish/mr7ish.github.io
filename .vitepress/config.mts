@@ -1,23 +1,24 @@
 import { defineConfig } from "vitepress";
+import customNavConfigs from "../theme-configs-nav";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "bigfish's blog",
   titleTemplate: false,
   description: "a blog site based on vitepress",
+  // TODO fix icon path
   head: [["link", { rel: "icon", href: "./favicon.ico" }]],
   lang: "en",
   base: "/",
   cleanUrls: true,
   // (源目录) 相对于项目根目录解析
   srcDir: "./site",
+  appearance: "dark",
+  lastUpdated: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
-    ],
-
+    logo: "/site/public/favicon.ico",
+    nav: customNavConfigs,
     sidebar: [
       {
         text: "Examples",
