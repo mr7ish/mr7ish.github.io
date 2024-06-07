@@ -5,12 +5,12 @@ export default defineConfig({
   title: "bigfish's blog",
   titleTemplate: false,
   description: "a blog site based on vitepress",
-  head: [["link", { rel: "icon", href: "./favicon.ico" }]],
+  head: [["link", { rel: "icon", href: "/favicon.ico" }]],
   lang: "en",
-  base: "/site/",
+  base: "/",
   cleanUrls: true,
   // (源目录) 相对于项目根目录解析
-  // srcDir: "./site",
+  srcDir: "./site",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
