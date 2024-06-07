@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
 import customNavConfigs from "../theme-configs-nav";
 
-// https://vitepress.dev/reference/site-config
+// https://vitepress.dev/zh/reference/site-config
 export default defineConfig({
   title: "bigfish's blog",
   titleTemplate: false,
@@ -16,9 +16,10 @@ export default defineConfig({
   appearance: "dark",
   lastUpdated: true,
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    // https://vitepress.dev/zh/reference/default-theme-config
     logo: "/favicon.ico",
     nav: customNavConfigs,
+    outline: [1, 5],
     sidebar: [
       {
         text: "Examples",
