@@ -10,7 +10,7 @@ export default defineConfig({
   base: "/site/",
   cleanUrls: true,
   // (源目录) 相对于项目根目录解析
-  srcDir: "./site",
+  // srcDir: "./site",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
