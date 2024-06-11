@@ -3,9 +3,9 @@ import customNavConfigs from "../theme-configs-nav";
 
 // https://vitepress.dev/zh/reference/site-config
 export default defineConfig({
-  title: "bigfish's blog",
+  title: "bigfish's records",
   titleTemplate: false,
-  description: "a blog site based on vitepress",
+  description: "a personal record site based on vitepress",
   // TODO fix icon path
   head: [["link", { rel: "icon", href: "./favicon.ico" }]],
   lang: "en",
@@ -18,6 +18,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/zh/reference/default-theme-config
     logo: "/favicon.ico",
+    // logo: "/favicon.svg",
     nav: customNavConfigs,
     outline: [1, 5],
     sidebar: [
