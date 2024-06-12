@@ -1,5 +1,5 @@
 import { defineConfig } from "vitepress";
-import customNavConfigs from "../theme-configs-nav";
+import { navConfigs } from "../default-theme-configs";
 
 // https://vitepress.dev/zh/reference/site-config
 export default defineConfig({
@@ -19,7 +19,7 @@ export default defineConfig({
     // https://vitepress.dev/zh/reference/default-theme-config
     logo: "/favicon.ico",
     // logo: "/favicon.svg",
-    nav: customNavConfigs,
+    nav: navConfigs,
     outline: [1, 5],
     sidebar: [
       {
