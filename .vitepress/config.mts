@@ -24,15 +24,18 @@ export default defineConfig({
     sidebar: [
       {
         text: "Examples",
+        // collapsed: true,
         items: [
           { text: "Markdown Examples", link: "/markdown-examples" },
+          {
+            text: "Markdown Examples",
+            items: [{ text: "Markdown Examples", link: "/markdown-examples" }],
+          },
           { text: "Runtime API Examples", link: "/api-examples" },
         ],
       },
     ],
 
-    socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
-    ],
+    socialLinks: [{ icon: "github", link: "https://github.com/mr7ish" }],
   },
 });
