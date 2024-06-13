@@ -3,23 +3,27 @@
 layout: home
 
 hero:
-  name: "My Awesome Project test3"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "Remembrance of Things Past"
+  text: "🍀 🐟 🕊️ ☘️ 🍁"
+  tagline: Welcome to here 🍃
+  image:
+    # src: /cute-cat.png
+    # alt: a cute cat here
+    light: /cute-monster.png
+    dark: /cute-cat.png
+    alt: a little cute here
   actions:
     - theme: brand
-      text: Markdown Examples
+      text: Todo...
       link: /markdown-examples
     - theme: alt
-      text: API Examples
+      text: wait...
       link: /api-examples
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
+<script setup>
+import('./style/index.less');
+
+</script>
+
+more...
