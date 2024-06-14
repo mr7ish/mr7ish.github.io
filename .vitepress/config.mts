@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress";
 import { navConfigs } from "../default-theme-configs";
+import resolveMarkdownPlugin from "./theme/plugins/resolveMarkdownPlugin";
 
 // https://vitepress.dev/zh/reference/site-config
 export default defineConfig({
@@ -37,5 +38,8 @@ export default defineConfig({
     ],
 
     socialLinks: [{ icon: "github", link: "https://github.com/mr7ish" }],
+  },
+  vite: {
+    // plugins: [resolveMarkdownPlugin()],
   },
 });

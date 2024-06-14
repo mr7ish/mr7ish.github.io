@@ -1,3 +1,17 @@
+---
+cover: /beauty.jpg
+---
+
+<!-- <script setup>
+import { onMounted } from "vue";
+ 
+onMounted(async () => {
+  const res = await (await fetch(window.location.href)).text();
+  console.log("res =>", res);
+});
+
+</script> -->
+
 # Markdown Extension Examples
 
 This page demonstrates some of the built-in markdown extensions provided by VitePress.

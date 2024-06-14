@@ -1,5 +1,6 @@
 ---
 outline: deep
+cover: /violet dream.jpg
 ---
 
 # Runtime API Examples
