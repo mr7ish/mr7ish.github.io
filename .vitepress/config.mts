@@ -40,6 +40,6 @@ export default defineConfig({
     socialLinks: [{ icon: "github", link: "https://github.com/mr7ish" }],
   },
   vite: {
-    // plugins: [resolveMarkdownPlugin()],
+    plugins: [resolveMarkdownPlugin()],
   },
 });
