@@ -1,5 +1,9 @@
 ---
 cover: /beauty.jpg
+createTime: 2024-06-15
+tags:
+  - JavaScript
+  - test
 ---
 
 <!-- <script setup>
