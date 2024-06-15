@@ -189,3 +189,7 @@
   --meta-time-color: #bbbbbb;
   --meta-tag-bg: rgba(101, 117, 133, 0.16);
 }
+
+html {
+  scroll-behavior: smooth;
+}
