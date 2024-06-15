@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      moment:
+        specifier: ^2.30.1
+        version: 2.30.1
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
@@ -553,6 +556,9 @@ packages:
 
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
+  moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
 
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
@@ -1205,6 +1211,8 @@ snapshots:
   minisearch@6.3.0: {}
 
   mitt@3.0.1: {}
+
+  moment@2.30.1: {}
 
   nanoid@3.3.7: {}
 

@@ -5,6 +5,7 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "moment": "^2.30.1",
     "reading-time": "^1.5.0",
     "vue": "^3.4.27"
   },
