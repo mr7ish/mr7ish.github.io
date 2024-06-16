@@ -9,7 +9,11 @@
         @click="backTop"
         class="top"
       >
-        top
+        <!-- top -->
+        <img
+          class="love"
+          src="/heart-animation.png"
+        />
       </div>
     </template>
   </Layout>
@@ -77,5 +81,22 @@ onUnmounted(() => {
   align-items: center;
   cursor: pointer;
   z-index: 11;
+}
+
+.love {
+  width: 100%;
+  height: 100%;
+  /* width: 100px;
+  height: 100px; */
+  object-fit: cover;
+  animation: heart-burst steps(28) 0.8s infinite both;
+}
+@keyframes heart-burst {
+  0% {
+    object-position: 0%;
+  }
+  100% {
+    object-position: 100%;
+  }
 }
 </style>
