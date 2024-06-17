@@ -1,4 +1,5 @@
 ---
+createTime: 2022-12-28
 tags:
   - Echarts
 coverImg: /dogsRun.gif
@@ -28,13 +29,9 @@ import * as echarts from ' echarts '
 
 图表适配：
 
-window.addEventListener( ' resize' , function () {
-
+window.addEventListener('resize' , function () {
 ​	myChart.resize();
-
-} )
-
-
+});
 
 ```js
 //初始化实例对象	指定容器（必须有明确的宽高）
