@@ -19,6 +19,7 @@
 import { useData } from "vitepress";
 import { getShorthandDate } from "../utils/dateFormat";
 import { Ref } from "vue";
+import { SpecifiedFrontmatter } from "../../../env";
 
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 console.log("frontmatter meta =>", frontmatter.value);

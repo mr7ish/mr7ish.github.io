@@ -22,6 +22,7 @@ import { useData, withBase } from "vitepress";
 import MetaTime from "./MetaTime.vue";
 import MetaTags from "./MetaTags.vue";
 import { Ref } from "vue";
+import { SpecifiedFrontmatter } from "../../../env";
 
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 console.log("frontmatter =>", frontmatter.value);

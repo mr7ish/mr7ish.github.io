@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
 import { Ref, computed } from "vue";
+import { SpecifiedFrontmatter } from "../../../env";
 
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 

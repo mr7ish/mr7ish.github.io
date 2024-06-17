@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-interface SpecifiedFrontmatter extends Record<string, any> {
+export interface SpecifiedFrontmatter extends Record<string, any> {
   id?: string;
   title?: string;
   createTime?: string;
