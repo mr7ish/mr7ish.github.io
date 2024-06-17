@@ -13,11 +13,11 @@
 
 <script setup lang="ts">
 import { useData } from "vitepress";
-import { computed } from "vue";
+import { Ref, computed } from "vue";
 
-const { frontmatter } = useData();
+const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 
-const tags = computed(() => (frontmatter.value.tags as string[]) ?? []);
+const tags = computed(() => frontmatter.value.tags ?? []);
 </script>
 
 <style scoped lang="less">

@@ -22,24 +22,11 @@
 <script setup lang="ts">
 import DefaultTheme from "vitepress/theme";
 import DocBefore from "../components/DocBefore.vue";
-import { nextTick, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const { Layout } = DefaultTheme;
 
-const content = ref("");
-
 const isNeedBackTop = ref(false);
-
-const getArticles = async () => {
-  const modules = import.meta.glob("../../../site/articles/*.md", {
-    // load modules immediately
-    eager: true,
-  });
-  console.log("modules =>", modules);
-
-  const articles = Object.values(modules);
-  console.log("articles =>", articles);
-};
 
 const backTop = () => {
   // document.documentElement.scrollTop = 0;
@@ -58,7 +45,6 @@ const calcScrollHeight = () => {
 };
 
 onMounted(() => {
-  getArticles();
   window.addEventListener("scroll", calcScrollHeight);
 });
 

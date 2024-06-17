@@ -18,8 +18,9 @@
 <script setup lang="ts">
 import { useData } from "vitepress";
 import { getShorthandDate } from "../utils/dateFormat";
+import { Ref } from "vue";
 
-const { frontmatter } = useData();
+const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 console.log("frontmatter meta =>", frontmatter.value);
 </script>
 
