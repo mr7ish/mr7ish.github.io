@@ -26,7 +26,7 @@ export default () => {
   console.log("voids =>", voids);
   console.log("reals =>", reals);
 
-  const tags = getTimeTags(reals, (s) => s.createTime!, "month");
+  const tags = getTimeTags(reals, (s) => s.createTime!, "day");
   console.log("tags =>", tags);
 
   const ascendingReals = sortByNumVal(reals, (a, b) => {
@@ -52,7 +52,7 @@ function getTimeTags<T>(
     return {
       year: moment(getTime(t)).year(),
       month: moment(getTime(t)).month() + 1,
-      day: moment(getTime(t)).day(),
+      day: moment(getTime(t)).date(),
     };
   };
 
