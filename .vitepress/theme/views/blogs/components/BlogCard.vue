@@ -4,6 +4,7 @@
       <span class="time-label">{{ title }}</span>
     </div>
     <template v-for="article in articles">
+      <!-- TODO adjust v-bind obj -->
       <BlogItem v-bind="article" />
     </template>
   </div>
