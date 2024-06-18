@@ -33,6 +33,23 @@ export default () => {
 
   console.log("ascendingReals =>", ascendingReals);
 
+  const sortedArticles = sortArticles(ascendingReals);
+  console.log("sortedArticles =>", sortedArticles);
+
+  return {
+    rawArticles,
+    ascendingReals,
+    sortedArticles,
+    undefinedAticles: {
+      year: "undefined",
+      articles: voids,
+    },
+  };
+};
+
+function sortArticles(
+  ascendingReals: (SpecifiedFrontmatter & { relativePath: string })[]
+) {
   const yearTags = getTimeTags(ascendingReals, (s) => s.createTime!, "year");
   console.log("yearTags =>", yearTags);
 
@@ -71,14 +88,8 @@ export default () => {
     };
   });
 
-  console.log("sortedArticles =>", sortedArticles);
-
-  return {
-    rawArticles,
-    ascendingReals,
-    sortedArticles,
-  };
-};
+  return sortedArticles;
+}
 
 function getTimeTags<T>(
   source: T[],

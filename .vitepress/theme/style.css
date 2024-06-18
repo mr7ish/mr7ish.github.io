@@ -172,24 +172,45 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --meta-time-color: #bbbbbb;
-  }
-}
-
 :root {
-  --default-color: #000000;
-  --meta-time-color: #555555;
+  --default-color: #000;
+  --meta-time-color: #555;
   --meta-tag-bg: rgba(142, 150, 170, 0.14);
+  --scroll-bar-bg: #fff;
+  --scrollbar: #eee;
+  --scrollbar-hover: #bbb;
 }
 
 :root.dark {
-  --default-color: #ffffff;
-  --meta-time-color: #bbbbbb;
+  --default-color: #fff;
+  --meta-time-color: #bbb;
   --meta-tag-bg: rgba(101, 117, 133, 0.16);
+  --scroll-bar-bg: #050505;
+  --scrollbar: #111;
+  --scrollbar-hover: #222;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 拖动条 */
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar);
+  border-radius: 10px;
+}
+
+/* 背景槽 */
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background-color: var(--scroll-bar-bg);
+  border-radius: 10px;
+}
+
+::selection {
+  background: #8884;
 }
