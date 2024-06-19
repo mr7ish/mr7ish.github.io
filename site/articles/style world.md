@@ -2,7 +2,7 @@
 createTime: 2023-08-25
 tags:
   - css
-coverImg: /star trails.png
+cover: /star trails.png
 ---
 
 滚动条自定义：

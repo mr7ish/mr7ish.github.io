@@ -2,7 +2,7 @@
 createTime: 2024-04-22
 tags:
   - react
-coverImg: /forests.jpg
+cover: /forests.jpg
 ---
 
 ### useCallback

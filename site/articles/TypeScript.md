@@ -2,7 +2,7 @@
 createTime: 2022-12-27
 tags:
   - TypeScript
-coverImg: /old-scene.jpg
+cover: /old-scene.jpg
 ---
 
 [TS教程](https://ts.xcatliu.com/)

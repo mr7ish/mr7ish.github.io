@@ -2,7 +2,7 @@
 createTime: 2024-04-30
 tags:
   - canvas
-coverImg: /silence moment.jpg
+cover: /silence moment.jpg
 ---
 
 [详细教程见 MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Basic_usage)

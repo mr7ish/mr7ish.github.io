@@ -2,7 +2,7 @@
 createTime: 2023-03-03
 tags:
   - utils
-coverImg: /song of lives .png
+cover: /song of lives .png
 ---
 
 介绍两种比较简单的打印方法：

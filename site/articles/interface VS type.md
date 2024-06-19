@@ -2,7 +2,7 @@
 createTime: 2023-05-26
 tags:
   - TypeScript
-coverImg: /the distance.jpg
+cover: /the distance.jpg
 ---
 
 ## interface 和 type：

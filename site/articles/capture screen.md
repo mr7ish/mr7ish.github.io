@@ -2,7 +2,7 @@
 createTime: 2024-05-17
 tags:
   - utils
-coverImg: /beauty.jpg
+cover: /beauty.jpg
 ---
 
 ### 实现截屏功能

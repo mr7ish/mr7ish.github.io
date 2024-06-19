@@ -2,7 +2,7 @@
 createTime: 2024-05-10
 tags:
   - libraries
-coverImg: /wilderness.jpg
+cover: /wilderness.jpg
 ---
 
 ### [autofit](https://www.npmjs.com/package/autofit.js)

@@ -2,7 +2,7 @@
 createTime: 2023-08-25
 tags:
   - configs
-coverImg: /sunset.png
+cover: /sunset.png
 ---
 
 ## Prettier

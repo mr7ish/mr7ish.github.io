@@ -2,7 +2,7 @@
 createTime: 2022-12-28
 tags:
   - Echarts
-coverImg: /dogsRun.gif
+cover: /dogsRun.gif
 ---
 
 

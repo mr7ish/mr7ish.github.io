@@ -2,7 +2,7 @@
 createTime: 2023-04-10
 tags:
   - 小程序
-coverImg: /that girl,that cat.png
+cover: /that girl,that cat.png
 ---
 
 ## 小程序：

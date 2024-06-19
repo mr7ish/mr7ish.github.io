@@ -2,7 +2,7 @@
 createTime: 2023-03-15
 tags:
   - JavaScript
-coverImg: /Taylor.jpg
+cover: /Taylor.jpg
 ---
 
 # ES6+ 新增的一些语法特性：
