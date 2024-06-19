@@ -4,8 +4,20 @@
       <span class="time-label">{{ title }}</span>
     </div>
     <template v-for="article in articles">
-      <!-- TODO adjust v-bind obj -->
-      <BlogItem v-bind="article" />
+      <div>
+        <a
+          class="article-item-anchor"
+          :href="article.relativePath"
+        >
+          <BlogItem
+            v-bind="{
+              createTime: article.createTime,
+              min: article.min,
+              articleTitle: article.title ?? article.fileName,
+            }"
+          />
+        </a>
+      </div>
     </template>
   </div>
 </template>
@@ -27,9 +39,10 @@ const props = defineProps<Props>();
   .time-wrapper {
     position: relative;
     height: 5rem;
-    user-select: none;
     font-size: 1rem;
     line-height: 1.75;
+    user-select: none;
+    pointer-events: none;
 
     .time-label {
       position: absolute;
@@ -41,6 +54,16 @@ const props = defineProps<Props>();
       font-weight: 700;
       -webkit-text-stroke-width: 2px;
       -webkit-text-stroke-color: rgb(170, 170, 170);
+    }
+  }
+
+  .article-item-anchor {
+    display: inline-flex;
+    opacity: 0.6;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

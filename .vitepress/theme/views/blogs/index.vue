@@ -13,6 +13,9 @@
         </template>
       </div>
     </article>
+    <RouterTo style="max-width: 65ch">
+      <template #icon> 🏡 </template>
+    </RouterTo>
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import getArticles from "../../utils/getArticles";
 import { useData } from "vitepress";
 import BlogCard from "./components/BlogCard.vue";
 import { deepClone } from "../../utils/deepClone";
+import RouterTo from "../../components/RouterTo.vue";
 
 const { sortedArticles, undefinedAticles } = getArticles();
 
@@ -42,9 +46,6 @@ onMounted(() => {});
 
   .blogs-wrapper {
     max-width: 65ch;
-
-    height: 900px;
-    background-color: rgba(0, 0, 0, 0.2);
     margin: auto;
   }
 }

@@ -214,3 +214,27 @@ html {
 ::selection {
   background: #8884;
 }
+
+@media print {
+  .print-hidden {
+    display: none;
+  }
+}
+
+.love-animation {
+  width: 100%;
+  height: 100%;
+  /* width: 100px;
+  height: 100px; */
+  object-fit: cover;
+  animation: heart-burst steps(28) 0.8s infinite both;
+}
+
+@keyframes heart-burst {
+  0% {
+    object-position: 0%;
+  }
+  100% {
+    object-position: 100%;
+  }
+}
