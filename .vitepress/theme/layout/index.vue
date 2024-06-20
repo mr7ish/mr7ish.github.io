@@ -12,14 +12,10 @@
       </RouterTo>
     </template>
     <template #layout-bottom>
-      <transition
-        name="scroll"
-        @enter="onEnter"
-        @after-enter="onAfterEnter"
-      >
+      <transition name="scroll">
         <div
           v-if="isNeedBackTop"
-          class="top-btn"
+          class="scroll-top-wrapper"
         >
           <img
             class="scroll-cat"
@@ -29,9 +25,6 @@
           <div
             class="hook-btn"
             @click="backTop"
-            :style="{
-              pointerEvents: !isStarting ? 'auto' : 'none',
-            }"
           ></div>
 
           <!-- <img
@@ -51,16 +44,6 @@ import { Ref, computed, ref, watchEffect } from "vue";
 import RouterTo from "../components/RouterTo.vue";
 import { useData } from "vitepress";
 import { SpecifiedFrontmatter } from "../../../env";
-
-// TODO 暂停
-const isStarting = ref(false);
-
-const onEnter = () => {
-  isStarting.value = true;
-};
-const onAfterEnter = () => {
-  isStarting.value = false;
-};
 
 const { Layout } = DefaultTheme;
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
@@ -86,7 +69,6 @@ watchEffect(() => {
 });
 
 const backTop = () => {
-  // document.documentElement.scrollTop = 0;
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
@@ -111,26 +93,23 @@ function fnWrapper(subscribed: () => void, unsubscribed: () => void) {
 </script>
 
 <style scoped lang="less">
-.top-btn {
+.scroll-top-wrapper {
   position: fixed;
   right: 20px;
   width: 40px;
   height: 40px;
-  height: 850px;
-  background-color: lightcoral;
+  height: 800px;
+  // background-color: lightcoral;
   border-radius: 4px;
   z-index: 30;
   user-select: none;
-
-  // z-index: 29;
-  // transform: translateY(800px) rotateZ(0deg);
-  transform: translateY(0px) rotate(0deg);
-  transform-origin: center 0;
+  transform: translateY(0px);
+  // transform-origin: center 0;
 
   .hook-btn {
     width: 100%;
     height: 40px;
-    background-color: lightblue;
+    // background-color: lightblue;
     position: absolute;
     bottom: 4px;
     cursor: pointer;
@@ -147,62 +126,37 @@ function fnWrapper(subscribed: () => void, unsubscribed: () => void) {
 
 @keyframes scroll-animation {
   0% {
-    transform: translateY(-850px);
+    transform: translateY(-800px);
   }
   70% {
     transform: translateY(50px);
   }
-
+  90% {
+    transform: translateY(-10px);
+  }
   100% {
     transform: translateY(0px);
   }
 }
 
-@keyframes swing {
+@keyframes scroll-animation-reverse {
   0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  10% {
-    transform: translateY(0px) rotate(5deg);
-  }
-  20% {
-    transform: translateY(0px) rotate(-5deg);
-  }
-  30% {
-    transform: translateY(0px) rotate(4deg);
-  }
-  40% {
-    transform: translateY(0px) rotate(-4deg);
-  }
-  50% {
-    transform: translateY(0px) rotate(3deg);
-  }
-  60% {
-    transform: translateY(0px) rotate(-3deg);
+    transform: translateY(-800px);
   }
   70% {
-    transform: translateY(0px) rotate(2deg);
-  }
-  80% {
-    transform: translateY(0px) rotate(-2deg);
-  }
-  90% {
-    transform: translateY(0px) rotate(1deg);
+    transform: translateY(50px);
   }
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px);
   }
 }
 
 .scroll-enter-active {
-  // animation: scroll-animation 3.5s ease-in-out, swing 2s 4s infinite linear;
-  animation: scroll-animation 3.5s ease-in-out,
-    swing 10s 4s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: scroll-animation 1.5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 .scroll-leave-active {
-  // animation: name duration timing-function delay iteration-count direction
-  //   fill-mode;
-  animation: scroll-animation 1s reverse cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation: scroll-animation-reverse 1s reverse
+    cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 </style>

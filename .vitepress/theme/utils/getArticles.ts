@@ -7,7 +7,6 @@ export default () => {
     // load modules immediately
     eager: true,
   });
-  console.log("modules =>", modules);
 
   const rawArticles = Object.values(modules).map((m: any) => {
     const { __pageData } = m;
@@ -20,28 +19,20 @@ export default () => {
     };
   });
 
-  console.log("rawArticles =>", rawArticles);
-
   const { voids, reals } = sortByValueIsVoid(rawArticles, "createTime");
-
-  console.log("voids =>", voids);
-  console.log("reals =>", reals);
 
   const ascendingReals = sortByNumVal(reals, (a, b) => {
     return moment(a.createTime).valueOf() - moment(b.createTime).valueOf();
   });
 
-  console.log("ascendingReals =>", ascendingReals);
-
   const sortedArticles = sortArticles(ascendingReals);
-  console.log("sortedArticles =>", sortedArticles);
 
   return {
     rawArticles,
     ascendingReals,
     sortedArticles,
     undefinedAticles: {
-      year: "undefined",
+      year: "void",
       articles: voids,
     },
   };
@@ -51,7 +42,6 @@ function sortArticles(
   ascendingReals: (SpecifiedFrontmatter & { relativePath: string })[]
 ) {
   const yearTags = getTimeTags(ascendingReals, (s) => s.createTime!, "year");
-  console.log("yearTags =>", yearTags);
 
   const sortedArticles = yearTags.map((y) => {
     const yearArticles = ascendingReals.filter(
