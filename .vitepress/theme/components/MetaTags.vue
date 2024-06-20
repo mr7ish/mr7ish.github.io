@@ -3,11 +3,13 @@
     v-if="tags.length > 0"
     class="tags-wrapper"
   >
-    <template v-for="tag in tags">
-      <div :class="['tag-item', { 'larger-pd': tag.length < 5 }]">
-        {{ tag }}
-      </div>
-    </template>
+    <div
+      :class="['tag-item', { 'larger-pd': tag.length < 5 }]"
+      v-for="(tag, index) in tags"
+      :key="index"
+    >
+      {{ tag }}
+    </div>
   </div>
 </template>
 
@@ -27,7 +29,7 @@ const tags = computed(() => frontmatter.value.tags ?? []);
   gap: 0.5rem;
 
   .tag-item {
-    padding: 0.15rem 0.375rem;
+    padding: 0.15rem 0.575rem;
     background-color: var(--meta-tag-bg);
     border-radius: 1rem;
     font-size: 0.6875rem;

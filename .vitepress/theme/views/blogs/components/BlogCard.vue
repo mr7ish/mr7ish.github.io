@@ -1,24 +1,34 @@
 <template>
   <div class="blog-card-wrapper">
-    <div class="time-wrapper">
+    <div
+      class="time-wrapper slide-enter"
+      :style="{
+        '--enter-stage': $attrs.timeStageSum as number,
+      }"
+    >
       <span class="time-label">{{ title }}</span>
     </div>
-    <template v-for="article in articles">
-      <div>
-        <a
-          class="article-item-anchor"
-          :href="article.relativePath"
-        >
-          <BlogItem
-            v-bind="{
-              createTime: article.createTime,
-              min: article.min,
-              articleTitle: article.title ?? article.fileName,
-            }"
-          />
-        </a>
-      </div>
-    </template>
+    <div
+      v-for="(article, index) in articles"
+      :key="article.fileName! + index"
+      class="slide-enter"
+      :style="{
+          '--enter-stage': index + ($attrs.articleStageSum as number),
+        }"
+    >
+      <a
+        class="article-item-anchor"
+        :href="article.relativePath"
+      >
+        <BlogItem
+          v-bind="{
+            createTime: article.createTime,
+            min: article.min,
+            articleTitle: article.title ?? article.fileName,
+          }"
+        />
+      </a>
+    </div>
   </div>
 </template>
 

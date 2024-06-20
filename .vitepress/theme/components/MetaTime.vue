@@ -44,7 +44,7 @@ type Props = {
 };
 
 const props = defineProps<Props>();
-console.log("props =>", props.customTime);
+// console.log("props =>", props.customTime);
 
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 // console.log("frontmatter meta =>", frontmatter.value);

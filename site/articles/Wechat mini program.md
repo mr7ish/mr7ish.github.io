@@ -151,7 +151,7 @@ app.json	全局配置文件	[官方文档](https://developers.weixin.qq.com/mini
 
 `data: {​	name: '张三' }`
 
-在 wxml 文件可以用 `{{ name }}` 渲染变量
+在 wxml 文件可以用 <span v-pre>`{{ name }}`</span> 渲染变量
 
 ```html
 <!-- .wxml -->
