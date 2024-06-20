@@ -105,6 +105,11 @@ function fnWrapper(subscribed: () => void, unsubscribed: () => void) {
   user-select: none;
   transform: translateY(0px);
   // transform-origin: center 0;
+  opacity: 0.2;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   .hook-btn {
     width: 100%;
