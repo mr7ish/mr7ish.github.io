@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import getArticles from "../../utils/getArticles";
 import BlogCard from "./components/BlogCard.vue";
 import { deepClone } from "../../utils/deepClone";
@@ -181,10 +181,6 @@ function calcStageSum(
   }
   return _stageSum[key];
 }
-
-onMounted(() => {
-  console.log("mounted...");
-});
 </script>
 
 <style scoped lang="less">
