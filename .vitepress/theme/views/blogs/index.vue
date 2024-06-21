@@ -109,7 +109,9 @@ const isAscending = ref(
 
 const articles = computed(() => {
   if (isAscending.value) return deepClone(sortedArticles);
-  return deepClone(sortedArticles).reverse();
+  const cloned = deepClone(sortedArticles);
+  cloned.map((i) => i.articles.reverse());
+  return cloned.reverse();
 });
 
 const entireArticles = computed(() => [...articles.value, undefinedAticles]);
