@@ -69,6 +69,13 @@
     >
       <template #icon> 🏡 </template>
     </RouterTo>
+    <footer style="padding-top: 1rem">
+      <InspiredBy
+        prefix="designed & inspired by"
+        author="Anthony Fu"
+        link="https://antfu.me/"
+      />
+    </footer>
   </div>
 </template>
 
@@ -81,6 +88,7 @@ import RouterTo from "../../components/RouterTo.vue";
 import BlogTags from "./components/BlogTags.vue";
 import { get, set } from "../../utils/localStorage";
 import sumArray from "../../utils/sumArray";
+import InspiredBy from "./components/InspiredBy.vue";
 
 const { sortedArticles, undefinedAticles } = getArticles();
 
