@@ -26,11 +26,6 @@
             class="hook-btn"
             @click="backTop"
           ></div>
-
-          <!-- <img
-          class="love-animation"
-          src="/heart-animation.png"
-        /> -->
         </div>
       </transition>
     </template>
@@ -40,10 +35,20 @@
 <script setup lang="ts">
 import DefaultTheme from "vitepress/theme";
 import DocBefore from "../components/DocBefore.vue";
-import { Ref, computed, nextTick, provide, ref, watchEffect } from "vue";
+import {
+  Ref,
+  computed,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  provide,
+  ref,
+  watchEffect,
+} from "vue";
 import RouterTo from "../components/RouterTo.vue";
 import { useData } from "vitepress";
 import { SpecifiedFrontmatter } from "../../../env";
+import { createHeartByClick } from "../utils/heartBurst";
 
 const { Layout } = DefaultTheme;
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
@@ -124,6 +129,14 @@ provide("toggle-appearance", async ({ clientX: x, clientY: y }: MouseEvent) => {
       pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
     }
   );
+});
+
+onMounted(() => {
+  document.addEventListener("click", createHeartByClick);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", createHeartByClick);
 });
 </script>
 
