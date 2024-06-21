@@ -39,10 +39,11 @@
         </span>
       </div>
       <BlogTags
+        class="slide-enter"
         :tags="tags"
         :clicked="currentTag"
         @get-clicked-tag="getClickedTag"
-        style="margin-bottom: 0.5rem"
+        style="margin-bottom: 0.5rem; --enter-stage: 2.5"
       />
     </div>
     <article>
