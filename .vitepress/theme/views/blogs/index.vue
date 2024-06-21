@@ -71,6 +71,11 @@
     </RouterTo>
     <footer style="padding-top: 1rem">
       <InspiredBy
+        class="slide-enter"
+        :style="{
+          '--enter-stage': sumArray(articleSizeArr) + 1,
+        }"
+        :key="currentTag"
         prefix="designed & inspired by"
         author="Anthony Fu"
         link="https://antfu.me/"
