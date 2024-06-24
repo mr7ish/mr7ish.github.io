@@ -149,7 +149,7 @@ onUnmounted(() => {
   height: 800px;
   // background-color: lightcoral;
   border-radius: 4px;
-  z-index: 30;
+  z-index: var(--z-i-30);
   user-select: none;
   transform: translateY(0px);
   // transform-origin: center 0;
