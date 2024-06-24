@@ -19,7 +19,7 @@
         >
           <img
             class="scroll-cat"
-            src="/scroll-extended.png"
+            src="/others/scroll-extended.png"
             alt="top"
           />
           <div

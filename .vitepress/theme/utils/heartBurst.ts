@@ -17,7 +17,7 @@ function getWhiteElementsTagName() {
 }
 
 function heartBurst({ x, y }: Point) {
-  const heartImg = createImage("/heart-animation.png");
+  const heartImg = createImage("/others/heart-animation.png");
   heartImg.classList.add("love-basic", "love-animation");
   heartImg.style.left = x + "px";
   heartImg.style.top = y + "px";
