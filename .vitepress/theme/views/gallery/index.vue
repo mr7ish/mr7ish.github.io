@@ -87,9 +87,9 @@ const handleImg = (e: Event) => {
 };
 
 const open = () => {
-  const status = imgPreviewModalRef.value?.getStatus();
-  console.log("tuo get =>", status);
-  if (!status) return;
+  // const status = imgPreviewModalRef.value?.getStatus();
+  // console.log("tuo get =>", status);
+  // if (!status) return;
 
   if (isOpen.value) return;
   isOpen.value = true;
