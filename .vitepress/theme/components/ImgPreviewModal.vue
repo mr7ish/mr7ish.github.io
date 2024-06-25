@@ -2,6 +2,7 @@
   <BaseModal
     ref="baseModalRef"
     is-transition
+    @getStatus="getStatus"
   >
   </BaseModal>
 </template>
@@ -11,6 +12,13 @@ import { provide, ref } from "vue";
 import BaseModal from "./BaseModal.vue";
 
 const baseModalRef = ref<InstanceType<typeof BaseModal>>();
+
+const status = ref(true);
+
+const getStatus = (_s: boolean) => {
+  console.log("_s =>", _s);
+  status.value = _s;
+};
 
 const emit = defineEmits<{
   close: [];
@@ -29,6 +37,7 @@ const close = () => {
 defineExpose({
   open,
   close,
+  getStatus: () => status.value,
 });
 </script>
 
