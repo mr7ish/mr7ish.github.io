@@ -3,42 +3,51 @@
     <main>
       <div class="pictures-wrapper">
         <img
+          class="picture"
           v-for="(pic, index) in shuffleds"
           :key="index"
           :src="pic.path"
           :alt="pic.name"
           loading="lazy"
-          @click="open"
+          @click="handleImg"
         />
       </div>
     </main>
-    <BaseModal ref="baseModalRef">
-      <div
-        style="
-          background-color: lightblue;
-          width: 50%;
-          height: 50%;
-          color: #000;
-        "
-      >
-        <div style="height: 110%">aaasdasd</div>
-      </div>
-    </BaseModal>
   </div>
+  <ImgPreviewModal
+    ref="imgPreviewModalRef"
+    @close="closeCallback"
+  />
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { nextTick, provide, ref } from "vue";
 import BaseModal from "../../components/BaseModal.vue";
 import getPictures from "../../utils/getPictures";
+import ImgPreviewModal from "../../components/ImgPreviewModal.vue";
 
-const baseModalRef = ref<InstanceType<typeof BaseModal>>();
+const imgPreviewModalRef = ref<InstanceType<typeof BaseModal>>();
+const clickedImg = ref<HTMLImageElement>();
+
+provide("clickedImg", clickedImg);
 
 const { shuffleds } = getPictures();
 console.log("shuffleds =>", shuffleds);
 
+const closeCallback = () => {
+  console.log("clickedImg =>", clickedImg.value);
+  clickedImg.value?.classList.remove("clicked");
+};
+
+const handleImg = (e: Event) => {
+  const img = e.target as HTMLImageElement;
+  clickedImg.value = img;
+  img.classList.add("clicked", "top-level");
+  open();
+};
+
 const open = () => {
-  baseModalRef.value?.open();
+  imgPreviewModalRef.value?.open();
 };
 </script>
 
@@ -55,9 +64,20 @@ const open = () => {
       column-count: 3;
       column-gap: 1rem;
 
-      img {
+      .picture {
         margin: 1rem 0;
         cursor: pointer;
+        position: relative;
+        transform: translate(0, 0) scale(1);
+        transition: all 0.5s;
+
+        &.clicked {
+          transform: translate(100px, 100px) scale(1.5);
+        }
+
+        &.top-level {
+          z-index: calc(var(--z-i-top) + 1);
+        }
 
         &:first-child {
           margin-top: 0;
