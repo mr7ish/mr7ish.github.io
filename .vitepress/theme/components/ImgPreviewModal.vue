@@ -8,7 +8,7 @@
         'fade-out': startFadeOut,
       },
     ]"
-    @click="close"
+    @click.self="close"
   ></div>
 </template>
 
@@ -20,21 +20,28 @@ const startFadeOut = ref(false);
 
 const open = () => {
   visible.value = true;
+  return visible.value;
 };
 
 const close = () => {
   startFadeOut.value = true;
+  emit("close");
 
   setTimeout(() => {
     visible.value = false;
     startFadeOut.value = false;
+    emit("afterClose");
   }, 350);
 };
+
+const emit = defineEmits<{
+  close: [];
+  afterClose: [];
+}>();
 
 defineExpose({
   open,
   close,
-  getStatus: () => status.value,
 });
 </script>
 

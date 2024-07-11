@@ -9,95 +9,130 @@
           :src="pic.path"
           :alt="pic.name"
           loading="lazy"
-          @click="onClickPic"
+          @click="throttleClick"
         />
       </div>
     </main>
   </div>
-  <ImgPreviewModal ref="imgPreviewModalRef" />
+  <ImgPreviewModal
+    ref="imgPreviewModalRef"
+    @close="whenClose"
+    @afterClose="afterClose"
+  />
 </template>
 
 <script setup lang="ts">
-import { Ref, inject, nextTick, provide, ref } from "vue";
-import BaseModal from "../../components/BaseModal.vue";
+import { ref } from "vue";
 import getPictures from "../../utils/getPictures";
 import ImgPreviewModal from "../../components/ImgPreviewModal.vue";
+import { calcMoveDistance, calcScale } from "../../utils/picCalc";
+import { debounce, throttle, throttle2 } from "../../utils/_";
 
-const imgPreviewModalRef = ref<InstanceType<typeof ImgPreviewModal>>();
-const clickedImg = ref<HTMLImageElement>();
-const isOpen = ref(false);
-
-// provide("clickedImg", clickedImg);
+type PicStyleParams = {
+  pic: HTMLImageElement;
+  x?: number;
+  y?: number;
+  scale?: number;
+};
 
 const { shuffleds } = getPictures();
-console.log("shuffleds =>", shuffleds);
 
-const closeCallback = () => {
-  clickedImg.value?.classList.remove("clicked");
-  if (clickedImg.value) {
-    clickedImg.value.style.transform = `translate(0, 0) scale(1)`;
-  }
-  window.removeEventListener("wheel", preventScroll);
-  document.documentElement.style.overflowY = "auto";
-  isOpen.value = false;
+const imgPreviewModalRef = ref<InstanceType<typeof ImgPreviewModal>>();
+const isOpen = ref(false);
+const activeImg = ref<HTMLImageElement>();
+
+const scale = ref(1);
+const moveX = ref(0);
+const moveY = ref(0);
+
+const whenClose = () => {
+  if (!activeImg.value) return;
+  activeImg.value?.removeEventListener("wheel", throttleScale);
+  changePicStyle({ pic: activeImg.value });
 };
 
-const handleImg = (e: Event) => {
+const afterClose = () => {
+  changeRootStyle(false);
+  activeImg.value?.classList.remove("z-index-top");
+  activeImg.value = undefined;
+  changeStatus(false);
+};
+
+const onClickPic = (e: Event) => {
   if (isOpen.value) return;
+
+  if (!open()) return;
+
   const img = e.target as HTMLImageElement;
-  // clickedImg.value = img;
-  img.classList.add("clicked", "top-level");
-  open();
-  console.log("img =>", img.getBoundingClientRect());
-  console.log("img w=>", img.width);
-  console.log("img h=>", img.height);
+  activeImg.value = img;
 
-  const originW = img.width;
-  const originH = img.height;
+  img.classList.add("z-index-top");
 
-  const clientW = document.documentElement.clientWidth;
-  const clientH = document.documentElement.clientHeight;
+  const [_moveX, _moveY] = calcMoveDistance(img);
+  const _scale = calcScale(img, 0.5);
 
-  const scale = 2;
-  const scaleW = scale * originW;
-  const scaleH = scale * originH;
+  scale.value = _scale;
+  moveX.value = _moveX;
+  moveY.value = _moveY;
 
-  const clicentCenterX = clientW / 2;
-  const clicentCenterY = clientH / 2;
-  console.log("clicentCenterX =>", clicentCenterX);
-  console.log("clicentCenterY =>", clicentCenterY);
+  changeRootStyle(true);
 
-  const { x, y } = img.getBoundingClientRect();
+  changePicStyle({
+    pic: img,
+    x: _moveX,
+    y: _moveY,
+    scale: _scale,
+  });
 
-  const imgCenterX = x + originW / 2;
-  const imgCenterY = y + clientH / 2;
-  console.log("imgCenterX =>", imgCenterX);
-  console.log("imgCenterY =>", imgCenterY);
-
-  const moveX = clicentCenterX - (x + originW / 2);
-  const moveY = clicentCenterY - (y + originH / 2);
-
-  console.log("moveX =>", moveX);
-  console.log("moveY =>", moveY);
-
-  img.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+  activeImg.value?.addEventListener("wheel", throttleScale);
 };
+
+const throttleScale = throttle2(onScale, 200);
+
+function onScale(e: WheelEvent) {
+  if (!activeImg.value) return;
+
+  // 向下
+  if (e.deltaY > 0) {
+    if (scale.value - 1 > 1) {
+      scale.value--;
+    }
+  }
+
+  // 向上
+  if (e.deltaY < 0) {
+    if (scale.value < 10) {
+      scale.value++;
+    }
+  }
+
+  changePicStyle({
+    pic: activeImg.value,
+    x: moveX.value,
+    y: moveY.value,
+    scale: scale.value,
+  });
+}
+
+const throttleClick = debounce(onClickPic, 200);
 
 const open = () => {
-  // const status = imgPreviewModalRef.value?.getStatus();
-  // console.log("tuo get =>", status);
-  // if (!status) return;
-
-  if (isOpen.value) return;
-  isOpen.value = true;
-  imgPreviewModalRef.value?.open();
-  window.addEventListener("wheel", preventScroll, { passive: false });
-  // document.documentElement.style.overflowY = "hidden";
+  return imgPreviewModalRef.value?.open() && changeStatus(true);
 };
 
-function preventScroll(e: Event) {
-  imgPreviewModalRef.value?.close();
-  e.preventDefault();
+function changeStatus(_status: boolean) {
+  isOpen.value = _status;
+  return _status;
+}
+
+function changePicStyle({ pic, x, y, scale }: PicStyleParams) {
+  pic.style.transform = `translate(${x ?? 0}px, ${y ?? 0}px) scale(${
+    scale ?? 1
+  })`;
+}
+
+function changeRootStyle(isHidden: boolean) {
+  document.documentElement.style.overflowY = isHidden ? "hidden" : "auto";
 }
 </script>
 
@@ -120,14 +155,11 @@ function preventScroll(e: Event) {
         position: relative;
         transform-origin: center center;
         transform: translate(0, 0) scale(1);
-        transition: all 0.5s;
+        transition: all 0.35s;
+        user-select: none !important;
+        -webkit-user-select: none !important;
 
-        &.clicked {
-          // transform: translate(100px, 100px) scale(1.5);
-          // pointer-events: none;
-        }
-
-        &.top-level {
+        &.z-index-top {
           z-index: calc(var(--z-i-top) + 1);
         }
 
