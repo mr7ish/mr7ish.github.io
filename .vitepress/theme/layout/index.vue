@@ -63,20 +63,24 @@ const layoutType = computed<"doc" | "page" | "home">(
   () => frontmatter.value.layout ?? "doc"
 );
 
+const backTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
 watchEffect(() => {
   fnWrapper(
     () => {
       window.addEventListener("scroll", calcScrollHeight);
     },
     () => {
-      window.removeEventListener("scroll", calcScrollHeight);
+      backTop();
+      nextTick(() => {
+        calcScrollHeight();
+        window.removeEventListener("scroll", calcScrollHeight);
+      });
     }
   );
 });
-
-const backTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
 
 function calcScrollHeight() {
   const scrollY = window.scrollY;
