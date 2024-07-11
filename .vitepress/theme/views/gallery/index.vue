@@ -9,39 +9,35 @@
           :src="pic.path"
           :alt="pic.name"
           loading="lazy"
-          @click="handleImg"
+          @click="onClickPic"
         />
       </div>
     </main>
   </div>
-  <ImgPreviewModal
-    ref="imgPreviewModalRef"
-    @close="closeCallback"
-  />
+  <ImgPreviewModal ref="imgPreviewModalRef" />
 </template>
 
 <script setup lang="ts">
-import { nextTick, provide, ref } from "vue";
-import BaseModal from "../../components/BaseModal.vue";
+import { provide, ref } from "vue";
 import getPictures from "../../utils/getPictures";
 import ImgPreviewModal from "../../components/ImgPreviewModal.vue";
 
-const imgPreviewModalRef = ref<InstanceType<typeof BaseModal>>();
-const clickedImg = ref<HTMLImageElement>();
+const imgPreviewModalRef = ref<InstanceType<typeof ImgPreviewModal>>();
+// const clickedImg = ref<HTMLImageElement>();
 
-provide("clickedImg", clickedImg);
+// provide("clickedImg", clickedImg);
 
 const { shuffleds } = getPictures();
 console.log("shuffleds =>", shuffleds);
 
-const closeCallback = () => {
-  console.log("clickedImg =>", clickedImg.value);
-  clickedImg.value?.classList.remove("clicked");
-};
+// const closeCallback = () => {
+//   console.log("clickedImg =>", clickedImg.value);
+//   clickedImg.value?.classList.remove("clicked");
+// };
 
-const handleImg = (e: Event) => {
+const onClickPic = (e: Event) => {
   const img = e.target as HTMLImageElement;
-  clickedImg.value = img;
+  // clickedImg.value = img;
   img.classList.add("clicked", "top-level");
   open();
 };
