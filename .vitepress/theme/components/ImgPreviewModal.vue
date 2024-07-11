@@ -34,6 +34,7 @@ const close = () => {
 defineExpose({
   open,
   close,
+  getStatus: () => status.value,
 });
 </script>
 

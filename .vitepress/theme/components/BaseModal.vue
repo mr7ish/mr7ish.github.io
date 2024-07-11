@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, inject, onBeforeMount, onMounted, ref } from "vue";
+import { Ref, inject, onBeforeMount, provide, ref } from "vue";
 
 type Props = {
   isTransition?: boolean;
@@ -33,17 +33,33 @@ const clickedImg = inject<Ref<HTMLImageElement>>("clickedImg");
 
 const visible = ref(false);
 
+const isOver = ref(true);
+
+const emit = defineEmits<{
+  getStatus: [_s: boolean];
+}>();
+
 const onAfterLeave = () => {
+  // 如果点了关闭, 过渡钩子还未执行完, 又立刻点击打开就跳过
+  if (visible.value) return;
   clickedImg?.value.classList.remove("top-level");
+  isOver.value = true;
+  emit("getStatus", isOver.value);
 };
 
 const open = () => {
   visible.value = true;
+  isOver.value = false;
+  emit("getStatus", isOver.value);
 };
 
 const close = () => {
-  visible.value = false;
-  closeCallback?.();
+  setTimeout(() => {
+    visible.value = false;
+    isOver.value = false;
+    emit("getStatus", isOver.value);
+    closeCallback?.();
+  }, 500);
 };
 
 defineExpose({
@@ -75,15 +91,6 @@ onBeforeMount(() => {
   const style = document.createElement("style");
   style.appendChild(document.createTextNode(css));
   document.head.appendChild(style);
-});
-
-function preventScroll(e) {
-  console.log("e =>", e);
-  e.preventDefault();
-}
-
-onMounted(() => {
-  window.addEventListener("wheel", preventScroll, { passive: false });
 });
 </script>
 

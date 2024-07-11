@@ -18,33 +18,87 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref } from "vue";
+import { Ref, inject, nextTick, provide, ref } from "vue";
+import BaseModal from "../../components/BaseModal.vue";
 import getPictures from "../../utils/getPictures";
 import ImgPreviewModal from "../../components/ImgPreviewModal.vue";
 
 const imgPreviewModalRef = ref<InstanceType<typeof ImgPreviewModal>>();
-// const clickedImg = ref<HTMLImageElement>();
+const clickedImg = ref<HTMLImageElement>();
+const isOpen = ref(false);
 
 // provide("clickedImg", clickedImg);
 
 const { shuffleds } = getPictures();
 console.log("shuffleds =>", shuffleds);
 
-// const closeCallback = () => {
-//   console.log("clickedImg =>", clickedImg.value);
-//   clickedImg.value?.classList.remove("clicked");
-// };
+const closeCallback = () => {
+  clickedImg.value?.classList.remove("clicked");
+  if (clickedImg.value) {
+    clickedImg.value.style.transform = `translate(0, 0) scale(1)`;
+  }
+  window.removeEventListener("wheel", preventScroll);
+  document.documentElement.style.overflowY = "auto";
+  isOpen.value = false;
+};
 
-const onClickPic = (e: Event) => {
+const handleImg = (e: Event) => {
+  if (isOpen.value) return;
   const img = e.target as HTMLImageElement;
   // clickedImg.value = img;
   img.classList.add("clicked", "top-level");
   open();
+  console.log("img =>", img.getBoundingClientRect());
+  console.log("img w=>", img.width);
+  console.log("img h=>", img.height);
+
+  const originW = img.width;
+  const originH = img.height;
+
+  const clientW = document.documentElement.clientWidth;
+  const clientH = document.documentElement.clientHeight;
+
+  const scale = 2;
+  const scaleW = scale * originW;
+  const scaleH = scale * originH;
+
+  const clicentCenterX = clientW / 2;
+  const clicentCenterY = clientH / 2;
+  console.log("clicentCenterX =>", clicentCenterX);
+  console.log("clicentCenterY =>", clicentCenterY);
+
+  const { x, y } = img.getBoundingClientRect();
+
+  const imgCenterX = x + originW / 2;
+  const imgCenterY = y + clientH / 2;
+  console.log("imgCenterX =>", imgCenterX);
+  console.log("imgCenterY =>", imgCenterY);
+
+  const moveX = clicentCenterX - (x + originW / 2);
+  const moveY = clicentCenterY - (y + originH / 2);
+
+  console.log("moveX =>", moveX);
+  console.log("moveY =>", moveY);
+
+  img.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
 };
 
 const open = () => {
+  // const status = imgPreviewModalRef.value?.getStatus();
+  // console.log("tuo get =>", status);
+  // if (!status) return;
+
+  if (isOpen.value) return;
+  isOpen.value = true;
   imgPreviewModalRef.value?.open();
+  window.addEventListener("wheel", preventScroll, { passive: false });
+  // document.documentElement.style.overflowY = "hidden";
 };
+
+function preventScroll(e: Event) {
+  imgPreviewModalRef.value?.close();
+  e.preventDefault();
+}
 </script>
 
 <style scoped lang="less">
@@ -64,11 +118,13 @@ const open = () => {
         margin: 1rem 0;
         cursor: pointer;
         position: relative;
+        transform-origin: center center;
         transform: translate(0, 0) scale(1);
         transition: all 0.5s;
 
         &.clicked {
-          transform: translate(100px, 100px) scale(1.5);
+          // transform: translate(100px, 100px) scale(1.5);
+          // pointer-events: none;
         }
 
         &.top-level {
