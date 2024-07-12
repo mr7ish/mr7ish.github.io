@@ -38,7 +38,8 @@ export function getPicInfo(pic: HTMLImageElement) {
   const renderW = pic.width;
   const renderH = pic.height;
 
-  const { x, y } = pic.getBoundingClientRect();
+  const { x, y, top, bottom, left, right, width, height } =
+    pic.getBoundingClientRect();
 
   // image center point relative to the client
   const picCenterPoint: Vector2 = [x + renderW / 2, y + renderH / 2];
@@ -47,6 +48,13 @@ export function getPicInfo(pic: HTMLImageElement) {
     renderW,
     renderH,
     picCenterPoint,
-    ...pic.getBoundingClientRect(),
+    x,
+    y,
+    top,
+    bottom,
+    left,
+    right,
+    width,
+    height,
   };
 }

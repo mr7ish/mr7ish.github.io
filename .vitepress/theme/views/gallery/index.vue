@@ -25,7 +25,12 @@
 import { ref } from "vue";
 import getPictures from "../../utils/getPictures";
 import ImgPreviewModal from "../../components/ImgPreviewModal.vue";
-import { calcMoveDistance, calcScale } from "../../utils/picCalc";
+import {
+  calcMoveDistance,
+  calcScale,
+  getClientInfo,
+  getPicInfo,
+} from "../../utils/picCalc";
 import { debounce, throttle, throttle2 } from "../../utils/_";
 
 type PicStyleParams = {
@@ -69,19 +74,33 @@ const onClickPic = (e: Event) => {
   img.classList.add("z-index-top");
 
   const [_moveX, _moveY] = calcMoveDistance(img);
+
   const _scale = calcScale(img, 0.5);
 
   scale.value = _scale;
   moveX.value = _moveX;
   moveY.value = _moveY;
 
+  const { y, height } = getPicInfo(img);
+  const { clientH } = getClientInfo();
+
+  if (y < 80) {
+    const scrollY = window.scrollY;
+    window.scrollTo({ top: scrollY - Math.abs(y) - 80, behavior: "smooth" });
+    moveY.value -= Math.abs(y) + 80;
+  } else if (clientH - height < y) {
+    const scrollY = window.scrollY;
+    window.scrollTo({ top: scrollY + height, behavior: "smooth" });
+    moveY.value += height;
+  }
+
   changeRootStyle(true);
 
   changePicStyle({
     pic: img,
-    x: _moveX,
-    y: _moveY,
-    scale: _scale,
+    x: moveX.value,
+    y: moveY.value,
+    scale: scale.value,
   });
 
   activeImg.value?.addEventListener("wheel", throttleScale);
