@@ -32,6 +32,7 @@ import {
   getPicInfo,
 } from "../../utils/picCalc";
 import { debounce, throttle, throttle2 } from "../../utils/_";
+import { isMobile } from "../../utils/isMobile";
 
 type PicStyleParams = {
   pic: HTMLImageElement;
@@ -75,7 +76,7 @@ const onClickPic = (e: Event) => {
 
   const [_moveX, _moveY] = calcMoveDistance(img);
 
-  const _scale = calcScale(img, 0.5);
+  const _scale = calcScale(img, isMobile() ? 1.5 : 0.5);
 
   scale.value = _scale;
   moveX.value = _moveX;
