@@ -76,7 +76,7 @@ const onClickPic = (e: Event) => {
 
   const [_moveX, _moveY] = calcMoveDistance(img);
 
-  const _scale = calcScale(img, isMobile() ? 1.5 : 0.5);
+  const _scale = calcScale(img, isMobile() ? 0.9 : 0.5);
 
   scale.value = _scale;
   moveX.value = _moveX;
