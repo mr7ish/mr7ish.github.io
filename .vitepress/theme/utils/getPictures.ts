@@ -1,3 +1,5 @@
+import { getSuffix } from "./getFileSuffix";
+
 export default () => {
   const modules: Record<string, { default: string }> = import.meta.glob(
     "../../../site/public/*",
@@ -23,11 +25,6 @@ export default () => {
 
 function whiteList() {
   return ["png", "jpg", "gif"];
-}
-
-export function getSuffix(path: string) {
-  const match = path.match(/\.[^/.]+$/);
-  return match ? match[0].slice(1) : "";
 }
 
 function shuffleArray<T>(array: T[]) {
