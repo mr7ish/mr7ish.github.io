@@ -196,7 +196,7 @@ onUnmounted(() => {
 
 @media (max-width: 480px) {
   .music-player-container {
-    transform: translateX(-50%) scale(0.8);
+    // transform: translateX(-50%) scale(0.8);
   }
 }
 </style>
