@@ -37,7 +37,9 @@ export default (): MusicTrack[] => {
     return {
       path: basic,
       album: info[2],
-      cover: covers.find((i) => i.album === info[2])?.path,
+      cover:
+        covers.find((i) => i.album === info[2])?.path ??
+        covers.find((i) => i.singer === info[0])?.path,
       name: info[1],
       singer: info[0],
       type: `${getSuffix(basic.split("?")[0])}`,

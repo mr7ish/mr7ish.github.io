@@ -1,6 +1,6 @@
 <template>
   <div class="cover-wrapper">
-    <img :src="pictures[getRangeRandom(0, pictures.length)].path" />
+    <img :src="path ?? pictures[getRangeRandom(0, pictures.length)].path" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ type Props = {
   size?: number | string;
   shape?: "corner" | "circle";
   radius?: number;
+  path?: string;
 };
 
 const props = withDefaults(defineProps<Props>(), {
