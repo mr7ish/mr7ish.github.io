@@ -66,6 +66,8 @@ defineExpose({
 <style scoped lang="less">
 .music-list-container {
   width: 100%;
+  max-height: 40vh;
+  overflow-y: auto;
   position: relative;
   z-index: var(--z-i-top);
   background-color: rgba(0, 0, 0, 0.8);
