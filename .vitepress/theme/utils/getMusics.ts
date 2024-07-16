@@ -25,18 +25,21 @@ export default (): MusicTrack[] => {
     console.log("default =>", i.default);
     console.log("decode default =>", decodeURI(i.default));
 
-    const basic = i.default.replace(/[\/public|\/music|\/assets]/g, "");
-    console.log("basic =>", basic);
+    // const basic = i.default.replace(/[\/public|\/music|\/assets]/g, "");
+    // console.log("basic =>", basic);
 
-    const info = decodeURI(basic.replace("." + getSuffix(i.default), ""))
-      .split("-")
-      .map((i) => i.replace(/\s+/g, ""));
+    const basic = i.default;
+    const decodeBasic = decodeURI(basic);
+
+    const info = decodeBasic.replace(/\/|music|assets/g, "");
+    // .split("-")
+    // .map((i) => i.replace(/\s+/g, ""));
     console.log("info =>", info);
 
     const album = info[2];
 
     return {
-      path: `/music/${basic}`,
+      path: basic,
       album,
       cover: covers.find((i) => i.album === album)?.path,
       name: info[1],
