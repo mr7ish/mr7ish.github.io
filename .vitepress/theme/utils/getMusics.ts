@@ -56,13 +56,19 @@ function getCovers() {
   );
 
   const covers = Object.values(modules).map((i) => {
-    const basic = i.default.replace("/public/music/covers/", "");
-    const info = decodeURI(basic.replace("." + getSuffix(i.default), ""))
-      .split("-")
-      .map((i) => i.replace(/\s+/g, ""));
+    const basic = i.default;
+    const decodeBasic = decodeURI(basic);
+
+    const [useful] = decodeBasic
+      .replace(/\/|music|covers|assets/g, "")
+      .split(".");
+    console.log("useful =>", useful);
+
+    const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
+    console.log("info =>", info);
 
     return {
-      path: `/music/covers/${basic}`,
+      path: basic,
       album: info[1],
       singer: info[0],
     };
