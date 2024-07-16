@@ -13,7 +13,7 @@ export default (): MusicTrack[] => {
   const covers = getCovers();
 
   const modules: Record<string, { default: string }> = import.meta.glob(
-    "../../../site/public/music/*",
+    "../../../site/music/*",
     {
       eager: true,
     }
