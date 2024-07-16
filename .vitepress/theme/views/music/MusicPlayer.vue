@@ -23,18 +23,38 @@
         <span>-</span>
         <span class="singer-name">{{ currentTrack.singer }}</span>
       </div>
-      <PauseSvg
+      <div
+        class="icon-box"
         v-if="!isPlay"
-        class-name="icon-pause"
-        @click="handleStatus(true)"
-      />
-      <PlaySvg
+      >
+        <PauseSvg
+          class-name="icon-pause"
+          @click="handleStatus(true)"
+        />
+      </div>
+
+      <div
+        class="icon-box"
         v-else
-        class-name="icon-play"
-        @click="handleStatus(false)"
+      >
+        <PlayIcon
+          class="icon-play-custom"
+          @click="handleStatus(false)"
+        />
+      </div>
+
+      <ListSvg
+        style="margin-right: 0.75rem"
+        @click="musicListRef?.toggle"
       />
-      <ListSvg />
     </div>
+
+    <MusicList
+      ref="musicListRef"
+      :musicList="musics"
+      :playingKey="currentTrack.name"
+      :status="isPlay"
+    />
   </div>
 </template>
 
@@ -45,11 +65,13 @@ import { useEventListener } from "@vueuse/core";
 import MusicCover from "./components/MusicCover.vue";
 import ListSvg from "./components/ListSvg.vue";
 import PauseSvg from "./components/PauseSvg.vue";
-import PlaySvg from "./components/PlaySvg.vue";
 import { getRangeRandom } from "../../utils/math";
+import PlayIcon from "./components/PlayIcon.vue";
+import MusicList from "./components/MusicList.vue";
 
 const musics = getMusics();
 const audioRef = ref<HTMLAudioElement>();
+const musicListRef = ref<InstanceType<typeof MusicList>>();
 const duration = ref(0); // unit: s
 const isPlay = ref(false);
 
@@ -101,18 +123,22 @@ onUnmounted(() => {
 
   min-width: 25vw;
   height: 50px;
-  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   bottom: 50px;
   left: 50%;
+  z-index: var(--z-i-top);
   transform: translateX(-50%);
-  border-radius: 0 0.75rem 0.75rem 0;
-  overflow: hidden;
 
   .player-wrapper {
     height: 100%;
+    border-radius: 0 0.75rem 0.75rem 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: calc(var(--z-i-top) + 1);
 
     .track-cover {
       width: 50px;
@@ -122,41 +148,43 @@ onUnmounted(() => {
     .track-info {
       flex: 1;
       flex-shrink: 0;
-      margin-left: 1rem;
       font-size: 0.8rem;
       display: flex;
       gap: 0.3rem;
       color: var(--default-color);
-      // background-color: lightblue;
-
       overflow: hidden;
       white-space: nowrap;
     }
 
-    :deep(.icon) {
+    .icon-box {
       width: 1.25rem;
       height: 1.25rem;
-      margin: 0 1rem;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       user-select: none;
+      // background-color: lightcoral;
 
-      path {
-        fill: var(--default-color);
+      .icon-pause {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      .icon-play-custom {
+        transform: scale(0.2);
+        transform-origin: center center;
+        cursor: pointer;
       }
     }
 
-    .icon-pause,
-    .icon-play {
-      margin: 0;
-      margin-left: 1rem;
-    }
+    :deep(.icon) {
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
 
-    .icon-play {
-      width: 1.2rem;
-      height: 1.2rem;
-
-      :deep(path) {
-        fill: var(--vp-c-brand-1) !important;
+      path {
+        fill: var(--default-color);
       }
     }
   }
