@@ -22,6 +22,9 @@ export default (): MusicTrack[] => {
   console.log(modules);
 
   const musics = Object.values(modules).map((i) => {
+    console.log("default =>", i.default);
+    console.log("decode default =>", decodeURI(i.default));
+
     const basic = i.default.replace(/[\/public|\/music|\/assets]/g, "");
     console.log("basic =>", basic);
 
@@ -47,7 +50,7 @@ export default (): MusicTrack[] => {
 
 function getCovers() {
   const modules: Record<string, { default: string }> = import.meta.glob(
-    "../../../site/public/music/covers/*",
+    "../../../site/music/covers/*",
     {
       eager: true,
     }
