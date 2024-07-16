@@ -22,10 +22,14 @@ export default (): MusicTrack[] => {
   console.log(modules);
 
   const musics = Object.values(modules).map((i) => {
-    const basic = i.default.replace("/public/music/", "");
+    const basic = i.default.replace(/[\/public|\/music|\/assets]/g, "");
+    console.log("basic =>", basic);
+
     const info = decodeURI(basic.replace("." + getSuffix(i.default), ""))
       .split("-")
       .map((i) => i.replace(/\s+/g, ""));
+    console.log("info =>", info);
+
     const album = info[2];
 
     return {
