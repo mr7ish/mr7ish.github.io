@@ -10,7 +10,7 @@
       v-for="i of count"
       :key="i"
       :style="{
-        '--delay': `${i * 0.2}s`,
+        '--delay': `${(i * 0.2).toFixed(1)}s`,
         height:
           i <= defaultCount ? `calc(100% / ${count} * ${count - i + 1})` : '',
       }"

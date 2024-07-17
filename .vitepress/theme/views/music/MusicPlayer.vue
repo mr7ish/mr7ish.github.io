@@ -53,6 +53,7 @@
       :musicList="musics"
       :uuid="currentTrack.uuid"
       :status="isPlay"
+      @change="changeMusic"
     />
   </div>
 </template>
@@ -80,6 +81,14 @@ const currentTrack = ref<MusicTrack>(
   musics[getRangeRandom(0, musics.length - 1)]
 );
 
+function changeMusic(nextMusic: MusicTrack) {
+  if (nextMusic.uuid !== currentTrack.value.uuid) {
+    currentTrack.value = nextMusic;
+    load();
+    play();
+  }
+}
+
 function handleStatus(status: boolean) {
   isPlay.value = status;
 
@@ -93,6 +102,11 @@ function handleStatus(status: boolean) {
 function controlVolume(ratio: number) {
   if (!audioRef.value) return;
   audioRef.value.volume = ratio;
+}
+
+// reload source
+function load() {
+  audioRef.value?.load();
 }
 
 function play() {

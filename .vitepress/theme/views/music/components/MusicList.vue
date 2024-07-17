@@ -18,6 +18,7 @@
           playing: uuid === m.uuid,
         }"
         :title="`${m.name} - ${m.singer}`"
+        @click="emit('change', m)"
       >
         <span>{{ m.name }}</span>
         <span style="margin: 0 0.2rem">-</span>
@@ -54,6 +55,10 @@ const props = withDefaults(defineProps<Props>(), {
   uuid: undefined,
   status: false,
 });
+
+const emit = defineEmits<{
+  change: [music: MusicTrack];
+}>();
 
 const open = ref(false);
 
@@ -98,6 +103,7 @@ defineExpose({
       overflow-x: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      cursor: pointer;
     }
 
     .icon-box {
@@ -118,7 +124,10 @@ defineExpose({
       .icon-play-custom {
         transform: scale(0.2);
         transform-origin: center center;
-        cursor: pointer;
+
+        :deep(.item) {
+          background-color: #31c37c;
+        }
       }
     }
   }
@@ -130,7 +139,7 @@ defineExpose({
   .playing {
     span {
       color: #31c37c;
-      color: var(--vp-c-brand-1);
+      // color: var(--vp-c-brand-1);
     }
   }
 }
