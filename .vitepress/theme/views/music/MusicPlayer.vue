@@ -1,5 +1,12 @@
 <template>
-  <div class="music-player-container">
+  <div
+    :class="[
+      'music-player-container',
+      {
+        hidden,
+      },
+    ]"
+  >
     <audio
       ref="audioRef"
       controls
@@ -10,11 +17,14 @@
       />
     </audio>
 
-    <div class="player-wrapper">
+    <div
+      class="player-wrapper"
+      @click="openPerfect"
+    >
       <div class="track-cover">
         <MusicCover
           size="100%"
-          :path="currentTrack.cover"
+          :path="cover"
         />
       </div>
       <div class="track-info">
@@ -28,7 +38,7 @@
       >
         <PauseSvg
           class-name="icon-pause"
-          @click="handleStatus(true)"
+          @click.stop="handleStatus(true)"
         />
       </div>
 
@@ -38,13 +48,13 @@
       >
         <PlayIcon
           class="icon-play-custom"
-          @click="handleStatus(false)"
+          @click.stop="handleStatus(false)"
         />
       </div>
 
       <ListSvg
         style="margin-right: 0.75rem"
-        @click="musicListRef?.toggle"
+        @click.stop="() => musicListRef?.toggle()"
       />
     </div>
 
@@ -56,10 +66,17 @@
       @change="changeMusic"
     />
   </div>
+  <PerfectPlayer
+    ref="perfectPlayerRef"
+    :currentTrack="currentTrack"
+    :cover="cover"
+    :status="isPlay"
+    @after-close="hidden = false"
+  />
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 import getMusics, { MusicTrack } from "../../utils/getMusics";
 import { useEventListener } from "@vueuse/core";
 import MusicCover from "./components/MusicCover.vue";
@@ -68,18 +85,34 @@ import PauseSvg from "./components/PauseSvg.vue";
 import { getRangeRandom } from "../../utils/math";
 import PlayIcon from "./components/PlayIcon.vue";
 import MusicList from "./components/MusicList.vue";
+import PerfectPlayer from "./components/PerfectPlayer.vue";
+import getPictures from "../../utils/getPictures";
 
 const musics = getMusics();
+const { pictures } = getPictures();
 const audioRef = ref<HTMLAudioElement>();
 const musicListRef = ref<InstanceType<typeof MusicList>>();
+const perfectPlayerRef = ref<InstanceType<typeof PerfectPlayer>>();
 const duration = ref(0); // unit: s
 const isPlay = ref(false);
+const hidden = ref(false);
 
 console.log("music =>", musics);
 
 const currentTrack = ref<MusicTrack>(
   musics[getRangeRandom(0, musics.length - 1)]
 );
+
+function generateCover() {
+  return pictures[getRangeRandom(0, pictures.length)].path;
+}
+
+const cover = computed(() => currentTrack.value.cover ?? generateCover());
+
+function openPerfect() {
+  perfectPlayerRef.value?.open();
+  hidden.value = true;
+}
 
 function changeMusic(nextMusic: MusicTrack) {
   if (nextMusic.uuid !== currentTrack.value.uuid) {
@@ -90,8 +123,6 @@ function changeMusic(nextMusic: MusicTrack) {
 }
 
 function handleStatus(status: boolean) {
-  isPlay.value = status;
-
   if (status) {
     play();
   } else {
@@ -110,30 +141,40 @@ function load() {
 }
 
 function play() {
-  audioRef.value?.play();
+  if (audioRef.value?.play) {
+    audioRef.value.play();
+    isPlay.value = true;
+  }
 }
 
 function pause() {
-  audioRef.value?.pause();
+  if (audioRef.value?.pause) {
+    audioRef.value.pause();
+    isPlay.value = false;
+  }
 }
 
-const cleanup = useEventListener(audioRef, "loadedmetadata", () => {
-  if (!audioRef.value) return;
-  duration.value = +audioRef.value.duration.toFixed(0);
-  console.log("audio =>", duration.value);
-  controlVolume(0.2);
-  controlVolume(1);
-  audioRef.value;
-});
+const loadedMetaDataCleanup = useEventListener(
+  audioRef,
+  "loadedmetadata",
+  () => {
+    if (!audioRef.value) return;
+    duration.value = +audioRef.value.duration.toFixed(0);
+    console.log("audio =>", duration.value);
+    // controlVolume(0.2);
+    // controlVolume(1);
+    console.log(audioRef.value.volume);
+  }
+);
 
 onUnmounted(() => {
-  cleanup();
+  loadedMetaDataCleanup();
 });
 </script>
 
 <style scoped lang="less">
 .music-player-container {
-  --default-color: rgba(255, 255, 255, 0.8);
+  --player-default-color: rgba(255, 255, 255, 0.8);
 
   min-width: 25vw;
   height: 50px;
@@ -142,6 +183,11 @@ onUnmounted(() => {
   left: 50%;
   z-index: var(--z-i-top);
   transform: translateX(-50%);
+  transition: all 0.35s ease;
+
+  &.hidden {
+    bottom: -150vh;
+  }
 
   .player-wrapper {
     height: 100%;
@@ -165,9 +211,9 @@ onUnmounted(() => {
       font-size: 0.8rem;
       display: flex;
       gap: 0.3rem;
-      color: var(--default-color);
-      overflow: hidden;
+      color: var(--player-default-color);
       white-space: nowrap;
+      overflow-x: auto;
     }
 
     .icon-box {
@@ -198,7 +244,7 @@ onUnmounted(() => {
       cursor: pointer;
 
       path {
-        fill: var(--default-color);
+        fill: var(--player-default-color);
       }
     }
   }
@@ -211,7 +257,7 @@ onUnmounted(() => {
 @media (max-width: 480px) {
   .music-player-container {
     // transform: translateX(-50%) scale(0.8);
-    min-width: 70vw;
+    max-width: 70vw;
   }
 }
 </style>

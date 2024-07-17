@@ -6,6 +6,7 @@
         open,
       },
     ]"
+    @click.stop
   >
     <div
       class="music-item"
@@ -40,9 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { MusicTrack } from "../../../utils/getMusics";
 import PlayIcon from "./PlayIcon.vue";
+import { Fn, useEventListener } from "@vueuse/core";
 
 type Props = {
   musicList?: MusicTrack[];
@@ -62,6 +64,18 @@ const emit = defineEmits<{
 
 const open = ref(false);
 
+let cleanup: Fn | null = null;
+
+watchEffect(() => {
+  if (open.value) {
+    cleanup = useEventListener(document, "click", () => {
+      open.value = false;
+    });
+  } else {
+    cleanup?.();
+  }
+});
+
 defineExpose({
   toggle() {
     open.value = !open.value;
@@ -74,15 +88,14 @@ defineExpose({
   width: 100%;
   max-height: 40vh;
   overflow-y: auto;
-  position: relative;
-  z-index: var(--z-i-top);
   background-color: rgba(0, 0, 0, 0.8);
-  background-color: rgba(0, 0, 0, 0.58);
+  background-color: rgba(0, 0, 0, 0.5);
   // background-color: lightblue;
   padding: 0.75rem;
   border-radius: 0.75rem 0.75rem 0 0;
   border-radius: 0.75rem;
   position: absolute;
+  z-index: calc(var(--z-i-top) + 1);
   bottom: -100vh;
   transition: all 0.35s ease;
   display: flex;
