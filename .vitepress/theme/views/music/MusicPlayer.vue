@@ -2,7 +2,6 @@
   <div class="music-player-container">
     <audio
       ref="audioRef"
-      autoplay
       controls
     >
       <source
@@ -52,7 +51,7 @@
     <MusicList
       ref="musicListRef"
       :musicList="musics"
-      :playingKey="currentTrack.name"
+      :uuid="currentTrack.uuid"
       :status="isPlay"
     />
   </div>

@@ -1,6 +1,8 @@
+import { nanoid } from "nanoid";
 import { getSuffix } from "./getFileSuffix";
 
 export type MusicTrack = {
+  uuid: string;
   path: string;
   album?: string;
   cover?: string;
@@ -35,6 +37,7 @@ export default (): MusicTrack[] => {
     console.log("info =>", info);
 
     return {
+      uuid: nanoid(),
       path: basic,
       album: info[2],
       cover:

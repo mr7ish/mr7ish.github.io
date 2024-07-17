@@ -15,8 +15,9 @@
       <div
         class="basic-info"
         :class="{
-          playing: playingKey === m.name,
+          playing: uuid === m.uuid,
         }"
+        :title="`${m.name} - ${m.singer}`"
       >
         <span>{{ m.name }}</span>
         <span style="margin: 0 0.2rem">-</span>
@@ -25,7 +26,7 @@
 
       <div
         class="icon-box"
-        v-if="playingKey === m.name"
+        v-if="uuid === m.uuid"
       >
         <PlayIcon
           class="icon-play-custom"
@@ -44,13 +45,13 @@ import PlayIcon from "./PlayIcon.vue";
 
 type Props = {
   musicList?: MusicTrack[];
-  playingKey?: MusicTrack["name"];
+  uuid?: MusicTrack["uuid"];
   status?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
   musicList: () => [],
-  playingKey: undefined,
+  uuid: undefined,
   status: false,
 });
 
