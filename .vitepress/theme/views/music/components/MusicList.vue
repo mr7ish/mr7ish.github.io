@@ -19,7 +19,7 @@
         }"
       >
         <span>{{ m.name }}</span>
-        <span>-</span>
+        <span style="margin: 0 0.2rem">-</span>
         <span class="o-p-8">{{ m.singer }}</span>
       </div>
 
@@ -66,6 +66,8 @@ defineExpose({
 <style scoped lang="less">
 .music-list-container {
   width: 100%;
+  max-height: 40vh;
+  overflow-y: auto;
   position: relative;
   z-index: var(--z-i-top);
   background-color: rgba(0, 0, 0, 0.8);
@@ -91,8 +93,10 @@ defineExpose({
     justify-content: space-between;
 
     .basic-info {
-      display: flex;
-      gap: 0.2rem;
+      max-width: calc(100% - 1.5rem);
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .icon-box {

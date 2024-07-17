@@ -109,6 +109,7 @@ const cleanup = useEventListener(audioRef, "loadedmetadata", () => {
   duration.value = +audioRef.value.duration.toFixed(0);
   console.log("audio =>", duration.value);
   controlVolume(0.2);
+  controlVolume(1);
   audioRef.value;
 });
 
@@ -196,7 +197,8 @@ onUnmounted(() => {
 
 @media (max-width: 480px) {
   .music-player-container {
-    transform: translateX(-50%) scale(0.8);
+    // transform: translateX(-50%) scale(0.8);
+    min-width: 70vw;
   }
 }
 </style>

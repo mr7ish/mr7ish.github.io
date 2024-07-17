@@ -9,4 +9,6 @@ import MusicPlayer from '../.vitepress/theme/views/music/MusicPlayer.vue'
 
 </script>
 
-<MusicPlayer />
+<ClientOnly>
+  <MusicPlayer />
+</ClientOnly>
