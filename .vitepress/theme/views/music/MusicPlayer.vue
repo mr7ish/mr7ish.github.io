@@ -71,12 +71,15 @@
     :currentTrack="currentTrack"
     :cover="cover"
     :status="isPlaying"
+    :duration="duration"
+    :current-time="currentTime"
     @after-close="hidden = false"
+    @progress-change="progressChange"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, onUnmounted, ref } from "vue";
+import { computed, onUnmounted, ref, watch } from "vue";
 import getMusics, { MusicTrack } from "../../utils/getMusics";
 import { useEventListener } from "@vueuse/core";
 import MusicCover from "./components/MusicCover.vue";
@@ -94,15 +97,49 @@ const audioRef = ref<HTMLAudioElement>();
 const musicListRef = ref<InstanceType<typeof MusicList>>();
 const perfectPlayerRef = ref<InstanceType<typeof PerfectPlayer>>();
 const duration = ref(0); // unit: s
+const currentTime = ref(0);
 const isPlaying = ref(false);
 const hidden = ref(false);
 const canPlay = ref(false);
+// played at least once
+const isPlayedOnce = ref(false);
 
 console.log("music =>", musics);
 
 const currentTrack = ref<MusicTrack>(
   musics[getRangeRandom(0, musics.length - 1)]
 );
+
+watch(
+  () => canPlay.value,
+  (can) => {
+    if (can) {
+      if (isPlayedOnce.value) {
+        play();
+      }
+    }
+  }
+);
+
+function playNext() {
+  currentTrack.value = chooseOne(currentTrack.value);
+  load();
+}
+
+// promise not repeat
+function chooseOne(current: MusicTrack) {
+  const next = musics[getRangeRandom(0, musics.length - 1)];
+  if (next.uuid === current.uuid) {
+    return chooseOne(current);
+  }
+  return next;
+}
+
+function progressChange(_currentTime: number) {
+  currentTime.value = _currentTime;
+  if (!audioRef.value) return;
+  audioRef.value.currentTime = _currentTime;
+}
 
 function generateCover() {
   return pictures[getRangeRandom(0, pictures.length)].path;
@@ -118,8 +155,8 @@ function openPerfect() {
 function changeMusic(nextMusic: MusicTrack) {
   if (nextMusic.uuid !== currentTrack.value.uuid) {
     currentTrack.value = nextMusic;
+    stop();
     load();
-    play();
   }
 }
 
@@ -143,22 +180,43 @@ function load() {
 }
 
 function play() {
-  if (audioRef.value?.play) {
-    if (!canPlay.value) {
-      console.log("not loaded");
-      return;
-    }
-    audioRef.value.play();
-    isPlaying.value = true;
+  if (!audioRef.value) return;
+  if (!canPlay.value) {
+    console.log("not loaded");
+    return;
+  }
+  audioRef.value.play();
+  isPlaying.value = true;
+  if (!isPlayedOnce.value) {
+    isPlayedOnce.value = true;
   }
 }
 
 function pause() {
-  if (audioRef.value?.pause) {
-    audioRef.value.pause();
-    isPlaying.value = false;
-  }
+  if (!audioRef.value) return;
+  audioRef.value.pause();
+  isPlaying.value = false;
 }
+
+function stop() {
+  if (!audioRef.value) return;
+  pause();
+  audioRef.value.currentTime = 0;
+  currentTime.value = 0;
+}
+
+const endedCleanup = useEventListener(audioRef, "ended", () => {
+  console.log("music ended");
+  if (!audioRef.value) return;
+  stop();
+  playNext();
+});
+
+const timeupdateCleanup = useEventListener(audioRef, "timeupdate", () => {
+  // console.log("time update =>", audioRef.value?.currentTime);
+  if (!audioRef.value) return;
+  currentTime.value = audioRef.value.currentTime;
+});
 
 const loadedMetaDataCleanup = useEventListener(
   audioRef,
@@ -169,13 +227,15 @@ const loadedMetaDataCleanup = useEventListener(
     canPlay.value = true;
     console.log("audio =>", duration.value);
     // controlVolume(0.2);
-    // controlVolume(1);
-    console.log(audioRef.value.volume);
+    controlVolume(0.5);
+    // console.log(audioRef.value.volume);
   }
 );
 
 onUnmounted(() => {
   loadedMetaDataCleanup();
+  timeupdateCleanup();
+  endedCleanup();
 });
 </script>
 

@@ -21,20 +21,18 @@ export default (): MusicTrack[] => {
     }
   );
 
-  console.log(modules);
-
   const musics = Object.values(modules).map((i) => {
-    console.log("default =>", i.default);
-    console.log("decode default =>", decodeURI(i.default));
+    // console.log("default =>", i.default);
+    // console.log("decode default =>", decodeURI(i.default));
 
     const basic = i.default;
     const decodeBasic = decodeURI(basic);
 
     const [useful] = decodeBasic.replace(/\/|music|assets/g, "").split(".");
-    console.log("useful =>", useful);
+    // console.log("useful =>", useful);
 
     const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
-    console.log("info =>", info);
+    // console.log("info =>", info);
 
     return {
       uuid: nanoid(),
@@ -67,10 +65,10 @@ function getCovers() {
     const [useful] = decodeBasic
       .replace(/\/|music|covers|assets/g, "")
       .split(".");
-    console.log("useful =>", useful);
+    // console.log("useful =>", useful);
 
     const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
-    console.log("info =>", info);
+    // console.log("info =>", info);
 
     return {
       path: basic,
