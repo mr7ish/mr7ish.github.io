@@ -45,7 +45,7 @@
       <div class="tool-bar">
         <div class="todo-bar"></div>
         <div class="progress-bar">
-          <div
+          <!-- <div
             class="progress-bg"
             @click.self="clickProgress"
             ref="progressBgRef"
@@ -68,13 +68,37 @@
                 @mousedown.self="onMousedown"
               ></div>
             </div>
-          </div>
+          </div> -->
+          <ProgressBar
+            :total="duration"
+            :current="currentTime"
+            @progress-change="timeProgressChange"
+          />
           <div class="time-line">
             <span>{{ startTime }}</span>
             <span> {{ endTime }}</span>
           </div>
         </div>
-        <div class="setting-bar"></div>
+        <div class="setting-bar">
+          <div
+            class="icon-box"
+            v-if="!status"
+          >
+            <PauseSvg
+              class-name="icon-pause"
+              @click="emit('handleStatus', true)"
+            />
+          </div>
+          <div
+            class="icon-box"
+            v-else
+          >
+            <PlayIcon
+              class="icon-play-custom"
+              @click="emit('handleStatus', false)"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -87,6 +111,9 @@ import MusicCover from "./MusicCover.vue";
 import ShrinkSvg from "./ShrinkSvg.vue";
 import { transTime } from "../../../utils/transTime";
 import { transNumber } from "../../../utils/transNumber";
+import ProgressBar from "./ProgressBar.vue";
+import PauseSvg from "./PauseSvg.vue";
+import PlayIcon from "./PlayIcon.vue";
 
 type Props = {
   currentTrack: MusicTrack;
@@ -102,9 +129,14 @@ const props = withDefaults(defineProps<Props>(), {
   currentTime: 0,
 });
 
+function timeProgressChange(ratio: number) {
+  emit("progressChange", ratio * props.duration);
+}
+
 const emit = defineEmits<{
   afterClose: [];
   progressChange: [curTime: number];
+  handleStatus: [status: boolean];
 }>();
 
 const pointRef = ref<HTMLDivElement>();
@@ -206,6 +238,9 @@ defineExpose({
   --m-t: 8rem;
   --p-l-h: 4px;
   --p-s: 3;
+  --i-size: 3.5rem;
+  --i-scale: 0.5;
+  --i-bg-c: hsla(0, 0%, 100%, 0.9);
 
   width: 100vw;
   height: 100vh;
@@ -366,6 +401,42 @@ defineExpose({
       .setting-bar {
         flex: 2;
         // background-color: lightsalmon;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon-box {
+          width: var(--i-size);
+          height: var(--i-size);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          user-select: none;
+          // background-color: lightcoral;
+
+          .icon-pause {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+          }
+
+          :deep(.icon) {
+            path {
+              fill: var(--i-bg-c);
+              cursor: pointer;
+            }
+          }
+
+          .icon-play-custom {
+            transform: scale(var(--i-scale));
+            transform-origin: center center;
+            cursor: pointer;
+
+            :deep(.item) {
+              background-color: var(--i-bg-c);
+            }
+          }
+        }
       }
     }
   }
@@ -384,7 +455,9 @@ defineExpose({
 @media (max-width: 480px) {
   .perfect-player-container {
     --p-l-h: 2px;
-    --p-s: 2;
+    --p-s: 3;
+    --i-size: 1.5rem;
+    --i-scale: 0.2;
   }
 
   .music-cover {
@@ -398,6 +471,8 @@ defineExpose({
   .perfect-player-container {
     --p-l-h: 3px;
     --p-s: 3;
+    --i-size: 2rem;
+    --i-scale: 0.3;
   }
 
   .music-cover {
@@ -407,6 +482,11 @@ defineExpose({
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
+  .perfect-player-container {
+    --i-size: 3rem;
+    --i-scale: 0.45;
+  }
+
   .music-cover {
     width: 20vw !important;
     height: 20vw !important;

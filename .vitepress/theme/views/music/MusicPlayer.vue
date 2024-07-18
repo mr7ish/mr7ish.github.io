@@ -75,6 +75,7 @@
     :current-time="currentTime"
     @after-close="hidden = false"
     @progress-change="progressChange"
+    @handle-status="handleStatus"
   />
 </template>
 
