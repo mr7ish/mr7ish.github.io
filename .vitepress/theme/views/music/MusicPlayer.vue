@@ -125,10 +125,6 @@ function changeMusic(nextMusic: MusicTrack) {
 
 function handleStatus(status: boolean) {
   if (status) {
-    if (!canPlay.value) {
-      console.log("not loaded");
-      return;
-    }
     play();
   } else {
     pause();
@@ -148,6 +144,10 @@ function load() {
 
 function play() {
   if (audioRef.value?.play) {
+    if (!canPlay.value) {
+      console.log("not loaded");
+      return;
+    }
     audioRef.value.play();
     isPlaying.value = true;
   }
