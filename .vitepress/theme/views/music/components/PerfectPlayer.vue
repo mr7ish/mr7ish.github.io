@@ -79,7 +79,7 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   uuid: undefined,
   status: false,
-  duration: 256,
+  duration: 0,
 });
 
 const endTime = computed(

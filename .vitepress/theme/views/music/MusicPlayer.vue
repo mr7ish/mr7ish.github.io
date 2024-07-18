@@ -34,7 +34,7 @@
       </div>
       <div
         class="icon-box"
-        v-if="!isPlay"
+        v-if="!isPlaying"
       >
         <PauseSvg
           class-name="icon-pause"
@@ -62,7 +62,7 @@
       ref="musicListRef"
       :musicList="musics"
       :uuid="currentTrack.uuid"
-      :status="isPlay"
+      :status="isPlaying"
       @change="changeMusic"
     />
   </div>
@@ -70,7 +70,7 @@
     ref="perfectPlayerRef"
     :currentTrack="currentTrack"
     :cover="cover"
-    :status="isPlay"
+    :status="isPlaying"
     @after-close="hidden = false"
   />
 </template>
@@ -94,8 +94,9 @@ const audioRef = ref<HTMLAudioElement>();
 const musicListRef = ref<InstanceType<typeof MusicList>>();
 const perfectPlayerRef = ref<InstanceType<typeof PerfectPlayer>>();
 const duration = ref(0); // unit: s
-const isPlay = ref(false);
+const isPlaying = ref(false);
 const hidden = ref(false);
+const canPlay = ref(false);
 
 console.log("music =>", musics);
 
@@ -124,6 +125,10 @@ function changeMusic(nextMusic: MusicTrack) {
 
 function handleStatus(status: boolean) {
   if (status) {
+    if (!canPlay.value) {
+      console.log("not loaded");
+      return;
+    }
     play();
   } else {
     pause();
@@ -138,19 +143,20 @@ function controlVolume(ratio: number) {
 // reload source
 function load() {
   audioRef.value?.load();
+  canPlay.value = false;
 }
 
 function play() {
   if (audioRef.value?.play) {
     audioRef.value.play();
-    isPlay.value = true;
+    isPlaying.value = true;
   }
 }
 
 function pause() {
   if (audioRef.value?.pause) {
     audioRef.value.pause();
-    isPlay.value = false;
+    isPlaying.value = false;
   }
 }
 
@@ -160,6 +166,7 @@ const loadedMetaDataCleanup = useEventListener(
   () => {
     if (!audioRef.value) return;
     duration.value = +audioRef.value.duration.toFixed(0);
+    canPlay.value = true;
     console.log("audio =>", duration.value);
     // controlVolume(0.2);
     // controlVolume(1);
