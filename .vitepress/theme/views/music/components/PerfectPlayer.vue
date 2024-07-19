@@ -80,23 +80,72 @@
           </div>
         </div>
         <div class="setting-bar">
-          <div
-            class="icon-box"
-            v-if="!status"
-          >
-            <PauseSvg
-              class-name="icon-pause"
-              @click="emit('handleStatus', true)"
-            />
+          <div class="left-setting flex-box">
+            <div
+              class="icon-box cursor-pointer"
+              @click="modeIdx++"
+            >
+              <RandomSvg
+                class-name="icon-random"
+                v-if="modeList[modeIdx % modeList.length] === 'random'"
+              />
+              <LoopSvg
+                class-name="icon-loop"
+                v-else-if="modeList[modeIdx % modeList.length] === 'loop'"
+              />
+              <SingleLoopSvg
+                class-name="icon-single-loop"
+                v-else
+              />
+            </div>
           </div>
-          <div
-            class="icon-box"
-            v-else
-          >
-            <PlayIcon
-              class="icon-play-custom"
-              @click="emit('handleStatus', false)"
-            />
+          <div class="main-setting">
+            <div class="icon-box">
+              <NextSvg class-name="icon-pre" />
+            </div>
+            <div
+              class="icon-box"
+              v-if="!status"
+            >
+              <PauseSvg
+                class-name="icon-pause"
+                @click="emit('handleStatus', true)"
+              />
+            </div>
+            <div
+              class="icon-box"
+              v-else
+            >
+              <PlayIcon
+                class="icon-play-custom"
+                @click="emit('handleStatus', false)"
+              />
+            </div>
+            <div class="icon-box">
+              <NextSvg class-name="icon-next" />
+            </div>
+          </div>
+          <div class="right-setting flex-box">
+            <div class="icon-box">
+              <VolumeEnable
+                v-if="volume > 0"
+                class-name="icon-volume"
+                @click="toggleVolumeEnable(true)"
+              />
+              <VolumeDisable
+                v-else
+                class-name="icon-volume"
+                @click="toggleVolumeEnable(false)"
+              />
+            </div>
+            <div class="volume-progress">
+              <ProgressBar
+                :current="volume"
+                :total="volumeDuration"
+                @progress-change="volumeProgressChange"
+                :title="volume"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -105,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { MusicTrack } from "../../../utils/getMusics";
 import MusicCover from "./MusicCover.vue";
 import ShrinkSvg from "./ShrinkSvg.vue";
@@ -114,6 +163,12 @@ import { transNumber } from "../../../utils/transNumber";
 import ProgressBar from "./ProgressBar.vue";
 import PauseSvg from "./PauseSvg.vue";
 import PlayIcon from "./PlayIcon.vue";
+import NextSvg from "./NextSvg.vue";
+import RandomSvg from "./RandomSvg.vue";
+import LoopSvg from "./LoopSvg.vue";
+import SingleLoopSvg from "./SingleLoopSvg.vue";
+import VolumeEnable from "./VolumeEnable.vue";
+import VolumeDisable from "./VolumeDisable.vue";
 
 type Props = {
   currentTrack: MusicTrack;
@@ -121,23 +176,31 @@ type Props = {
   status?: boolean;
   duration?: number;
   currentTime?: number;
+  initVolume?: number;
 };
+
+type Mode = "random" | "loop" | "singleLoop";
 
 const props = withDefaults(defineProps<Props>(), {
   status: false,
   duration: 0,
   currentTime: 0,
+  initVolume: 0,
 });
-
-function timeProgressChange(ratio: number) {
-  emit("progressChange", ratio * props.duration);
-}
 
 const emit = defineEmits<{
   afterClose: [];
   progressChange: [curTime: number];
   handleStatus: [status: boolean];
+  volumeChange: [volume: number];
 }>();
+
+const volumeDuration = 100;
+const volume = ref(props.initVolume * volumeDuration);
+const lastVolume = ref(volume.value);
+
+const modeIdx = ref(0);
+const modeList: Mode[] = ["random", "loop", "singleLoop"];
 
 const pointRef = ref<HTMLDivElement>();
 const disabledPointer = ref(false);
@@ -168,6 +231,27 @@ const endTime = computed(
 );
 
 const isOpen = ref(false);
+
+function toggleVolumeEnable(enable: boolean) {
+  if (!enable) {
+    volume.value = lastVolume.value;
+  } else {
+    volume.value = 0;
+  }
+  emit("volumeChange", volume.value / volumeDuration);
+}
+
+function volumeProgressChange(ratio: number) {
+  // console.log("ratio =>", ratio);
+  volume.value = Math.floor(ratio * volumeDuration);
+  lastVolume.value = volume.value;
+
+  emit("volumeChange", volume.value / volumeDuration);
+}
+
+function timeProgressChange(ratio: number) {
+  emit("progressChange", ratio * props.duration);
+}
 
 function onMousedown(e: Event) {
   isDragging.value = true;
@@ -400,10 +484,47 @@ defineExpose({
 
       .setting-bar {
         flex: 2;
+        width: 90%;
+        margin: auto;
         // background-color: lightsalmon;
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 2rem;
+
+        .left-setting {
+          justify-content: flex-end;
+        }
+
+        .right-setting {
+          justify-content: flex-start;
+          display: flex;
+
+          .volume-progress {
+            // width: 50%;
+            flex: 1;
+          }
+        }
+
+        .flex-box {
+          display: flex;
+          align-items: center;
+          flex: 1;
+          // background-color: lightblue;
+        }
+
+        .main-setting {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 2rem;
+          // background-color: lightblue;
+        }
+
+        .cursor-pointer {
+          cursor: pointer;
+        }
 
         .icon-box {
           width: var(--i-size);
@@ -414,6 +535,30 @@ defineExpose({
           user-select: none;
           // background-color: lightcoral;
 
+          .icon-volume {
+            transform: scale(0.5);
+          }
+
+          .icon-single-loop {
+            transform: scale(0.4);
+          }
+
+          .icon-loop {
+            transform: scale(0.5);
+          }
+
+          .icon-random {
+            transform: scale(0.4);
+          }
+
+          .icon-pre {
+            transform: scale(-0.8);
+          }
+
+          .icon-next {
+            transform: scale(0.8);
+          }
+
           .icon-pause {
             width: 100%;
             height: 100%;
@@ -421,6 +566,9 @@ defineExpose({
           }
 
           :deep(.icon) {
+            width: 100%;
+            height: 100%;
+
             path {
               fill: var(--i-bg-c);
               cursor: pointer;

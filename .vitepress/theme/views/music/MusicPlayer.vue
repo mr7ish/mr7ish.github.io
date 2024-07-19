@@ -66,6 +66,7 @@
       @change="changeMusic"
     />
   </div>
+
   <PerfectPlayer
     ref="perfectPlayerRef"
     :currentTrack="currentTrack"
@@ -73,14 +74,16 @@
     :status="isPlaying"
     :duration="duration"
     :current-time="currentTime"
+    :init-volume="volume"
     @after-close="hidden = false"
     @progress-change="progressChange"
     @handle-status="handleStatus"
+    @volume-change="controlVolume"
   />
 </template>
 
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watch } from "vue";
+import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
 import getMusics, { MusicTrack } from "../../utils/getMusics";
 import { useEventListener } from "@vueuse/core";
 import MusicCover from "./components/MusicCover.vue";
@@ -104,6 +107,7 @@ const hidden = ref(false);
 const canPlay = ref(false);
 // played at least once
 const isPlayedOnce = ref(false);
+const volume = ref(0.1);
 
 console.log("music =>", musics);
 
@@ -169,9 +173,9 @@ function handleStatus(status: boolean) {
   }
 }
 
-function controlVolume(ratio: number) {
+function controlVolume(_volume: number) {
   if (!audioRef.value) return;
-  audioRef.value.volume = ratio;
+  audioRef.value.volume = _volume;
 }
 
 // reload source
@@ -228,8 +232,9 @@ const loadedMetaDataCleanup = useEventListener(
     canPlay.value = true;
     console.log("audio =>", duration.value);
     // controlVolume(0.2);
-    controlVolume(0.5);
+    // controlVolume(0.5);
     // console.log(audioRef.value.volume);
+    controlVolume(volume.value);
   }
 );
 

@@ -66,6 +66,8 @@ function clickProgress(e: Event) {
   if (disabledPointer.value) {
     disabledPointer.value = false;
   }
+
+  // console.log("ratio =>", ratio);
 }
 
 function onMousedown(e: Event) {
@@ -100,6 +102,7 @@ function moveProgress(e: Event) {
 
     const ratio = x / progressBgWidth;
     emit("progressChange", ratio);
+    // console.log("ratio =>", ratio);
   }
 }
 
