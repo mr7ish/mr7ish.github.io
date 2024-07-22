@@ -306,6 +306,13 @@ function clickProgress(e: Event) {
   }
 }
 
+watch(
+  () => isOpen.value,
+  (val) => {
+    document.documentElement.style.overflowY = val ? "hidden" : "auto";
+  }
+);
+
 function open() {
   isOpen.value = true;
 }
@@ -362,7 +369,7 @@ defineExpose({
 
   .player-panel {
     height: calc(100% - var(--m-t));
-    padding-top: env(safe-area-inset-bottom);
+    padding-top: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -610,6 +617,10 @@ defineExpose({
     --p-s: 3;
     --i-size: 1.5rem;
     --i-scale: 0.2;
+  }
+
+  .player-panel {
+    padding-top: 2rem !important;
   }
 
   .music-cover {
