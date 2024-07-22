@@ -620,7 +620,11 @@ defineExpose({
   }
 
   .player-panel {
-    padding-top: 2rem !important;
+    padding-top: 4rem !important;
+  }
+
+  .close-btn {
+    left: 2rem !important;
   }
 
   .music-cover {
