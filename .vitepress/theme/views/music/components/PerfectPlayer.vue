@@ -126,26 +126,28 @@
             </div>
           </div>
           <div class="right-setting flex-box">
-            <div class="icon-box">
-              <VolumeEnable
-                v-if="volume > 0"
-                class-name="icon-volume"
-                @click="toggleVolumeEnable(true)"
-              />
-              <VolumeDisable
-                v-else
-                class-name="icon-volume"
-                @click="toggleVolumeEnable(false)"
-              />
-            </div>
-            <div class="volume-progress">
-              <ProgressBar
-                :current="volume"
-                :total="volumeDuration"
-                @progress-change="volumeProgressChange"
-                :title="volume"
-              />
-            </div>
+            <template v-if="!isMobile()">
+              <div class="icon-box">
+                <VolumeEnable
+                  v-if="volume > 0"
+                  class-name="icon-volume"
+                  @click="toggleVolumeEnable(true)"
+                />
+                <VolumeDisable
+                  v-else
+                  class-name="icon-volume"
+                  @click="toggleVolumeEnable(false)"
+                />
+              </div>
+              <div class="volume-progress">
+                <ProgressBar
+                  :current="volume"
+                  :total="volumeDuration"
+                  @progress-change="volumeProgressChange"
+                  :title="volume"
+                />
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -169,6 +171,7 @@ import LoopSvg from "./LoopSvg.vue";
 import SingleLoopSvg from "./SingleLoopSvg.vue";
 import VolumeEnable from "./VolumeEnable.vue";
 import VolumeDisable from "./VolumeDisable.vue";
+import { isMobile } from "../../../utils/isMobile";
 
 type Props = {
   currentTrack: MusicTrack;
@@ -359,6 +362,7 @@ defineExpose({
 
   .player-panel {
     height: calc(100% - var(--m-t));
+    padding-top: env(safe-area-inset-bottom);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -369,7 +373,7 @@ defineExpose({
     .close-btn {
       position: absolute;
       top: -3.7rem;
-      left: 0;
+      left: 1rem;
       width: 20px;
       height: 20px;
       cursor: pointer;
