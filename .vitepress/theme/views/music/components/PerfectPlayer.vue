@@ -34,6 +34,7 @@
           size="100%"
           radius="50%"
           :path="cover"
+          :isLoading="duration <= 0"
         />
       </div>
 

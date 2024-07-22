@@ -25,6 +25,7 @@
         <MusicCover
           size="100%"
           :path="cover"
+          :isLoading="!canPlay"
         />
       </div>
       <div class="track-info">
@@ -140,16 +141,11 @@ watch(
   (_mode) => {
     if (_mode === "random") {
       musicList.value = shuffleArray(deepClone(musics));
-      console.log("random music =>", musicList.value);
-
       return;
     }
 
     if (_mode === "loop") {
       musicList.value = musics;
-      console.log("loop music =>", musicList.value);
-
-      return;
     }
   }
 );
