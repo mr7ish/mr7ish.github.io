@@ -24,7 +24,7 @@
         :class="[
           'music-cover',
           {
-            rotate: isOpen,
+            rotate: isOpen && !resetRotate,
             running: status,
             paused: !status,
           },
@@ -57,27 +57,30 @@
         </div>
         <div class="setting-bar">
           <div class="left-setting flex-box">
-            <div
-              class="icon-box cursor-pointer"
-              @click="modeIdx++"
-            >
-              <RandomSvg
-                class-name="icon-random"
-                v-if="modeList[modeIdx % modeList.length] === 'random'"
-              />
+            <div class="icon-box cursor-pointer">
               <LoopSvg
                 class-name="icon-loop"
-                v-else-if="modeList[modeIdx % modeList.length] === 'loop'"
+                v-if="mode === 'loop'"
+                @click="mode = 'singleLoop'"
               />
               <SingleLoopSvg
                 class-name="icon-single-loop"
+                v-else-if="mode === 'singleLoop'"
+                @click="mode = 'random'"
+              />
+              <RandomSvg
+                class-name="icon-random"
                 v-else
+                @click="mode = 'loop'"
               />
             </div>
           </div>
           <div class="main-setting">
             <div class="icon-box">
-              <NextSvg class-name="icon-pre" />
+              <NextSvg
+                class-name="icon-pre"
+                @click="changeMusic('pre')"
+              />
             </div>
             <div
               class="icon-box"
@@ -98,7 +101,10 @@
               />
             </div>
             <div class="icon-box">
-              <NextSvg class-name="icon-next" />
+              <NextSvg
+                class-name="icon-next"
+                @click="changeMusic('next')"
+              />
             </div>
           </div>
           <div class="right-setting flex-box">
@@ -132,7 +138,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import { MusicTrack } from "../../../utils/getMusics";
 import MusicCover from "./MusicCover.vue";
 import ShrinkSvg from "./ShrinkSvg.vue";
@@ -158,7 +164,8 @@ type Props = {
   initVolume?: number;
 };
 
-type Mode = "random" | "loop" | "singleLoop";
+export type Mode = "random" | "loop" | "singleLoop";
+export type ChangeMethod = "pre" | "next";
 
 const props = withDefaults(defineProps<Props>(), {
   status: false,
@@ -172,14 +179,30 @@ const emit = defineEmits<{
   progressChange: [curTime: number];
   handleStatus: [status: boolean];
   volumeChange: [volume: number];
+  modeChange: [mode: Mode];
+  changeMusicByMode: [method: ChangeMethod, auto: boolean];
 }>();
 
 const volumeDuration = 100;
 const volume = ref(props.initVolume * volumeDuration);
 const lastVolume = ref(volume.value);
 
-const modeIdx = ref(0);
-const modeList: Mode[] = ["random", "loop", "singleLoop"];
+const mode = ref<Mode>("loop");
+
+const resetRotate = ref(false);
+
+function changeMusic(method: ChangeMethod) {
+  emit("changeMusicByMode", method, false);
+  resetRotate.value = true;
+
+  setTimeout(() => {
+    resetRotate.value = false;
+  }, 200);
+}
+
+watchEffect(() => {
+  emit("modeChange", mode.value);
+});
 
 const startTime = computed(
   () =>
@@ -216,13 +239,6 @@ function volumeProgressChange(ratio: number) {
 function timeProgressChange(ratio: number) {
   emit("progressChange", ratio * props.duration);
 }
-
-watch(
-  () => isOpen.value,
-  (val) => {
-    document.documentElement.style.overflowY = val ? "hidden" : "auto";
-  }
-);
 
 function open() {
   isOpen.value = true;

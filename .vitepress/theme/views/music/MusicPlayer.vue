@@ -60,7 +60,7 @@
 
     <MusicList
       ref="musicListRef"
-      :musicList="musics"
+      :musicList="musicList"
       :uuid="currentTrack.uuid"
       :status="isPlaying"
       @change="changeMusic"
@@ -79,6 +79,8 @@
     @progress-change="progressChange"
     @handle-status="handleStatus"
     @volume-change="controlVolume"
+    @mode-change="modeChange"
+    @change-music-by-mode="changeMusicByMode"
   />
 </template>
 
@@ -92,8 +94,13 @@ import PauseSvg from "./components/PauseSvg.vue";
 import { getRangeRandom } from "../../utils/math";
 import PlayIcon from "./components/PlayIcon.vue";
 import MusicList from "./components/MusicList.vue";
-import PerfectPlayer from "./components/PerfectPlayer.vue";
+import PerfectPlayer, {
+  ChangeMethod,
+  Mode,
+} from "./components/PerfectPlayer.vue";
 import getPictures from "../../utils/getPictures";
+import { shuffleArray } from "../../utils/shuffleArray";
+import { deepClone } from "../../utils/deepClone";
 
 const musics = getMusics();
 const { pictures } = getPictures();
@@ -108,11 +115,13 @@ const canPlay = ref(false);
 // played at least once
 const isPlayedOnce = ref(false);
 const volume = ref(0.1);
+const mode = ref<Mode>("loop");
 
 console.log("music =>", musics);
+const musicList = ref<MusicTrack[]>(musics);
 
 const currentTrack = ref<MusicTrack>(
-  musics[getRangeRandom(0, musics.length - 1)]
+  musicList.value[getRangeRandom(0, musics.length - 1)]
 );
 
 watch(
@@ -126,18 +135,55 @@ watch(
   }
 );
 
-function playNext() {
-  currentTrack.value = chooseOne(currentTrack.value);
+watch(
+  () => mode.value,
+  (_mode) => {
+    if (_mode === "random") {
+      musicList.value = shuffleArray(deepClone(musics));
+      console.log("random music =>", musicList.value);
+
+      return;
+    }
+
+    if (_mode === "loop") {
+      musicList.value = musics;
+      console.log("loop music =>", musicList.value);
+
+      return;
+    }
+  }
+);
+
+function changeMusicByMode(method: ChangeMethod, auto: boolean) {
+  stop();
+
+  let index = musicList.value.findIndex(
+    (i) => i.uuid === currentTrack.value.uuid
+  );
+
+  let oldIndex = index;
+
+  if (method === "pre") {
+    if (index <= 0) {
+      index = musicList.value.length - 1;
+    } else {
+      index--;
+    }
+  } else {
+    if (index === musicList.value.length - 1) {
+      index = 0;
+    } else {
+      index++;
+    }
+  }
+
+  currentTrack.value =
+    musicList.value[mode.value === "singleLoop" && auto ? oldIndex : index];
   load();
 }
 
-// promise not repeat
-function chooseOne(current: MusicTrack) {
-  const next = musics[getRangeRandom(0, musics.length - 1)];
-  if (next.uuid === current.uuid) {
-    return chooseOne(current);
-  }
-  return next;
+function modeChange(_mode: Mode) {
+  mode.value = _mode;
 }
 
 function progressChange(_currentTime: number) {
@@ -213,8 +259,7 @@ function stop() {
 const endedCleanup = useEventListener(audioRef, "ended", () => {
   console.log("music ended");
   if (!audioRef.value) return;
-  stop();
-  playNext();
+  changeMusicByMode("next", true);
 });
 
 const timeupdateCleanup = useEventListener(audioRef, "timeupdate", () => {

@@ -1,4 +1,6 @@
+import { deepClone } from "./deepClone";
 import { getSuffix } from "./getFileSuffix";
+import { shuffleArray } from "./shuffleArray";
 
 export default () => {
   const modules: Record<string, { default: string }> = import.meta.glob(
@@ -19,18 +21,10 @@ export default () => {
 
   return {
     pictures,
-    shuffleds: shuffleArray(pictures),
+    shuffleds: shuffleArray(deepClone(pictures)),
   };
 };
 
 function whiteList() {
   return ["png", "jpg", "gif"];
-}
-
-function shuffleArray<T>(array: T[]) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }
