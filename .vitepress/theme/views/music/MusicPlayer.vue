@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watch, watchEffect } from "vue";
+import { computed, onUnmounted, ref, watch } from "vue";
 import getMusics, { MusicTrack } from "../../utils/getMusics";
 import { useEventListener } from "@vueuse/core";
 import MusicCover from "./components/MusicCover.vue";
@@ -218,7 +218,6 @@ const endedCleanup = useEventListener(audioRef, "ended", () => {
 });
 
 const timeupdateCleanup = useEventListener(audioRef, "timeupdate", () => {
-  // console.log("time update =>", audioRef.value?.currentTime);
   if (!audioRef.value) return;
   currentTime.value = audioRef.value.currentTime;
 });
@@ -230,10 +229,6 @@ const loadedMetaDataCleanup = useEventListener(
     if (!audioRef.value) return;
     duration.value = +audioRef.value.duration.toFixed(0);
     canPlay.value = true;
-    console.log("audio =>", duration.value);
-    // controlVolume(0.2);
-    // controlVolume(0.5);
-    // console.log(audioRef.value.volume);
     controlVolume(volume.value);
   }
 );
@@ -247,8 +242,6 @@ onUnmounted(() => {
 
 <style scoped lang="less">
 .music-player-container {
-  --player-default-color: rgba(255, 255, 255, 0.8);
-
   min-width: 25vw;
   height: 50px;
   position: fixed;

@@ -45,30 +45,6 @@
       <div class="tool-bar">
         <div class="todo-bar"></div>
         <div class="progress-bar">
-          <!-- <div
-            class="progress-bg"
-            @click.self="clickProgress"
-            ref="progressBgRef"
-          >
-            <div
-              :class="[
-                'progress-line',
-                {
-                  disabled: disabledPointer,
-                },
-              ]"
-              :style="{
-                width: progressLineWidth,
-              }"
-              @mousedown.self="updatePointEvents"
-            >
-              <div
-                class="point"
-                ref="pointRef"
-                @mousedown.self="onMousedown"
-              ></div>
-            </div>
-          </div> -->
           <ProgressBar
             :total="duration"
             :current="currentTime"
@@ -205,20 +181,6 @@ const lastVolume = ref(volume.value);
 const modeIdx = ref(0);
 const modeList: Mode[] = ["random", "loop", "singleLoop"];
 
-const pointRef = ref<HTMLDivElement>();
-const disabledPointer = ref(false);
-
-// drag vars
-const isDragging = ref(false);
-const startX = ref(0);
-const progressBgRef = ref<HTMLDivElement>();
-
-const progressLineWidth = computed(() => {
-  if (props.duration === 0) return "0%";
-  const w = `${((props.currentTime / props.duration) * 100).toFixed(2)}%`;
-  return w;
-});
-
 const startTime = computed(
   () =>
     `${transNumber(transTime(props.currentTime).minutes())}:${transNumber(
@@ -245,7 +207,6 @@ function toggleVolumeEnable(enable: boolean) {
 }
 
 function volumeProgressChange(ratio: number) {
-  // console.log("ratio =>", ratio);
   volume.value = Math.floor(ratio * volumeDuration);
   lastVolume.value = volume.value;
 
@@ -254,56 +215,6 @@ function volumeProgressChange(ratio: number) {
 
 function timeProgressChange(ratio: number) {
   emit("progressChange", ratio * props.duration);
-}
-
-function onMousedown(e: Event) {
-  isDragging.value = true;
-  const { clientX } = e as MouseEvent;
-  const { offsetLeft } = e.target as HTMLDivElement;
-  startX.value = clientX - offsetLeft;
-  document.addEventListener("mousemove", moveProgress);
-  document.addEventListener("mouseup", onMouseup);
-}
-
-function onMouseup() {
-  isDragging.value = false;
-  document.removeEventListener("mousemove", moveProgress);
-  document.removeEventListener("mouseup", onMouseup);
-}
-
-function moveProgress(e: Event) {
-  if (!isDragging.value) return;
-
-  const { clientX } = e as MouseEvent;
-  let x = clientX - startX.value;
-
-  if (progressBgRef.value) {
-    const progressBgWidth = progressBgRef.value.getBoundingClientRect().width;
-
-    if (x < 0) {
-      x = 0;
-    } else if (x > progressBgWidth) {
-      x = progressBgWidth;
-    }
-
-    const _currentTime = (x / progressBgWidth) * props.duration;
-    emit("progressChange", _currentTime);
-  }
-}
-
-function updatePointEvents() {
-  disabledPointer.value = true;
-}
-
-function clickProgress(e: Event) {
-  const { offsetX } = e as PointerEvent;
-  const { offsetWidth } = e.target as HTMLDivElement;
-  const _currentTime = (offsetX / offsetWidth) * props.duration;
-  emit("progressChange", _currentTime);
-
-  if (disabledPointer.value) {
-    disabledPointer.value = false;
-  }
 }
 
 watch(
@@ -393,7 +304,7 @@ defineExpose({
         opacity: 0.8;
 
         :deep(path) {
-          fill: #fff;
+          fill: var(--default-color);
         }
       }
     }
@@ -435,7 +346,6 @@ defineExpose({
     .tool-bar {
       flex: 1;
       width: 100%;
-      // background-color: lightblue;
       display: flex;
       flex-direction: column;
 
@@ -448,42 +358,6 @@ defineExpose({
         flex: 1;
         width: 90%;
         margin: auto;
-        // background-color: lightcoral;
-
-        .progress-bg {
-          width: 100%;
-          height: var(--p-l-h);
-          border-radius: calc(var(--p-l-h) / 2);
-          background-color: rgba(255, 255, 255, 0.6);
-          cursor: pointer;
-          user-select: none;
-
-          .progress-line {
-            width: 0;
-            height: 100%;
-            border-radius: calc(var(--p-l-h) / 2);
-            // background-color: rgba(0, 0, 0, 0.3);
-            background-color: lightcoral;
-            background-color: hsla(0, 0%, 100%, 0.7);
-            position: relative;
-            // pointer-events: none;
-            &.disabled {
-              pointer-events: none;
-            }
-
-            .point {
-              width: calc(var(--p-l-h) * var(--p-s));
-              height: calc(var(--p-l-h) * var(--p-s));
-              background-color: #fff;
-              opacity: 0.9;
-              position: absolute;
-              border-radius: 50%;
-              top: 50%;
-              right: 0;
-              transform: translate(50%, -50%);
-            }
-          }
-        }
 
         .time-line {
           display: flex;
@@ -497,7 +371,6 @@ defineExpose({
         flex: 2;
         width: 90%;
         margin: auto;
-        // background-color: lightsalmon;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -512,7 +385,6 @@ defineExpose({
           display: flex;
 
           .volume-progress {
-            // width: 50%;
             flex: 1;
           }
         }
@@ -521,7 +393,6 @@ defineExpose({
           display: flex;
           align-items: center;
           flex: 1;
-          // background-color: lightblue;
         }
 
         .main-setting {
@@ -530,7 +401,6 @@ defineExpose({
           justify-content: center;
           align-items: center;
           gap: 2rem;
-          // background-color: lightblue;
         }
 
         .cursor-pointer {

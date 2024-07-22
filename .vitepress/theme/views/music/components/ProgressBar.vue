@@ -124,8 +124,6 @@ function updatePointEvents() {
     width: 0;
     height: 100%;
     border-radius: calc(var(--p-l-h) / 2);
-    // background-color: rgba(0, 0, 0, 0.3);
-    background-color: lightcoral;
     background-color: hsla(0, 0%, 100%, 0.7);
     position: relative;
 

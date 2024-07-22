@@ -181,6 +181,7 @@
   --scrollbar-hover: #bbb;
   --z-i-top: 999;
   --z-i-30: 30;
+  --player-default-color: rgba(255, 255, 255, 0.9);
 }
 
 :root.dark {
@@ -191,6 +192,7 @@
   --scrollbar: #111;
   /* --scrollbar: lightgreen; */
   --scrollbar-hover: #222;
+  --player-default-color: rgba(255, 255, 255, 0.8);
 }
 
 html {

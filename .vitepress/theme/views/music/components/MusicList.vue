@@ -90,7 +90,6 @@ defineExpose({
   overflow-y: auto;
   background-color: rgba(0, 0, 0, 0.8);
   background-color: rgba(0, 0, 0, 0.5);
-  // background-color: lightblue;
   padding: 0.75rem;
   border-radius: 0.75rem 0.75rem 0 0;
   border-radius: 0.75rem;
@@ -117,6 +116,7 @@ defineExpose({
       text-overflow: ellipsis;
       white-space: nowrap;
       cursor: pointer;
+      color: var(--player-default-color);
     }
 
     .icon-box {
