@@ -624,7 +624,7 @@ defineExpose({
   }
 
   .close-btn {
-    left: 2rem !important;
+    top: 2rem !important;
   }
 
   .music-cover {
