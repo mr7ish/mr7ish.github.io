@@ -3,13 +3,16 @@
     <div
       v-if="isLoading"
       class="loading-mask"
-    ></div>
+    >
+      <LoadingSvg />
+    </div>
     <img :src="path" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import LoadingSvg from "./LoadingSvg.vue";
 
 type Props = {
   size?: number | string;
@@ -50,9 +53,32 @@ const radius = computed(() =>
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.6);
+    // background-color: rgba(255, 255, 255, 0.6);
     left: 0;
     top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    :deep(.icon-loading) {
+      width: 50%;
+      height: 50%;
+      animation: loading 1.5s linear infinite;
+
+      path {
+        // fill: #1668dc;
+        fill: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
