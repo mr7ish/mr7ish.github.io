@@ -102,6 +102,7 @@ import PerfectPlayer, {
 import getPictures from "../../utils/getPictures";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { deepClone } from "../../utils/deepClone";
+import { notice } from "../../utils/notice";
 
 const musics = getMusics();
 const { pictures } = getPictures();
@@ -229,7 +230,7 @@ function load() {
 function play() {
   if (!audioRef.value) return;
   if (!canPlay.value) {
-    console.log("not loaded");
+    notice("sorry, it's not ready yet", "info");
     return;
   }
   audioRef.value.play();
