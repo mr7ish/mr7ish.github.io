@@ -199,6 +199,18 @@
   --message-text-color: rgba(255, 255, 255, 0.85);
 }
 
+.VPNavBarMenuLink {
+  color: var(--default-color) !important;
+}
+
+.VPNavBarMenuLink:hover {
+  color: #bd34fe !important;
+}
+
+.VPNavBarMenuLink.active {
+  color: #41d1ff !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
