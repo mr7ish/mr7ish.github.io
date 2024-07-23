@@ -6,6 +6,8 @@
         hidden,
       },
     ]"
+    ref="musicpPlayerRef"
+    :style="style"
   >
     <audio
       ref="audioRef"
@@ -17,11 +19,11 @@
       />
     </audio>
 
-    <div
-      class="player-wrapper"
-      @click="openPerfect"
-    >
-      <div class="track-cover">
+    <div class="player-wrapper">
+      <div
+        class="track-cover"
+        @click="openPerfect"
+      >
         <MusicCover
           size="100%"
           :path="cover"
@@ -88,7 +90,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from "vue";
 import getMusics, { MusicTrack } from "../../utils/getMusics";
-import { useEventListener } from "@vueuse/core";
+import { useDraggable, useEventListener } from "@vueuse/core";
 import MusicCover from "./components/MusicCover.vue";
 import ListSvg from "./components/ListSvg.vue";
 import PauseSvg from "./components/PauseSvg.vue";
@@ -103,6 +105,8 @@ import getPictures from "../../utils/getPictures";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { deepClone } from "../../utils/deepClone";
 import { notice } from "../../utils/notice";
+
+const musicpPlayerRef = ref<HTMLDivElement>();
 
 const musics = getMusics();
 const { pictures } = getPictures();
@@ -280,6 +284,13 @@ onUnmounted(() => {
   timeupdateCleanup();
   endedCleanup();
 });
+
+const x = 20;
+const y = document.documentElement.clientHeight - 100;
+
+const { style } = useDraggable(musicpPlayerRef, {
+  initialValue: { x, y },
+});
 </script>
 
 <style scoped lang="less">
@@ -287,14 +298,17 @@ onUnmounted(() => {
   min-width: 25vw;
   height: 50px;
   position: fixed;
-  bottom: 50px;
-  left: 50%;
+  // bottom: 50px;
+  // left: 50%;
   z-index: var(--z-i-top);
-  transform: translateX(-50%);
-  transition: all 0.35s ease;
+  // transform: translateX(-50%);
+  // transition: all 0.35s ease;
+  transition: transform 0.35s ease;
 
   &.hidden {
-    bottom: -150vh;
+    // bottom: -150vh !important;
+    // top: -150vh !important;
+    transform: translateY(150vh);
   }
 
   .player-wrapper {
@@ -311,6 +325,7 @@ onUnmounted(() => {
     .track-cover {
       width: 50px;
       height: 100%;
+      cursor: pointer;
     }
 
     .track-info {

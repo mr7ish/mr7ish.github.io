@@ -12,6 +12,7 @@
       </RouterTo>
     </template>
     <template #layout-bottom>
+      <MusicPlayer />
       <transition name="scroll">
         <div
           v-if="isNeedBackTop"
@@ -49,6 +50,7 @@ import RouterTo from "../components/RouterTo.vue";
 import { useData } from "vitepress";
 import { SpecifiedFrontmatter } from "../../../env";
 import { createHeartByClick } from "../utils/heartBurst";
+import MusicPlayer from "../views/music/MusicPlayer.vue";
 
 const { Layout } = DefaultTheme;
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();

@@ -95,7 +95,7 @@ defineExpose({
   border-radius: 0.75rem;
   position: absolute;
   z-index: calc(var(--z-i-top) + 1);
-  bottom: -100vh;
+  bottom: -150vh;
   transition: all 0.35s ease;
   display: flex;
   flex-direction: column;
