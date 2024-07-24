@@ -109,6 +109,17 @@
             </div>
           </div>
           <div class="right-setting flex-box">
+            <div class="icon-box">
+              <DownloadSvg
+                class-name="icon-download"
+                @click="
+                  download(
+                    currentTrack.path,
+                    `${currentTrack.name} - ${currentTrack.singer}`
+                  )
+                "
+              />
+            </div>
             <template v-if="!isMobile()">
               <div class="icon-box">
                 <VolumeEnable
@@ -155,6 +166,8 @@ import SingleLoopSvg from "./SingleLoopSvg.vue";
 import VolumeEnable from "./VolumeEnable.vue";
 import VolumeDisable from "./VolumeDisable.vue";
 import { isMobile } from "../../../utils/isMobile";
+import { download } from "../../../utils/download";
+import DownloadSvg from "./DownloadSvg.vue";
 
 type Props = {
   currentTrack: MusicTrack;
@@ -432,6 +445,10 @@ defineExpose({
           justify-content: center;
           user-select: none;
           // background-color: lightcoral;
+
+          .icon-download {
+            transform: scale(0.5);
+          }
 
           .icon-volume {
             transform: scale(0.5);
