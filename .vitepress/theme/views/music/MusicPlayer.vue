@@ -57,7 +57,7 @@
 
       <ListSvg
         style="margin-right: 0.75rem"
-        @click.stop="() => musicListRef?.toggle()"
+        @click.stop="openMusicList"
       />
     </div>
 
@@ -66,6 +66,7 @@
       :musicList="musicList"
       :uuid="currentTrack.uuid"
       :status="isPlaying"
+      :isTop="_y > musicListHeight"
       @change="changeMusic"
     />
   </div>
@@ -105,6 +106,7 @@ import getPictures from "../../utils/getPictures";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { deepClone } from "../../utils/deepClone";
 import { notice } from "../../utils/notice";
+import { getClientInfo } from "../../utils/picCalc";
 
 const musicpPlayerRef = ref<HTMLDivElement>();
 
@@ -204,6 +206,10 @@ function openPerfect() {
   hidden.value = true;
 }
 
+function openMusicList() {
+  musicListRef.value?.toggle();
+}
+
 function changeMusic(nextMusic: MusicTrack) {
   if (nextMusic.uuid !== currentTrack.value.uuid) {
     currentTrack.value = nextMusic;
@@ -286,10 +292,16 @@ onUnmounted(() => {
   endedCleanup();
 });
 
+const { clientH } = getClientInfo();
+const musicListHeight = clientH * 0.4;
 const x = 20;
-const y = document.documentElement.clientHeight - 100;
+const y = clientH - 100;
 
-const { style } = useDraggable(musicpPlayerRef, {
+const {
+  style,
+  x: _x,
+  y: _y,
+} = useDraggable(musicpPlayerRef, {
   initialValue: { x, y },
 });
 </script>
@@ -299,16 +311,10 @@ const { style } = useDraggable(musicpPlayerRef, {
   min-width: 25vw;
   height: 50px;
   position: fixed;
-  // bottom: 50px;
-  // left: 50%;
   z-index: var(--z-i-top);
-  // transform: translateX(-50%);
-  // transition: all 0.35s ease;
   transition: transform 0.35s ease;
 
   &.hidden {
-    // bottom: -150vh !important;
-    // top: -150vh !important;
     transform: translateY(150vh);
   }
 
@@ -347,7 +353,6 @@ const { style } = useDraggable(musicpPlayerRef, {
       align-items: center;
       justify-content: center;
       user-select: none;
-      // background-color: lightcoral;
 
       .icon-pause {
         width: 100%;
@@ -369,6 +374,7 @@ const { style } = useDraggable(musicpPlayerRef, {
 
       path {
         fill: var(--player-default-color);
+        pointer-events: none;
       }
     }
   }
@@ -380,7 +386,6 @@ const { style } = useDraggable(musicpPlayerRef, {
 
 @media (max-width: 480px) {
   .music-player-container {
-    // transform: translateX(-50%) scale(0.8);
     max-width: 70vw;
   }
 }

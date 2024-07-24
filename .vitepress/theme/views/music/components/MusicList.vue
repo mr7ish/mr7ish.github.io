@@ -3,10 +3,18 @@
     :class="[
       'music-list-container',
       {
-        open,
+        top: open && isTop,
+        bottom: open && !isTop,
       },
     ]"
     @click.stop
+    :style="
+      isTop
+        ? {
+            bottom: '-150vh',
+          }
+        : { top: '-250vh' }
+    "
   >
     <div
       class="music-item"
@@ -41,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import { MusicTrack } from "../../../utils/getMusics";
 import PlayIcon from "./PlayIcon.vue";
 import { Fn, useEventListener } from "@vueuse/core";
@@ -50,13 +58,22 @@ type Props = {
   musicList?: MusicTrack[];
   uuid?: MusicTrack["uuid"];
   status?: boolean;
+  isTop?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
   musicList: () => [],
   uuid: undefined,
   status: false,
+  isTop: true,
 });
+
+watch(
+  () => props.isTop,
+  (val) => {
+    console.log("isTop =>", val);
+  }
+);
 
 const emit = defineEmits<{
   change: [music: MusicTrack];
@@ -95,15 +112,18 @@ defineExpose({
   border-radius: 0.75rem;
   position: absolute;
   z-index: calc(var(--z-i-top) + 1);
-  bottom: -150vh;
   transition: all 0.35s ease;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   font-size: 0.75rem;
 
-  &.open {
-    bottom: 50px;
+  &.top {
+    bottom: 50px !important;
+  }
+
+  &.bottom {
+    top: 50px !important;
   }
 
   .music-item {
@@ -126,7 +146,6 @@ defineExpose({
       align-items: center;
       justify-content: center;
       user-select: none;
-      // background-color: lightcoral;
 
       .icon-pause {
         width: 100%;
