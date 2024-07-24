@@ -13,6 +13,7 @@ export type MusicTrack = {
 
 export default (): MusicTrack[] => {
   const covers = getCovers();
+  // console.log("covers =>", covers);
 
   const modules: Record<string, { default: string }> = import.meta.glob(
     "../../../site/music/*",
@@ -31,7 +32,8 @@ export default (): MusicTrack[] => {
     const [useful] = decodeBasic.replace(/\/|music|assets/g, "").split(".");
     // console.log("useful =>", useful);
 
-    const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
+    // const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
+    const info = useful.split("-").map((i) => i.trim());
     // console.log("info =>", info);
 
     return {
@@ -39,7 +41,7 @@ export default (): MusicTrack[] => {
       path: basic,
       album: info[2],
       cover:
-        covers.find((i) => i.album === info[2])?.path ??
+        covers.find((i) => i.album && i.album === info[2])?.path ??
         covers.find((i) => i.singer === info[0])?.path,
       name: info[1],
       singer: info[0],
@@ -67,7 +69,8 @@ function getCovers() {
       .split(".");
     // console.log("useful =>", useful);
 
-    const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
+    // const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
+    const info = useful.split("-").map((i) => i.trim());
     // console.log("info =>", info);
 
     return {
