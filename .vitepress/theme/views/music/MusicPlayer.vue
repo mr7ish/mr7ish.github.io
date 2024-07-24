@@ -222,6 +222,7 @@ function handleStatus(status: boolean) {
 
 function controlVolume(_volume: number) {
   if (!audioRef.value) return;
+  volume.value = _volume;
   audioRef.value.volume = _volume;
 }
 
