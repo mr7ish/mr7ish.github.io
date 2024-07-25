@@ -113,6 +113,9 @@ function updatePointEvents() {
 
 <style scoped lang="less">
 .progress-bg {
+  --p-l-h: 4px;
+  --p-s: 3;
+
   width: 100%;
   height: var(--p-l-h);
   border-radius: calc(var(--p-l-h) / 2);
@@ -142,6 +145,22 @@ function updatePointEvents() {
       right: 0;
       transform: translate(50%, -50%);
     }
+  }
+}
+
+// <=480
+@media (max-width: 480px) {
+  .progress-bg {
+    --p-l-h: 2px;
+    --p-s: 3;
+  }
+}
+
+// >=480 and <=992
+@media (min-width: 480px) and (max-width: 992px) {
+  .progress-bg {
+    --p-l-h: 3px;
+    --p-s: 3;
   }
 }
 </style>

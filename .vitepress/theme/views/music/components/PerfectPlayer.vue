@@ -44,7 +44,32 @@
       </div>
 
       <div class="tool-bar">
-        <div class="todo-bar"></div>
+        <div
+          class="todo-bar"
+          ref="lyricsWrapper"
+        >
+          <div class="lyrics-wrapper">
+            <span
+              v-for="(line, i) in lyrics"
+              :key="i"
+              :class="[
+                'lyrics-line',
+                {
+                  'lyrics-active': i === lyricsIndex - 1,
+                },
+              ]"
+              ref="lyricSpans"
+            >
+              {{ line.text }}
+            </span>
+            <span
+              v-for="_ of activeLine"
+              class="lyrics-line empty-line"
+            >
+              ...
+            </span>
+          </div>
+        </div>
         <div class="progress-bar">
           <ProgressBar
             :total="duration"
@@ -168,6 +193,8 @@ import VolumeDisable from "./VolumeDisable.vue";
 import { isMobile } from "../../../utils/isMobile";
 import { download } from "../../../utils/download";
 import DownloadSvg from "./DownloadSvg.vue";
+import { fetchLyrics, Lyric, parseLyrics } from "../../../utils/parseLyrics";
+import { getClientInfo } from "../../../utils/picCalc";
 
 type Props = {
   currentTrack: MusicTrack;
@@ -197,15 +224,34 @@ const emit = defineEmits<{
   changeMusicByMode: [method: ChangeMethod, auto: boolean];
 }>();
 
+const isOpen = ref(false);
 const volumeDuration = 100;
 const volume = ref(props.initVolume * volumeDuration);
 const lastVolume = ref(volume.value);
-
 const mode = ref<Mode>("loop");
-
 const resetRotate = ref(false);
+const lyrics = ref<Lyric[]>([]);
+
+const { clientW } = getClientInfo();
+const activeLine = clientW <= 480 ? 3 : 5;
+
+const initLyrics = () => {
+  lyrics.value = [];
+  lyricsIndex.value = 0;
+  top = 0;
+};
+
+watch(
+  () => props.duration,
+  (_duration) => {
+    if (_duration === 0) {
+      initLyrics();
+    }
+  }
+);
 
 function changeMusic(method: ChangeMethod) {
+  initLyrics();
   emit("changeMusicByMode", method, false);
   resetRotate.value = true;
 
@@ -231,8 +277,6 @@ const endTime = computed(
       transTime(props.duration).seconds()
     )}`
 );
-
-const isOpen = ref(false);
 
 function toggleVolumeEnable(enable: boolean) {
   if (!enable) {
@@ -266,13 +310,68 @@ function close() {
 defineExpose({
   open,
 });
+
+watchEffect(async () => {
+  if (props.currentTrack.lyric && isOpen.value) {
+    lyrics.value = await parseLyrics(
+      await fetchLyrics(props.currentTrack.lyric)
+    );
+  }
+});
+
+const lyricsWrapper = ref<HTMLDivElement>();
+const lyricSpans = ref<HTMLSpanElement[]>();
+const lyricsIndex = ref(0);
+
+watchEffect(() => {
+  if (isOpen.value && lyrics.value.length > 0) {
+    updateLyrics(props.currentTime);
+  }
+});
+
+let top = 0;
+
+function updateLyrics(currentTime: number) {
+  if (!lyricsWrapper.value || !lyricSpans.value) return;
+
+  const spanH = lyricSpans.value[0].getBoundingClientRect().height + 5;
+  // console.log("currentTime =>", currentTime);
+  console.log("currentTime round =>", +currentTime.toFixed(2));
+
+  const floatValue = 0.3;
+  const _currentTime = +currentTime.toFixed(2) + floatValue;
+
+  let index = 0;
+
+  while (
+    _currentTime >= lyrics.value[index]?.time &&
+    index < lyrics.value.length
+  ) {
+    index++;
+    // console.log("index =>", index);
+  }
+
+  // 时间点对应的歌词行索引
+  lyricsIndex.value = index;
+
+  if (lyricsIndex.value >= activeLine) {
+    top = spanH * (lyricsIndex.value - (activeLine - 1));
+  } else {
+    top = 0;
+  }
+
+  lyricsWrapper.value.scrollTo({
+    top,
+    behavior: "smooth",
+  });
+}
+
+const mainColor = computed(() => props.currentTrack.mainColor ?? "#31c37c");
 </script>
 
 <style scoped lang="less">
 .perfect-player-container {
   --m-t: 8rem;
-  --p-l-h: 4px;
-  --p-s: 3;
   --i-size: 3.5rem;
   --i-scale: 0.5;
   --i-bg-c: hsla(0, 0%, 100%, 0.9);
@@ -368,7 +467,7 @@ defineExpose({
 
       .info-singer {
         font-size: 0.75rem;
-        opacity: 0.5;
+        opacity: 0.6;
         letter-spacing: 0.1rem;
       }
     }
@@ -380,12 +479,37 @@ defineExpose({
       flex-direction: column;
 
       .todo-bar {
-        flex: 5;
-        // background-color: lightgoldenrodyellow;
+        flex: 5 0 0;
+        overflow-y: auto;
+        font-size: 0.85rem;
+        margin: 0.5rem 0;
+
+        .lyrics-wrapper {
+          padding: 0.75rem;
+
+          .lyrics-line {
+            display: block;
+            text-align: center;
+            margin: 5px 0;
+            opacity: 0.3;
+          }
+
+          .empty-line {
+            opacity: 0;
+            visibility: hidden;
+            user-select: none;
+            pointer-events: none;
+          }
+
+          .lyrics-active {
+            color: v-bind(mainColor);
+            opacity: 1;
+          }
+        }
       }
 
       .progress-bar {
-        flex: 1;
+        flex: 1 0;
         width: 90%;
         margin: auto;
 
@@ -398,7 +522,7 @@ defineExpose({
       }
 
       .setting-bar {
-        flex: 2;
+        flex: 2 0;
         width: 90%;
         margin: auto;
         display: flex;
@@ -519,7 +643,7 @@ defineExpose({
   .perfect-player-container {
     --p-l-h: 2px;
     --p-s: 3;
-    --i-size: 1.5rem;
+    --i-size: 2rem;
     --i-scale: 0.2;
   }
 

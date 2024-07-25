@@ -128,8 +128,10 @@ const mode = ref<Mode>("loop");
 console.log("music =>", musics);
 const musicList = ref<MusicTrack[]>(musics);
 
+const lover = musicList.value.findIndex((i) => i.name === "Lover");
+
 const currentTrack = ref<MusicTrack>(
-  musicList.value[getRangeRandom(0, musics.length - 1)]
+  musicList.value[lover ?? getRangeRandom(0, musics.length - 1)]
 );
 
 watch(
@@ -190,9 +192,9 @@ function modeChange(_mode: Mode) {
 }
 
 function progressChange(_currentTime: number) {
-  currentTime.value = _currentTime;
+  currentTime.value = +_currentTime.toFixed(6);
   if (!audioRef.value) return;
-  audioRef.value.currentTime = _currentTime;
+  audioRef.value.currentTime = currentTime.value;
 }
 
 function generateCover() {
@@ -267,6 +269,7 @@ function stop() {
 const endedCleanup = useEventListener(audioRef, "ended", () => {
   console.log("music ended");
   if (!audioRef.value) return;
+  duration.value = 0;
   changeMusicByMode("next", true);
 });
 
