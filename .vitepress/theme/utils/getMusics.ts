@@ -103,15 +103,17 @@ function getLyrics() {
   const lyrics = Object.values(modules).map((i) => {
     const basic = i.default;
     const decodeBasic = decodeURI(basic);
+    console.log("basic =>", basic);
+    console.log("decodeBasic =>", decodeBasic);
 
     const [useful] = decodeBasic
       .replace(/\/|music|lyrics|assets/g, "")
       .split(".");
-    // console.log("useful =>", useful);
+    console.log("useful =>", useful);
 
     // const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
     const info = useful.split("-").map((i) => i.trim());
-    // console.log("info =>", info);
+    console.log("info =>", info);
 
     return {
       path: basic,
