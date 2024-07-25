@@ -194,7 +194,6 @@ import { isMobile } from "../../../utils/isMobile";
 import { download } from "../../../utils/download";
 import DownloadSvg from "./DownloadSvg.vue";
 import { fetchLyrics, Lyric, parseLyrics } from "../../../utils/parseLyrics";
-import { getClientInfo } from "../../../utils/picCalc";
 
 type Props = {
   currentTrack: MusicTrack;

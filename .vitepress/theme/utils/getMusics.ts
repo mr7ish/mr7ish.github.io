@@ -135,4 +135,14 @@ const mainColorTone = [
     singer: "Taylor Swift",
     color: "#8B0B0A",
   },
+  {
+    name: "高兴的眼泪",
+    singer: "SPICY CHOCOLATE",
+    color: "#55A9E5",
+  },
+  {
+    name: "九月",
+    singer: "苏打绿",
+    color: "#FCCE20",
+  },
 ];
