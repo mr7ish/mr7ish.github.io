@@ -24,7 +24,9 @@ export async function parseLyrics(data: string) {
       const milliseconds = parseInt(match[3], 10);
       const time = minutes * 60 + seconds + milliseconds / 100;
       const text = line.replace(timeRegex, "").trim();
-      lyrics.push({ time, text });
+      if (text.length > 0) {
+        lyrics.push({ time, text });
+      }
     }
   }
 

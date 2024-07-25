@@ -106,16 +106,13 @@ function getLyrics() {
     }
   );
 
-  console.log("modules =>", modules);
-
   const lyrics: Lyric[] = [];
 
   for (const key in modules) {
-    console.log("key =>", key.split("/"));
     const path = key.split("/");
     const [useful] = path[path.length - 1].split(".");
     const info = useful.split("-").map((i) => i.trim());
-    console.log("info =>", info);
+    // console.log("info =>", info);
 
     lyrics.push({
       path: modules[key].default,
@@ -132,5 +129,10 @@ const mainColorTone = [
     name: "Lover",
     singer: "Taylor Swift",
     color: "#ffabc5",
+  },
+  {
+    name: "All Too Well (10 Minute)",
+    singer: "Taylor Swift",
+    color: "#8B0B0A",
   },
 ];

@@ -232,8 +232,9 @@ const mode = ref<Mode>("loop");
 const resetRotate = ref(false);
 const lyrics = ref<Lyric[]>([]);
 
-const { clientW } = getClientInfo();
-const activeLine = clientW <= 480 ? 3 : 5;
+// const { clientW } = getClientInfo();
+// const activeLine = clientW <= 480 ? 3 : 5;
+const activeLine = 5;
 
 const initLyrics = () => {
   lyrics.value = [];
@@ -336,7 +337,7 @@ function updateLyrics(currentTime: number) {
 
   const spanH = lyricSpans.value[0].getBoundingClientRect().height + 5;
   // console.log("currentTime =>", currentTime);
-  console.log("currentTime round =>", +currentTime.toFixed(2));
+  // console.log("currentTime round =>", +currentTime.toFixed(2));
 
   const floatValue = 0.3;
   const _currentTime = +currentTime.toFixed(2) + floatValue;
