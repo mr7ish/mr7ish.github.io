@@ -20,6 +20,7 @@
       class="music-item"
       v-for="(m, i) in musicList"
       :key="i"
+      ref="musicItemRef"
     >
       <div
         class="basic-info"
@@ -49,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, watchEffect } from "vue";
+import { onMounted, ref, watch, watchEffect } from "vue";
 import { MusicTrack } from "../../../utils/getMusics";
 import PlayIcon from "./PlayIcon.vue";
 import { Fn, useEventListener } from "@vueuse/core";
@@ -67,13 +68,6 @@ const props = withDefaults(defineProps<Props>(), {
   status: false,
   isTop: true,
 });
-
-watch(
-  () => props.isTop,
-  (val) => {
-    console.log("isTop =>", val);
-  }
-);
 
 const emit = defineEmits<{
   change: [music: MusicTrack];
@@ -97,6 +91,21 @@ defineExpose({
   toggle() {
     open.value = !open.value;
   },
+});
+
+const musicItemRef = ref<HTMLDivElement[]>();
+
+watchEffect(() => {
+  if (!open.value) return;
+  if (!musicItemRef.value || musicItemRef.value.length === 0) return;
+
+  const index = props.musicList.findIndex((i) => i.uuid === props.uuid);
+
+  // 滚动元素的父容器, 使调用该方法的元素对用户可见
+  musicItemRef.value[index]?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
 });
 </script>
 
