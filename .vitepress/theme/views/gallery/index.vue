@@ -180,7 +180,7 @@ function changeRootStyle(isHidden: boolean) {
         -webkit-user-select: none !important;
 
         &.z-index-top {
-          z-index: calc(var(--z-i-top) + 1);
+          z-index: calc(var(--z-i-top) + 2);
         }
 
         &:first-child {

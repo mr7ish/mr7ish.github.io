@@ -52,7 +52,7 @@ defineExpose({
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: var(--z-i-top);
+  z-index: calc(var(--z-i-top) + 1);
   background-color: rgba(0, 0, 0, 0.5);
 
   &.fade-in {
