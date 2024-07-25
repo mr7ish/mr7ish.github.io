@@ -17,7 +17,7 @@ export default (): MusicTrack[] => {
   const covers = getCovers();
   const lyrics = getLyrics();
   // console.log("covers =>", covers);
-  // console.log("lyrics =>", lyrics);
+  console.log("lyrics =>", lyrics);
 
   const modules: Record<string, { default: string }> = import.meta.glob(
     "../../../site/music/*",
