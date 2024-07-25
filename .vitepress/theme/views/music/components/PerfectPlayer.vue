@@ -333,7 +333,12 @@ watchEffect(() => {
 let top = 0;
 
 function updateLyrics(currentTime: number) {
-  if (!lyricsWrapper.value || !lyricSpans.value) return;
+  if (
+    !lyricsWrapper.value ||
+    !lyricSpans.value ||
+    lyricSpans.value.length === 0
+  )
+    return;
 
   const spanH = lyricSpans.value[0].getBoundingClientRect().height + 5;
   // console.log("currentTime =>", currentTime);
