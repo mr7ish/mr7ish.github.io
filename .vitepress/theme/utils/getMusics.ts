@@ -92,6 +92,12 @@ function getCovers() {
   return covers;
 }
 
+type Lyric = {
+  path: string;
+  name: string;
+  singer: string;
+};
+
 function getLyrics() {
   const modules: Record<string, { default: string }> = import.meta.glob(
     "../../../site/music/lyrics/*",
@@ -100,27 +106,23 @@ function getLyrics() {
     }
   );
 
-  const lyrics = Object.values(modules).map((i) => {
-    const basic = i.default;
-    const decodeBasic = decodeURI(basic);
-    console.log("basic =>", basic);
-    console.log("decodeBasic =>", decodeBasic);
+  console.log("modules =>", modules);
 
-    const [useful] = decodeBasic
-      .replace(/\/|music|lyrics|assets/g, "")
-      .split(".");
-    console.log("useful =>", useful);
+  const lyrics: Lyric[] = [];
 
-    // const info = useful.split("-").map((i) => i.replace(/\s+/g, ""));
+  for (const key in modules) {
+    console.log("key =>", key.split("/"));
+    const path = key.split("/");
+    const [useful] = path[path.length - 1].split(".");
     const info = useful.split("-").map((i) => i.trim());
     console.log("info =>", info);
 
-    return {
-      path: basic,
+    lyrics.push({
+      path: modules[key].default,
       name: info[1],
       singer: info[0],
-    };
-  });
+    });
+  }
 
   return lyrics;
 }
