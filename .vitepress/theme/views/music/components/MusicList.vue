@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import { MusicTrack } from "../../../utils/getMusics";
 import PlayIcon from "./PlayIcon.vue";
 import { Fn, useEventListener } from "@vueuse/core";

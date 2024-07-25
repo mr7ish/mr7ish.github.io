@@ -12,7 +12,7 @@
       </RouterTo>
     </template>
     <template #layout-bottom>
-      <!-- <MusicPlayer /> -->
+      <MusicPlayer />
       <transition name="scroll">
         <div
           v-if="isNeedBackTop"
