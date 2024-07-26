@@ -1,15 +1,17 @@
 <template>
-  <div
-    v-if="visible"
-    :class="[
-      'preview-modal-container',
-      {
-        'fade-in': visible && !startFadeOut,
-        'fade-out': startFadeOut,
-      },
-    ]"
-    @click.self="close"
-  ></div>
+  <Teleport to="body">
+    <div
+      v-if="visible"
+      :class="[
+        'preview-modal-container',
+        {
+          'fade-in': visible && !startFadeOut,
+          'fade-out': startFadeOut,
+        },
+      ]"
+      @click.self="close"
+    ></div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
