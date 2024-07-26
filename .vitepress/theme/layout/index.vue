@@ -12,7 +12,7 @@
       </RouterTo>
     </template>
     <template #layout-bottom>
-      <MusicPlayer />
+      <MusicPlayer v-if="!['music'].includes(frontmatter.fileName ?? '')" />
       <transition name="scroll">
         <div
           v-if="isNeedBackTop"
@@ -54,7 +54,7 @@ import MusicPlayer from "../views/music/MusicPlayer.vue";
 
 const { Layout } = DefaultTheme;
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
-// console.log("frontmatter =>", frontmatter.value);
+console.log("frontmatter =>", frontmatter.value);
 const { isDark } = useData();
 
 const isNeedBackTop = ref(false);

@@ -204,7 +204,8 @@
 }
 
 .VPNavBarMenuLink:hover {
-  color: #bd34fe !important;
+  /* color: #bd34fe !important; */
+  color: #ffabc5 !important;
 }
 
 .VPNavBarMenuLink.active {
