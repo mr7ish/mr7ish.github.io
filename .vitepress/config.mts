@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 import { navConfigs } from "../default-theme-configs";
 import resolveMarkdownPlugin from "./theme/plugins/resolveMarkdownPlugin";
+import { templateCompilerOptions } from "@tresjs/core";
 
 // https://vitepress.dev/zh/reference/site-config
 export default defineConfig({
@@ -41,5 +42,8 @@ export default defineConfig({
   },
   vite: {
     plugins: [resolveMarkdownPlugin()],
+  },
+  vue: {
+    ...templateCompilerOptions,
   },
 });
