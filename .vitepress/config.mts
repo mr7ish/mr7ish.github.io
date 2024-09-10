@@ -25,16 +25,16 @@ export default defineConfig({
     outline: [1, 5],
     sidebar: [
       {
-        text: "Examples",
+        text: "",
         // collapsed: true,
-        items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          {
-            text: "Markdown Examples",
-            items: [{ text: "Markdown Examples", link: "/markdown-examples" }],
-          },
-          { text: "Runtime API Examples", link: "/api-examples" },
-        ],
+        // items: [
+        //   { text: "Markdown Examples", link: "/markdown-examples" },
+        //   {
+        //     text: "Markdown Examples",
+        //     items: [{ text: "Markdown Examples", link: "/markdown-examples" }],
+        //   },
+        //   { text: "Runtime API Examples", link: "/api-examples" },
+        // ],
       },
     ],
 
