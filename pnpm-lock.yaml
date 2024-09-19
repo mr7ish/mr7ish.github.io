@@ -23,6 +23,9 @@ importers:
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
+      sprite-craft:
+        specifier: ^0.4.1
+        version: 0.4.1(three@0.167.1)
       three:
         specifier: ^0.167.1
         version: 0.167.1
@@ -576,6 +579,9 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
+  gsap@3.12.5:
+    resolution: {integrity: sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==}
+
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
 
@@ -595,6 +601,9 @@ packages:
     resolution: {integrity: sha512-P3b3HJDBtSzsXUl0im2L7gTO5Ubg8mEN6G8qoTS77iXxXX4Hvu4Qj540PZDvQ8V6DmX6iXo98k7Md0Cm1PrLaA==}
     engines: {node: '>=6'}
     hasBin: true
+
+  lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
@@ -638,6 +647,9 @@ packages:
     engines: {node: '>= 4.4.x'}
     hasBin: true
 
+  nipplejs@0.10.2:
+    resolution: {integrity: sha512-XGxFY8C2DOtobf1fK+MXINTzkkXJLjZDDpfQhOUZf4TSytbc9s4bmA0lB9eKKM8iDivdr9NQkO7DpIQfsST+9g==}
+
   parse-node-version@1.0.1:
     resolution: {integrity: sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==}
     engines: {node: '>= 0.10'}
@@ -655,6 +667,11 @@ packages:
   postcss@8.4.38:
     resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
     engines: {node: ^10 || ^12 || >=14}
+
+  postprocessing@6.36.2:
+    resolution: {integrity: sha512-a1qZjpm0Vrozat7YFtYOEvwElWz/ukhxoA+K7HzDVeor20vzacREMnJZL5GTj6TFVr7/ma3W0qD03Go0V5gQOA==}
+    peerDependencies:
+      three: '>= 0.157.0 < 0.169.0'
 
   preact@10.22.0:
     resolution: {integrity: sha512-RRurnSjJPj4rp5K6XoP45Ui33ncb7e4H7WiOHVpjbkvqvA3U+N8Z6Qbo0AE6leGYBV66n8EhEaFixvIu3SkxFw==}
@@ -700,6 +717,11 @@ packages:
   speakingurl@14.0.1:
     resolution: {integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==}
     engines: {node: '>=0.10.0'}
+
+  sprite-craft@0.4.1:
+    resolution: {integrity: sha512-YkXwtvobbc6O+fujf0wcMm0NUeA7Ai6ihiY5NdD4To7eoJPeztz7HtoXLpqbOxXWrj2YVl7KGBAD/ekcpUA7Eg==}
+    peerDependencies:
+      three: '>=0.155'
 
   tabbable@6.2.0:
     resolution: {integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==}
@@ -1287,6 +1309,8 @@ snapshots:
   graceful-fs@4.2.11:
     optional: true
 
+  gsap@3.12.5: {}
+
   hookable@5.5.3: {}
 
   iconv-lite@0.6.3:
@@ -1312,6 +1336,8 @@ snapshots:
       mime: 1.6.0
       needle: 3.3.1
       source-map: 0.6.1
+
+  lodash-es@4.17.21: {}
 
   magic-string@0.30.10:
     dependencies:
@@ -1346,6 +1372,8 @@ snapshots:
       sax: 1.4.1
     optional: true
 
+  nipplejs@0.10.2: {}
+
   parse-node-version@1.0.1: {}
 
   perfect-debounce@1.0.0: {}
@@ -1360,6 +1388,10 @@ snapshots:
       nanoid: 3.3.7
       picocolors: 1.0.1
       source-map-js: 1.2.0
+
+  postprocessing@6.36.2(three@0.167.1):
+    dependencies:
+      three: 0.167.1
 
   preact@10.22.0: {}
 
@@ -1413,6 +1445,14 @@ snapshots:
     optional: true
 
   speakingurl@14.0.1: {}
+
+  sprite-craft@0.4.1(three@0.167.1):
+    dependencies:
+      gsap: 3.12.5
+      lodash-es: 4.17.21
+      nipplejs: 0.10.2
+      postprocessing: 6.36.2(three@0.167.1)
+      three: 0.167.1
 
   tabbable@6.2.0: {}
 
