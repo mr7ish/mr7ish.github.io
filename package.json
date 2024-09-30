@@ -7,6 +7,7 @@
   "dependencies": {
     "@tresjs/core": "^4.2.5",
     "@vueuse/core": "^10.11.0",
+    "gsap": "^3.12.5",
     "moment": "^2.30.1",
     "nanoid": "^5.0.7",
     "reading-time": "^1.5.0",
