@@ -22,6 +22,7 @@
 import { onMounted, ref } from "vue";
 import { Application, SpriteMap, Character, SpriteMesh } from "sprite-craft";
 import "sprite-craft/style.css";
+import gsap from "gsap";
 
 const container = ref<HTMLDivElement>();
 
@@ -111,14 +112,6 @@ onMounted(() => {
       });
       app.scene.add(character_01);
 
-      // character_01.position.x = -1;
-
-      // character_01.rotateY(3 * Math.PI);
-
-      function reverseMesh(mesh: SpriteMesh, direction: 2 | 3 = 2) {
-        mesh.rotateY(Math.PI * direction);
-      }
-
       character_01.addAnimation({
         name: "walk",
         start_bounds: {
@@ -128,7 +121,7 @@ onMounted(() => {
           h: 77,
         },
         offset: 0,
-        time_scale: 0.8,
+        time_scale: 0.6,
         direction: "horizontal",
         frame_count: 4,
       });
@@ -142,85 +135,95 @@ onMounted(() => {
           h: 77,
         },
         offset: 0,
-        time_scale: 0.8,
+        time_scale: 0.6,
         direction: "horizontal",
         frame_count: 1,
       });
 
-      const keys: Record<"ArrowRight" | "ArrowLeft", boolean> = {
+      const keys: Record<"ArrowRight" | "ArrowLeft" | "Space", boolean> = {
         ArrowLeft: false,
         ArrowRight: false,
+        Space: false,
       };
 
-      const speed = 0.01;
+      const speed = 1;
       let isWalking = false;
+      const jumpHeight = 1;
+      let isJumping = false;
 
-      document.addEventListener("keydown", (e) => {
-        console.log(e.key);
+      let animation: ReturnType<typeof gsap.to> | undefined = undefined;
 
-        keys[e.key] = true;
+      function jump() {
+        if (isJumping) return;
+        isJumping = true;
 
-        if (e.key === "ArrowRight") {
-          console.log("ArrowRight isWalking", isWalking);
+        const initY = character_01.position.y;
+        const _jumpHeight = initY + jumpHeight;
 
-          if (isWalking) return;
-          isWalking = true;
-          // reverseMesh(character_01);
-          character_01.rotateY(2 * Math.PI);
+        animation = gsap.to(character_01.position, {
+          y: _jumpHeight,
+          duration: 0.3,
+          yoyo: true,
+          repeat: 1,
+          ease: "power1.out",
+          onComplete: () => {
+            character_01.position.y = initY;
+            isJumping = false;
+          },
+        });
+      }
 
-          character_01.playAnimation("walk");
+      app.$on("render-loop", ({ delta, elapsed_time, fps }) => {
+        if (keys.ArrowRight) {
+          forward(delta);
         }
 
-        if (e.key === "ArrowLeft") {
-          console.log("ArrowLeft isWalking", isWalking);
+        if (keys.ArrowLeft) {
+          backward(delta);
+        }
 
+        if (keys.Space) {
+          jump();
+        }
+      });
+
+      window.addEventListener("keydown", (e) => {
+        console.log(e.key);
+
+        if (e.key === " ") {
+          keys.Space = true;
+        } else {
+          keys[e.key] = true;
+        }
+
+        if (["ArrowRight", "ArrowLeft"].includes(e.key)) {
           if (isWalking) return;
           isWalking = true;
-          // reverseMesh(character_01, 3);
-          character_01.rotateY(3 * Math.PI);
-
           character_01.playAnimation("walk");
         }
       });
 
-      document.addEventListener("keyup", (e) => {
-        keys[e.key] = false;
+      window.addEventListener("keyup", (e) => {
+        if (e.key === " ") {
+          keys.Space = false;
+        } else {
+          keys[e.key] = false;
+        }
 
         if (["ArrowRight", "ArrowLeft"].includes(e.key)) {
           isWalking = false;
           character_01.playAnimation("idle");
-          return;
         }
-
-        // if (e.key === "ArrowRight") {
-        //   isWalking = false;
-        //   character_01.playAnimation("idle");
-        //   return;
-        // }
-
-        // if (e.key === "ArrowLeft") {
-        //   isWalking = false;
-        //   character_01.playAnimation("idle");
-        //   return;
-        // }
       });
 
-      action();
-
-      function action() {
-        if (keys.ArrowRight) {
-          move();
-        }
-
-        if (keys.ArrowLeft) {
-          move(-1);
-        }
-
-        requestAnimationFrame(action);
+      function forward(delta: number) {
+        character_01.rotation.y = 0;
+        setX(getX() + speed * delta);
       }
 
-      function move(direction: 1 | -1 = 1) {
-        setX(getX() + speed * direction);
+      function backward(delta: number) {
+        character_01.rotation.y = -Math.PI;
+        setX(getX() - speed * delta);
       }
 
       function getX() {
