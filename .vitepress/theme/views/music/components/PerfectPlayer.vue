@@ -180,7 +180,7 @@ import { MusicTrack } from "../../../utils/getMusics";
 import MusicCover from "./MusicCover.vue";
 import ShrinkSvg from "./ShrinkSvg.vue";
 import { transTime } from "../../../utils/transTime";
-import { transNumber } from "../../../utils/transNumber";
+import { fillZero } from "../../../utils/fillZero";
 import ProgressBar from "./ProgressBar.vue";
 import PauseSvg from "./PauseSvg.vue";
 import PlayIcon from "./PlayIcon.vue";
@@ -266,14 +266,14 @@ watchEffect(() => {
 
 const startTime = computed(
   () =>
-    `${transNumber(transTime(props.currentTime).minutes())}:${transNumber(
+    `${fillZero(transTime(props.currentTime).minutes())}:${fillZero(
       transTime(Math.round(props.currentTime)).seconds()
     )}`
 );
 
 const endTime = computed(
   () =>
-    `${transNumber(transTime(props.duration).minutes())}:${transNumber(
+    `${fillZero(transTime(props.duration).minutes())}:${fillZero(
       transTime(props.duration).seconds()
     )}`
 );
