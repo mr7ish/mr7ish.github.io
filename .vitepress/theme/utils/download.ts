@@ -37,4 +37,6 @@ export function download(imageUrl: string, fileName: string) {
       notice("download success", "success");
     })
     .catch((_error) => notice("download error", "error"));
+
+  console.log("download");
 }
