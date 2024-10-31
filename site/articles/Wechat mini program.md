@@ -507,3 +507,52 @@ wx.request({
 ```xml
 <rich-text nodes="{{ contents }}"></rich-text>
 ```
+
+### 微信小程序踩坑：
+
+#### font-weight属性
+
+​	设置 font-weight: 600; 加粗效果不生效
+
+​	原因：移动端下的字体有限，用数值来设置文本粗细效果时 缺乏对应粗细的字体。
+
+​	font-weight 的取值范围是 100-900，默认为 400
+
+​	400	对应	normal
+
+​	700	对应	bold
+
+​	设置为600，由于缺乏对应粗细的字体就会映射到下一等级。
+
+​	解决方法：设置粗细使用normal、bold
+
+[参考文章](https://blog.csdn.net/weixin_41697143/article/details/104517239)
+
+
+## 小程序封装组件：
+
+如果要在自定义组件里使用第三方的样式，需要设置
+
+```js
+Component({
+	options: {
+		styleIsolation: 'apply-shared'
+	}
+})
+```
+
+
+### 扩展程序推荐：
+
+wechat snippet
+WXML-Language Service
+微信小程序开发工具
+小程序开发助手
+
+IOS底部安全距离的占高
+
+```css
+constant(safe-area-inset-bottom);	/* ios < 11.2 */
+env(safe-area-inset-bottom);	/* ios >= 11.2 */
+```
+
