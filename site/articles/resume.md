@@ -236,57 +236,10 @@ https://www.laoyujianli.com/passage/1701477169135759361
 ![alt text](../public/others/how-to-say-hello.png)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 可以询问的问题：
 公司的绩效考核是怎样的？
 
 
-如何清肝火，健脾祛湿化痰？
+
 
 

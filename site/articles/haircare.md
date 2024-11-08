@@ -1,7 +1,8 @@
 ---
 createTime: 2024-09-10
 tags:
-  - daily
+  - health 
+  - physical
 ---
 
 改善发质可以从以下几个方面着手：
