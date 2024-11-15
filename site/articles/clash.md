@@ -21,17 +21,39 @@ fatal: unable to access 'https://github.com/xxx/xx.git/': Failed to connect to g
 
 可在 Settings 中查看地址，在 General 中查看端口
 
+##### 全局代理
+
 ```bash
 # 将后面的地址和端口替换为 http://127.0.0.1:7890
+git config --global http.proxy https://proxyserver:port
 git config --global https.proxy https://proxyserver:port
+```
+
+##### 仅针对 github 代理
+
+```bash
+git config --add http.https://github.com.proxy https://proxyserver:port
+git config --add https.https://github.com.proxy https://proxyserver:port
 ```
 
 #### 如需取消代理服务器
 
 ```bash
-# 取消代理
+# 取消全局代理
+git config --global --unset http.proxy
 git config --global --unset https.proxy
 
-# 查看当前代理设置，如果没有返回值，表示代理已被移除
+# 取消 github 代理
+git config --unset http.https://github.com.proxy
+git config --unset https.https://github.com.proxy
+
+
+# 查看当前全局代理设置，如果没有返回值，表示代理已被移除
+git config --global --get http.proxy
 git config --global --get https.proxy
+
+# 查看 github 代理设置
+git config --get http.https://github.com.proxy
+git config --get https.https://github.com.proxy
 ```
+
