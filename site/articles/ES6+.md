@@ -1,7 +1,7 @@
 ---
 createTime: 2023-03-15
 tags:
-  - javaScript
+  - javascript
 cover: /Taylor.jpg
 ---
 
