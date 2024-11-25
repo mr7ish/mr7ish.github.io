@@ -35,8 +35,8 @@ export const safeJsonParse = <T>({
 /**
  * @params fileName eg.下载 png 文件， fileName 要填 xxx.png 
  */
-export function download(imageUrl: string, fileName: string) {
-  fetch(imageUrl)
+export function download(fileUrl: string, fileName: string) {
+  fetch(fileUrl)
     .then((response) => response.blob())
     .then((blob) => {
       const url = URL.createObjectURL(blob);
