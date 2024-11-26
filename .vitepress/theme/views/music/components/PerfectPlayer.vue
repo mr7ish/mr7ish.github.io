@@ -317,6 +317,10 @@ watchEffect(async () => {
       await fetchLyrics(props.currentTrack.lyric)
     );
   }
+
+  if (isOpen.value && !props.currentTrack.lyric) {
+    initLyrics();
+  }
 });
 
 const lyricsWrapper = ref<HTMLDivElement>();
