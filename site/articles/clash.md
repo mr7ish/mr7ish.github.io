@@ -32,36 +32,70 @@ tips: 仅针对 github 代理就可以🥴
 ##### 全局代理
 
 ```bash
-# 将后面的地址和端口替换为 http://127.0.0.1:7890
-git config --global http.proxy https://proxyserver:port
-git config --global https.proxy https://proxyserver:port
+# 可根据配置替换后面的地址和端口
+git config --global http.proxy http://127.0.0.1:7890
+```
+
+```bash
+git config --global https.proxy http://127.0.0.1:7890
 ```
 
 ##### 仅针对 github 代理
 
 ```bash
-git config --add http.https://github.com.proxy https://proxyserver:port
-git config --add https.https://github.com.proxy https://proxyserver:port
+git config --add http.https://github.com.proxy http://127.0.0.1:7890
+```
+
+```bash
+git config --add https.https://github.com.proxy http://127.0.0.1:7890
 ```
 
 - #### 如需取消代理服务器
 
+##### 取消全局代理
 ```bash
-# 取消全局代理
 git config --global --unset http.proxy
+```
+
+```bash
 git config --global --unset https.proxy
+```
 
-# 取消 github 代理
+##### 取消 github 代理
+```bash
 git config --unset http.https://github.com.proxy
+```
+
+```bash
 git config --unset https.https://github.com.proxy
+```
 
-
-# 查看当前全局代理设置，如果没有返回值，表示代理已被移除
+##### 查看当前全局代理设置，如果没有返回值，表示代理已被移除
+```bash
 git config --global --get http.proxy
-git config --global --get https.proxy
+```
 
-# 查看 github 代理设置
+```bash
+git config --global --get https.proxy
+```
+
+##### 查看 github 代理设置
+```bash
 git config --get http.https://github.com.proxy
+```
+
+```bash
 git config --get https.https://github.com.proxy
 ```
+
+
+
+
+
+
+
+
+
+
+
 
