@@ -70,6 +70,7 @@ await：只能在 async 函数内部使用，它会等待一个 Promise 的结�
 通过闭包的形式避免竞态问题：
 
 ```vue
+<script setup>
 let finalData;
 
 watch(obj, async (newVal, oldVal, onInvalidate) => {
@@ -85,5 +86,6 @@ watch(obj, async (newVal, oldVal, onInvalidate) => {
   if(!expired) {
     finalData = data;
   }
-}) 
+})
+</script>
 ```
