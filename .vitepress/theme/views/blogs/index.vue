@@ -159,15 +159,17 @@ function getTags(_entireArticles: typeof entireArticles.value) {
   const tags: string[] = [];
 
   _entireArticles.map((a) => {
-    a.articles.map((i) => {
-      if (i.tags) {
-        i.tags.map((t) => {
-          if (!tags.includes(t)) {
-            tags.push(t);
-          }
-        });
-      }
-    });
+    a.articles
+      .filter((i) => !i.hidden)
+      .map((i) => {
+        if (i.tags) {
+          i.tags.map((t) => {
+            if (!tags.includes(t)) {
+              tags.push(t);
+            }
+          });
+        }
+      });
   });
 
   return ["All", ...tags, "Unlabeled"];

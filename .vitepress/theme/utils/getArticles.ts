@@ -8,16 +8,18 @@ export default () => {
     eager: true,
   });
 
-  const rawArticles = Object.values(modules).map((m: any) => {
-    const { __pageData } = m;
-    return {
-      relativePath: `/${(__pageData.relativePath as string).replace(
-        ".md",
-        ""
-      )}`,
-      ...(__pageData.frontmatter as SpecifiedFrontmatter),
-    };
-  });
+  const rawArticles = Object.values(modules)
+    .map((m: any) => {
+      const { __pageData } = m;
+      return {
+        relativePath: `/${(__pageData.relativePath as string).replace(
+          ".md",
+          ""
+        )}`,
+        ...(__pageData.frontmatter as SpecifiedFrontmatter),
+      };
+    })
+    .filter((i) => !i.hidden);
 
   const { voids, reals } = sortByValueIsVoid(rawArticles, "createTime");
 

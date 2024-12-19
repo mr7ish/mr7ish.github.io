@@ -12,4 +12,5 @@ export interface SpecifiedFrontmatter extends Record<string, any> {
   time?: number;
   words?: number;
   layout?: "doc" | "page" | "home";
+  hidden?: boolean;
 }
