@@ -57,6 +57,7 @@ import LinkTo from '../../.vitepress/theme/components/LinkTo.vue';
 
 
 ### 5个数字带来的职场思维
+<hr />
 
 #### 1. 职业生涯长度
 
@@ -80,6 +81,7 @@ import LinkTo from '../../.vitepress/theme/components/LinkTo.vue';
 
 
 ### 4大黄金问题
+<hr />
 
 #### 1. 我是否正在学习和成长？
 #### 2. 我是否正在对某些人、现在的公司，乃至整个社会拥有影响力？
