@@ -37,8 +37,10 @@ export default defineConfig({
         // ],
       },
     ],
-
     socialLinks: [{ icon: "github", link: "https://github.com/mr7ish" }],
+    search: {
+      provider: "local",
+    },
   },
   vite: {
     plugins: [resolveMarkdownPlugin()],
