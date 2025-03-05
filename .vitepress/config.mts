@@ -39,7 +39,13 @@ export default defineConfig({
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/mr7ish" }],
     search: {
-      provider: "local",
+      // provider: "local",
+      provider: "algolia",
+      options: {
+        appId: "OLRQJJJS6O",
+        apiKey: "c49cff5c3eefe1cd5e4083236d75bc30",
+        indexName: "mr7ishio",
+      },
     },
   },
   vite: {
