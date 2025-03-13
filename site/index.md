@@ -21,9 +21,6 @@ hero:
       link: /api-examples
 ---
 
-<script setup>
-import './style/index.less';
-
-</script>
+<script setup></script>
 
 more...
