@@ -4,7 +4,7 @@ type AnyFn = (...args: any[]) => any;
  * 在指定时间间隔内, 如果事件多次触发, 只执行最后一次
  * 用于频繁触发场景, 如用户输入, 只在用户输入完一段时间(拿最新值)去执行
  */
-export function debounce(fn: AnyFn, wait: number) {
+export function debounce(fn: AnyFn, wait: number = 500) {
   let timer: NodeJS.Timeout;
 
   return function (...args: Parameters<AnyFn>) {

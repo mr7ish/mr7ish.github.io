@@ -24,13 +24,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import getPictures from "../../utils/getPictures";
-import ImgPreviewModal from "../../components/ImgPreviewModal.vue";
+import ImgPreviewModal from "../../components/PreviewModal.vue";
 import {
   calcMoveDistance,
   calcScale,
   getClientInfo,
   getPicInfo,
-} from "../../utils/picCalc";
+} from "../../utils/element";
 import { debounce, throttle, throttle2 } from "../../utils/_";
 import { isMobile } from "../../utils/isMobile";
 

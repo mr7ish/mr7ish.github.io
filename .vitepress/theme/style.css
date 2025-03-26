@@ -184,6 +184,7 @@
   --player-default-color: rgba(255, 255, 255, 0.9);
   --message-bg-color: #fff;
   --message-text-color: rgba(0, 0, 0, 0.88);
+  --search-filter-border: #ccc;
 }
 
 :root.dark {
@@ -197,6 +198,7 @@
   --player-default-color: rgba(255, 255, 255, 0.8);
   --message-bg-color: #1f1f1f;
   --message-text-color: rgba(255, 255, 255, 0.85);
+  --search-filter-border: #eee;
 }
 
 .VPNavBarMenuLink {

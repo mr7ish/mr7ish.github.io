@@ -106,7 +106,7 @@ import getPictures from "../../utils/getPictures";
 import { shuffleArray } from "../../utils/shuffleArray";
 import { deepClone } from "../../utils/deepClone";
 import { notice } from "../../utils/notice";
-import { getClientInfo } from "../../utils/picCalc";
+import { getClientInfo } from "../../utils/element";
 
 const musicpPlayerRef = ref<HTMLDivElement>();
 

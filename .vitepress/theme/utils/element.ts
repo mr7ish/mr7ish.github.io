@@ -58,3 +58,19 @@ export function getPicInfo(pic: HTMLImageElement) {
     height,
   };
 }
+
+export function getElementCenterPoint(el: HTMLElement) {
+  const { x, y, width, height } = el.getBoundingClientRect();
+  const centerPoint: Vector2 = [x + width / 2, y + height / 2];
+  return centerPoint;
+}
+
+export function calcElementMoveDistance(el: HTMLElement): Vector2 {
+  const { clientCenterPoint } = getClientInfo();
+  const elementCenterPoint = getElementCenterPoint(el);
+
+  const moveX = clientCenterPoint[0] - elementCenterPoint[0];
+  const moveY = clientCenterPoint[1] - elementCenterPoint[1];
+
+  return [moveX, moveY];
+}

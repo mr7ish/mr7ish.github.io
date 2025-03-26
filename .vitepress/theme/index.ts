@@ -3,6 +3,8 @@ import { h } from "vue";
 import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import "./style.css";
+import "./style/index.less";
+import "animate.css";
 import CustomLayout from "./layout/index.vue";
 // import BlogsView from "./views/blogs/index.vue";
 
