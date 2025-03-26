@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
 import SearchFilter from "../../components/SearchFilter.vue";
 import foods from "./foods";
 import { searchFoods } from "./utils";
@@ -44,12 +44,6 @@ const filteredFoods = computed(() => {
   const words = keywords.value.toLowerCase();
   if (!words) return foods;
   return searchFoods(words, foods);
-});
-
-watchEffect(() => {
-  console.log("keywords =>", keywords.value);
-  console.log("filteredFoods =>", filteredFoods.value);
-  console.log("isFocus =>", isFocus.value);
 });
 </script>
 

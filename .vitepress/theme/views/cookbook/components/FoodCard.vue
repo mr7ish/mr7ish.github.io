@@ -28,6 +28,7 @@
       <div
         v-if="!isFolded"
         class="body"
+        :class="!isFolded ? 'fade' : ''"
       >
         <div
           class="material"
@@ -115,41 +116,11 @@ const steps = computed(() =>
 
 const imgUrl = computed(() => unpackedFood.value.finalDishImage as string);
 
-// const material = computed(() =>
-//   (unpackedFood.value.material as string[]).join(" ")
-// );
-
 function isPrimaryMaterial(material: string) {
   return (unpackedFood.value.name as string)
     .toLowerCase()
     .includes(material.toLowerCase());
 }
-
-const material = computed(() => {
-  const primary: string[] = [];
-  const secondary: string[] = [];
-
-  (unpackedFood.value.material as string[]).forEach((i) => {
-    if (
-      (unpackedFood.value.name as string)
-        .toLowerCase()
-        .includes(i.toLowerCase())
-    ) {
-      primary.push(i);
-    } else {
-      secondary.push(i);
-    }
-  });
-
-  return {
-    primary,
-    secondary,
-  };
-});
-
-// const secondaryMaterial = computed(() =>
-
-// );
 
 const previewModalRef = ref<InstanceType<typeof PreviewModal>>();
 const isFolded = ref(true);
@@ -243,12 +214,17 @@ function onClick(e: Event) {
     }
   }
 
+  .fade {
+    animation: fade 0.5s ease 0.5s forwards;
+  }
+
   .body {
     flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     padding: 10px;
+    opacity: 0;
 
     .material {
       margin-bottom: 10px;
@@ -279,6 +255,16 @@ function onClick(e: Event) {
   }
 }
 
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 // <=480
 @media (max-width: 480px) {
   .food-card-wrapper {
@@ -301,7 +287,7 @@ function onClick(e: Event) {
 
 @media (min-width: 1600px) {
   .food-card-wrapper {
-    width: 20vw;
+    width: 30vw;
   }
 }
 </style>
