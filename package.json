@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@tresjs/core": "^4.2.5",
-    "@vueuse/core": "^10.11.0",
+    "@vueuse/core": "^13.0.0",
     "animate.css": "^4.1.1",
     "gsap": "^3.12.5",
     "moment": "^2.30.1",
