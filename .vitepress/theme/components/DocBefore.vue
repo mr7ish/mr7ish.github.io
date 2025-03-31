@@ -1,9 +1,10 @@
 <template>
   <div class="doc-before-wrapper">
-    <h1 class="">{{ frontmatter.title ?? frontmatter.fileName }}</h1>
-    <p style="margin: -1.5rem 0 0.8rem">
+    <h1>{{ frontmatter.title ?? frontmatter.fileName }}</h1>
+    <div class="secondary-row">
       <MetaTime />
-    </p>
+      <SpeechSensor style="margin: -0.4rem 1rem 0" />
+    </div>
     <MetaTags style="margin: 0 0 1.5rem -0.2rem" />
     <div
       class="cover-wrapper"
@@ -23,6 +24,7 @@ import MetaTime from "./MetaTime.vue";
 import MetaTags from "./MetaTags.vue";
 import { Ref } from "vue";
 import { SpecifiedFrontmatter } from "../../../env";
+import SpeechSensor from "./SpeechSensor.vue";
 
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
 console.log("frontmatter =>", frontmatter.value);
@@ -36,6 +38,11 @@ console.log("frontmatter =>", frontmatter.value);
     margin-bottom: 0.8888889em;
     line-height: 1.1111111;
     color: var(--default-color);
+  }
+
+  .secondary-row {
+    margin: -1.5rem 0 0.8rem;
+    display: flex;
   }
 
   .cover-wrapper {

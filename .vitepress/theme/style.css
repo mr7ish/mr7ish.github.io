@@ -185,6 +185,7 @@
   --message-bg-color: #fff;
   --message-text-color: rgba(0, 0, 0, 0.88);
   --search-filter-border: #ccc;
+  --icon-sound-color: #20263b;
 }
 
 :root.dark {
@@ -199,6 +200,7 @@
   --message-bg-color: #1f1f1f;
   --message-text-color: rgba(255, 255, 255, 0.85);
   --search-filter-border: #eee;
+  --icon-sound-color: #bbb;
 }
 
 .VPNavBarMenuLink {
