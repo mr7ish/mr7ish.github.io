@@ -5,7 +5,14 @@ tags:
 cover: /wilderness.jpg
 ---
 
-### [autofit](https://www.npmjs.com/package/autofit.js)
+<script setup>
+import LinkPreview from '../../.vitepress/theme/components/LinkPreview.vue';
 
-大屏适配
+</script>
+
+### 大屏适配 (autofit)
+
+<LinkPreview url="https://www.npmjs.com/package/autofit.js" />
+
+
 
