@@ -5,11 +5,15 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@number-flow/vue": "^0.4.7",
     "@tresjs/core": "^4.2.5",
+    "@vueuse/components": "^13.1.0",
     "@vueuse/core": "^13.0.0",
     "animate.css": "^4.1.1",
     "gsap": "^3.12.5",
+    "html2canvas": "^1.4.1",
     "moment": "^2.30.1",
+    "motion-v": "1.0.0-beta.2",
     "nanoid": "^5.0.7",
     "reading-time": "^1.5.0",
     "sprite-craft": "^0.4.1",
