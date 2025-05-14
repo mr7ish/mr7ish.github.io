@@ -1,11 +1,12 @@
 <template>
   <div class="input-wrapper">
-    <IconSearch
+    <slot></slot>
+    <!-- <IconSearch
       class="icon-search animate__animated"
       :class="isFocus ? 'animate__jello' : ''"
       :size="20"
       :color="isFocus ? 'var(--vp-c-brand-1)' : undefined"
-    />
+    /> -->
     <input
       class="input"
       type="text"
@@ -18,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import IconSearch from "./svgs/IconSearch.vue";
+// import IconSearch from "./svgs/IconSearch.vue";
 
 withDefaults(
   defineProps<{
@@ -38,12 +39,12 @@ const isFocus = defineModel("isFocus", { default: false });
   position: relative;
   display: inline-flex;
 
-  .icon-search {
-    position: absolute;
-    top: 0.375rem;
-    left: 0.375rem;
-    font-size: 0.75rem;
-  }
+  // .icon-search {
+  //   position: absolute;
+  //   top: 0.375rem;
+  //   left: 0.375rem;
+  //   font-size: 0.75rem;
+  // }
 
   .input {
     border: 1px solid var(--search-filter-border);
