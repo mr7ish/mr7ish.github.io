@@ -12,11 +12,18 @@
     </div>
 
     <h1>Here are some cooking case 🥰</h1>
-    <SearchFilter
+    <CustomInput
       v-model:keywords.trim="keywords"
       v-model:isFocus="isFocus"
       placeholder="Category or Name..."
-    />
+    >
+      <IconSearch
+        class="icon-search animate__animated"
+        :class="isFocus ? 'animate__jello' : ''"
+        :size="20"
+        :color="isFocus ? 'var(--vp-c-brand-1)' : undefined"
+      />
+    </CustomInput>
     <main>
       <FoodCard
         v-for="(food, i) in filteredFoods"
@@ -31,10 +38,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import SearchFilter from "../../components/SearchFilter.vue";
+import CustomInput from "../../components/CustomInput.vue";
 import foods from "./foods";
 import { searchFoods } from "./utils";
 import FoodCard from "./components/FoodCard.vue";
+import IconSearch from "../../components/svgs/IconSearch.vue";
 
 const keywords = ref("");
 const isFocus = ref(false);
@@ -55,6 +63,13 @@ const filteredFoods = computed(() => {
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+
+  .icon-search {
+    position: absolute;
+    top: 0.375rem;
+    left: 0.375rem;
+    font-size: 0.75rem;
+  }
 
   .lang-switch-box {
     position: absolute;

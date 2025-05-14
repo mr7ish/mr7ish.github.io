@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="wrapperRef"
     class="outmost-wrapper"
     :class="!isFolded ? 'is-unfolded' : ''"
     :style="{
@@ -16,7 +17,12 @@
       }"
     >
       <div class="header">
-        <div class="icon">{{ unpackedFood.icon }}</div>
+        <div
+          class="icon"
+          @click="exportAsImg"
+        >
+          {{ unpackedFood.icon }}
+        </div>
         <div
           class="title animate__animated animate__flipInY"
           :key="isEn + ''"
@@ -81,6 +87,16 @@ import { Food } from "../types";
 import { calcElementMoveDistance } from "../../../utils/element";
 import PreviewModal from "../../../components/PreviewModal.vue";
 import StepBar from "./StepBar.vue";
+import { captureScreen } from "../../../utils/captureScreen";
+
+const wrapperRef = ref<HTMLElement>();
+
+function exportAsImg() {
+  captureScreen({
+    isFullScreen: true,
+    usage: "open_window",
+  });
+}
 
 type UnpackedFood = Record<keyof Food, string | string[]>;
 
