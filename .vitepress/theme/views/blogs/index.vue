@@ -77,7 +77,7 @@
           '--enter-stage': sumArray(articleSizeArr) + 1,
         }"
         :key="currentTag"
-        prefix="designed & inspired by"
+        prefix="designed & inspired from"
         author="Anthony Fu"
         link="https://antfu.me/"
       />
