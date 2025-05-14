@@ -1,3 +1,5 @@
+import { createImage } from "./factory";
+
 type Point = {
   x: number;
   y: number;
@@ -27,15 +29,4 @@ function heartBurst({ x, y }: Point) {
   setTimeout(() => {
     document.documentElement.removeChild(heartImg);
   }, 750);
-}
-
-/**
- * create an image object
- * @param imagePath image source
- * @returns an img element
- */
-export function createImage(imagePath: string) {
-  const image = new Image();
-  image.src = imagePath;
-  return image;
 }
