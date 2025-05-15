@@ -23,6 +23,7 @@
         :style="{
           top: `${y}px`,
           left: `${x}px`,
+          width: `${optionsWidth}px`,
         }"
         :initial="{ opacity: 0, scale: 0 }"
         :animate="{ opacity: 1, scale: 1 }"
@@ -35,7 +36,11 @@
             class="option-item enabled"
             @click="onSelect(option)"
           >
-            {{ option.label }}
+            <span>{{ option.label }}</span>
+            <slot
+              name="operates"
+              :option="option"
+            />
           </div>
         </template>
         <template v-else>
@@ -67,6 +72,8 @@ type Props = {
   value?: Option["value"];
   placeholder?: string;
   noOptionsTip?: string;
+  optionsWidth?: number;
+  valueToLabel?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,6 +87,8 @@ const props = withDefaults(defineProps<Props>(), {
   ],
   placeholder: "select...",
   noOptionsTip: "No options",
+  optionsWidth: 200,
+  valueToLabel: false,
 });
 
 const selectStyle = computed<CSSProperties>(() => {
@@ -115,7 +124,11 @@ function onClick(e: Event) {
 }
 
 function onSelect(option: Option) {
-  value.value = option.value;
+  if (props.valueToLabel) {
+    value.value = option.label;
+  } else {
+    value.value = option.value;
+  }
   isVisible.value = false;
 }
 
@@ -154,7 +167,6 @@ defineExpose({ close });
 }
 
 .options-wrapper {
-  min-width: 200px;
   max-height: 30vh;
   overflow-y: auto;
   position: fixed;
@@ -164,6 +176,7 @@ defineExpose({ close });
   background-color: #0e1616;
   border: 1px solid #1d2628;
   cursor: pointer;
+  color: #fff;
 
   .option-item {
     padding: 0 15px;
@@ -171,6 +184,9 @@ defineExpose({ close });
     user-select: none;
     background-color: #0e1616;
     transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &.disabled {
       color: #999;
