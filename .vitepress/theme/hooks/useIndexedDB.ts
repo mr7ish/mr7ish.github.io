@@ -71,26 +71,31 @@ export function useIndexedDB(options: Options) {
    */
   function set<T extends OperationParams>(data: T | T[]): Promise<boolean> {
     return new Promise((resolve) => {
-      if (!isConnected()) return resolve(false);
+      try {
+        if (!isConnected()) return resolve(false);
 
-      const transaction = db!.transaction(storeName, "readwrite");
-      const store = transaction.objectStore(storeName);
+        const transaction = db!.transaction(storeName, "readwrite");
+        const store = transaction.objectStore(storeName);
 
-      if (Array.isArray(data)) {
-        data.forEach((item) => {
-          store.put(item);
-        });
-      } else {
-        store.put(data);
+        if (Array.isArray(data)) {
+          data.forEach((item) => {
+            store.put(item);
+          });
+        } else {
+          store.put(data);
+        }
+
+        transaction.oncomplete = () => {
+          resolve(true);
+        };
+
+        transaction.onerror = (event) => {
+          resolve(!!setError((event.target as IDBTransaction).error));
+        };
+      } catch (err) {
+        resolve(false);
+        error.value = err;
       }
-
-      transaction.oncomplete = () => {
-        resolve(true);
-      };
-
-      transaction.onerror = (event) => {
-        resolve(!!setError((event.target as IDBTransaction).error));
-      };
     });
   }
 
@@ -102,20 +107,25 @@ export function useIndexedDB(options: Options) {
 
   async function get(key?: string) {
     return new Promise((resolve) => {
-      if (!isConnected()) return resolve(null);
+      try {
+        if (!isConnected()) return resolve(null);
 
-      const transaction = db!.transaction(storeName, "readonly");
-      const store = transaction.objectStore(storeName);
+        const transaction = db!.transaction(storeName, "readonly");
+        const store = transaction.objectStore(storeName);
 
-      let request: IDBRequest;
-      if (key) {
-        request = store.get(key as string);
-      } else {
-        request = store.getAll();
+        let request: IDBRequest;
+        if (key) {
+          request = store.get(key as string);
+        } else {
+          request = store.getAll();
+        }
+
+        request.onsuccess = () => resolve(request.result ?? null);
+        request.onerror = () => resolve(setError(request.error));
+      } catch (err) {
+        resolve(null);
+        error.value = err;
       }
-
-      request.onsuccess = () => resolve(request.result ?? null);
-      request.onerror = () => resolve(setError(request.error));
     });
   }
 
@@ -124,14 +134,19 @@ export function useIndexedDB(options: Options) {
    */
   function remove(key: string): Promise<boolean> {
     return new Promise((resolve) => {
-      if (!isConnected()) return resolve(false);
+      try {
+        if (!isConnected()) return resolve(false);
 
-      const transaction = db!.transaction(storeName, "readwrite");
-      const store = transaction.objectStore(storeName);
-      const request = store.delete(key);
+        const transaction = db!.transaction(storeName, "readwrite");
+        const store = transaction.objectStore(storeName);
+        const request = store.delete(key);
 
-      request.onsuccess = () => resolve(true);
-      request.onerror = () => resolve(!!setError(request.error));
+        request.onsuccess = () => resolve(true);
+        request.onerror = () => resolve(!!setError(request.error));
+      } catch (err) {
+        resolve(false);
+        error.value = err;
+      }
     });
   }
 
