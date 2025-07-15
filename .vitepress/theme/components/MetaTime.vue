@@ -8,11 +8,11 @@
     </span>
     <span
       class="meta-time meta-time-read"
-      v-if="frontmatter.min"
+      v-if="frontmatter._min"
     >
       <span v-if="frontmatter.createTime"> · </span>
       <span v-else>around</span>
-      {{ Math.ceil(frontmatter.min) }}min
+      {{ Math.ceil(frontmatter._min) }}min
     </span>
   </template>
   <template v-else>

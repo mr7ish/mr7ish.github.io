@@ -28,7 +28,7 @@ export default function resolveMarkdownPlugin(): Plugin {
         words: stats.words,
         time: stats.time,
         text: stats.text,
-        min: stats.minutes,
+        _min: stats.minutes,
         id,
         fileName: path.basename(id, ".md"),
       });

@@ -23,7 +23,7 @@
         <BlogItem
           v-bind="{
             createTime: article.createTime,
-            min: article.min,
+            min: article._min,
             articleTitle: article.title ?? article.fileName,
           }"
         />

@@ -7,7 +7,7 @@ export interface SpecifiedFrontmatter extends Record<string, any> {
   cover?: string;
   fileName?: string;
   tags?: string[];
-  min?: number;
+  _min?: number;
   text?: string;
   time?: number;
   words?: number;
