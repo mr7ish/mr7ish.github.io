@@ -6,6 +6,7 @@ export const navConfigs = [
   { text: "Gallery", link: "/gallery.md" },
   { text: "Music", link: "/music.md" },
   { text: "Cookbook", link: "/cookbook.md" },
+  // { text: "Todo", link: "/todo.md" },
   // { text: "Resume", link: "/resume.md" },
   // { text: "3d", link: "/3d.md" },
 ] as DefaultTheme.NavItem[];

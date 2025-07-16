@@ -12,6 +12,9 @@
       </RouterTo>
     </template>
     <template #layout-bottom>
+      <!-- <MagLev /> -->
+      <TodoIsland />
+
       <MusicPlayer v-if="!['music'].includes(frontmatter.fileName ?? '')" />
       <transition name="scroll">
         <div
@@ -51,10 +54,12 @@ import { useData } from "vitepress";
 import { SpecifiedFrontmatter } from "../../../env";
 import { createHeartByClick } from "../utils/heartBurst";
 import MusicPlayer from "../views/music/MusicPlayer.vue";
+import MagLev from "../components/MagLev.vue";
+import TodoIsland from "../components/todo/TodoIsland.vue";
 
 const { Layout } = DefaultTheme;
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
-console.log("frontmatter =>", frontmatter.value);
+// console.log("frontmatter =>", frontmatter.value);
 const { isDark } = useData();
 
 const isNeedBackTop = ref(false);
@@ -152,7 +157,7 @@ onUnmounted(() => {
   right: 20px;
   width: 40px;
   height: 40px;
-  height: 800px;
+  height: 90vh;
   // background-color: lightcoral;
   border-radius: 4px;
   z-index: var(--z-i-30);
@@ -185,7 +190,7 @@ onUnmounted(() => {
 
 @keyframes scroll-animation {
   0% {
-    transform: translateY(-800px);
+    transform: translateY(-100vh);
   }
   70% {
     transform: translateY(50px);
@@ -200,7 +205,7 @@ onUnmounted(() => {
 
 @keyframes scroll-animation-reverse {
   0% {
-    transform: translateY(-800px);
+    transform: translateY(-100vh);
   }
   70% {
     transform: translateY(50px);

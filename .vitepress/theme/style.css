@@ -186,6 +186,8 @@
   --message-text-color: rgba(0, 0, 0, 0.88);
   --search-filter-border: #ccc;
   --icon-sound-color: #20263b;
+  --link-preview-boxshadow: rgba(0, 0, 0, 0.8);
+  --todo-island-bg: 240 5.9% 10%;
 }
 
 :root.dark {
@@ -201,6 +203,8 @@
   --message-text-color: rgba(255, 255, 255, 0.85);
   --search-filter-border: #eee;
   --icon-sound-color: #bbb;
+  --link-preview-boxshadow: rgba(255, 255, 255, 0.8);
+  --todo-island-bg: 0 0% 98%;
 }
 
 .VPNavBarMenuLink {
