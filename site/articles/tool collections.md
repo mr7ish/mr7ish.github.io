@@ -15,3 +15,7 @@ import LinkPreview from '../../.vitepress/theme/components/LinkPreview.vue';
 ### image compression (图片压缩):
 
 <LinkPreview url="https://squoosh.app" />
+
+### image enhancement (图片增强):
+
+<LinkPreview url="https://letsenhance.io/zh-CN" />

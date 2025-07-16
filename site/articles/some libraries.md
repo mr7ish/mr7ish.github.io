@@ -16,7 +16,7 @@ import LinkPreview from '../../.vitepress/theme/components/LinkPreview.vue';
 
 ### 数字流动效果组件 (NumberFlow)
 
-<LinkPreview url="https://number-flow.barvian.me/vue" />
+<LinkPreview url="https://number-flow.barvian.me/" />
 
 ### 提取图片颜色 (vibrant)
 
@@ -26,5 +26,18 @@ import LinkPreview from '../../.vitepress/theme/components/LinkPreview.vue';
 
 <LinkPreview url="https://mermaid.js.org/" />
 
+### 网页截图 (snapDom)
 
+<LinkPreview url="https://zumerlab.github.io/snapdom/" />
 
+### 纯 CSS UI 组件库 (daisyUI)
+
+<LinkPreview url="https://daisyui.com/components/" />
+
+### UI 组件库 (Inspira UI)
+
+<LinkPreview url="https://inspira-ui.com/docs/components" />
+
+### 动画库 (motion)
+
+<LinkPreview url="https://motion.dev/docs" />
