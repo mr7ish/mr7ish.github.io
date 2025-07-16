@@ -109,7 +109,7 @@ const props = withDefaults(defineProps<Props>(), {
   showSubmitButton: true,
 });
 
-const emit = defineEmits(["submit", "change"]);
+const emit = defineEmits(["submit", "change", "animated"]);
 
 defineExpose({
   handleSubmit,
@@ -265,6 +265,13 @@ watch(vanishingText, (newVal: string) => {
     emit("change", { target: { value: newVal } });
   }
 });
+
+watch(
+  () => animating.value,
+  (_animating) => {
+    emit("animated", _animating);
+  }
+);
 
 onMounted(() => {
   changePlaceholder();

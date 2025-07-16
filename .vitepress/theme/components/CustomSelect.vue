@@ -2,9 +2,14 @@
   <div
     class="custom-select-wrapper"
     @click="onClick"
-    :style="selectStyle"
+    :style="{
+      ...selectStyle,
+      ...outmostCustomStyle,
+    }"
   >
-    <div class="text">{{ !value ? placeholder : value }}</div>
+    <div class="text">
+      {{ !value ? placeholder : valueToLabel ? label : value }}
+    </div>
     <IconArrowDown
       v-if="!value"
       style="pointer-events: none"
@@ -19,17 +24,19 @@
     <AnimatePresence :initial="false">
       <motion.div
         v-if="isVisible"
+        ref="optionsWrapperRef"
         class="options-wrapper"
         :style="{
           top: `${y}px`,
           left: `${x}px`,
           width: `${optionsWidth}px`,
+          ...optionsCustomStyle,
         }"
         :initial="{ opacity: 0, scale: 0 }"
         :animate="{ opacity: 1, scale: 1 }"
         :exit="{ opacity: 0, scale: 0 }"
       >
-        <template v-if="options.length > 0">
+        <template v-if="options && options.length > 0">
           <div
             v-for="(option, i) in options"
             :key="i"
@@ -54,10 +61,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, CSSProperties, onUnmounted, shallowRef } from "vue";
+import {
+  computed,
+  CSSProperties,
+  onUnmounted,
+  shallowRef,
+  useTemplateRef,
+} from "vue";
 import IconArrowDown from "./svgs/IconArrowDown.vue";
 import { AnimatePresence, motion } from "motion-v";
 import IconClose from "./svgs/IconClose.vue";
+import { onClickOutside } from "@vueuse/core";
+import { useData } from "vitepress";
 
 export type Option = {
   value: string;
@@ -74,6 +89,8 @@ type Props = {
   noOptionsTip?: string;
   optionsWidth?: number;
   valueToLabel?: boolean;
+  outmostCustomStyle?: CSSProperties;
+  optionsCustomStyle?: CSSProperties;
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -89,6 +106,8 @@ const props = withDefaults(defineProps<Props>(), {
   noOptionsTip: "No options",
   optionsWidth: 200,
   valueToLabel: false,
+  outmostCustomStyle: () => ({}),
+  optionsCustomStyle: () => ({}),
 });
 
 const selectStyle = computed<CSSProperties>(() => {
@@ -108,10 +127,20 @@ const width = computed(() =>
   props.ellipsis ? `${props.elipsisWidth}px` : "auto"
 );
 
+const { isDark } = useData();
+
+const bgColor = computed(() =>
+  isDark.value ? "#0e1616" : "rgb(255 255 255 / var(--tw-bg-opacity, 1))"
+);
+
 const x = shallowRef(0);
 const y = shallowRef(0);
 const isVisible = shallowRef(false);
 const value = defineModel<Option["value"]>();
+const label = shallowRef("");
+const optionsWrapperRef = useTemplateRef("optionsWrapperRef");
+
+onClickOutside(optionsWrapperRef, () => close());
 
 function onClick(e: Event) {
   const el = e.target as HTMLElement;
@@ -124,11 +153,13 @@ function onClick(e: Event) {
 }
 
 function onSelect(option: Option) {
-  if (props.valueToLabel) {
-    value.value = option.label;
-  } else {
-    value.value = option.value;
-  }
+  // if (props.valueToLabel) {
+  //   value.value = option.label;
+  // } else {
+  //   value.value = option.value;
+  // }
+  value.value = option.value;
+  label.value = option.label;
   isVisible.value = false;
 }
 
@@ -141,8 +172,6 @@ function close() {
 onUnmounted(() => {
   close();
 });
-
-defineExpose({ close });
 </script>
 
 <style scoped lang="less">
@@ -155,7 +184,7 @@ defineExpose({ close });
   gap: 10px;
   border-radius: 5px;
   border: 1px solid #1d2628;
-  background-color: #0e1616;
+  background-color: v-bind(bgColor);
   padding: 0 10px;
   cursor: pointer;
 

@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { AnimatePresence, motion } from "motion-v";
-import { computed, onMounted } from "vue";
+import { computed, watchEffect } from "vue";
 import useScrollLock from "../hooks/useScrollLock";
 import { useData } from "vitepress";
 
@@ -89,10 +89,11 @@ function close() {
   visible.value = false;
 }
 
-const { lock } = useScrollLock();
+const { lock, unlock } = useScrollLock();
 
-onMounted(() => {
-  lock();
+watchEffect(() => {
+  if (visible.value) return lock();
+  unlock();
 });
 </script>
 
