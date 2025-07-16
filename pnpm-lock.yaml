@@ -23,6 +23,9 @@ importers:
       animate.css:
         specifier: ^4.1.1
         version: 4.1.1
+      canvas-confetti:
+        specifier: ^1.9.3
+        version: 1.9.3
       gsap:
         specifier: ^3.12.5
         version: 3.12.7
@@ -649,6 +652,9 @@ packages:
 
   birpc@2.3.0:
     resolution: {integrity: sha512-ijbtkn/F3Pvzb6jHypHRyve2QApOCZDR25D/VnkY2G/lBNcXCTsnsCxgY4k4PkVB7zfwzYbY3O9Lcqe3xufS5g==}
+
+  canvas-confetti@1.9.3:
+    resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -1609,6 +1615,8 @@ snapshots:
   base64-arraybuffer@1.0.2: {}
 
   birpc@2.3.0: {}
+
+  canvas-confetti@1.9.3: {}
 
   ccount@2.0.1: {}
 
