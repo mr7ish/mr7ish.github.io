@@ -41,3 +41,7 @@ import LinkPreview from '../../.vitepress/theme/components/LinkPreview.vue';
 ### 动画库 (motion)
 
 <LinkPreview url="https://motion.dev/docs" />
+
+### 纸屑特效 (confetti)
+
+<LinkPreview url="https://www.kirilv.com/canvas-confetti/" />
