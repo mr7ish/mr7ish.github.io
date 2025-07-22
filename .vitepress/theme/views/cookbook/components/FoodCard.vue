@@ -82,12 +82,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { Food } from "../types";
 import { calcElementMoveDistance } from "../../../utils/element";
 import PreviewModal from "../../../components/PreviewModal.vue";
 import StepBar from "./StepBar.vue";
 import { captureScreen } from "../../../utils/captureScreen";
+import useScrollLock from "../../../hooks/useScrollLock";
 
 const wrapperRef = ref<HTMLElement>();
 
@@ -149,6 +150,13 @@ const unfoldedHeight = ref(initHeight);
 
 const tones = ["#F4C853", "#304A95", "#429356", "#CC4E39"];
 const bgColor = computed(() => tones[props.index % tones.length]);
+
+const { lock, unlock } = useScrollLock();
+
+watchEffect(() => {
+  if (!isFolded.value) return lock();
+  unlock();
+});
 
 function whenClose() {
   unfoldedHeight.value = initHeight;
