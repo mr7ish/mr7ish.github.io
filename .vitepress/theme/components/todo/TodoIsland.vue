@@ -100,6 +100,7 @@ const progressValue = computed(() => {
     .map((list) => list.list)
     .flat();
 
+  if(totalTodoItem.length === 0) return 0;
   return (
     +(
       totalTodoItem.filter((i) => i.completed).length / totalTodoItem.length
