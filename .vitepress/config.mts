@@ -5,7 +5,8 @@ import { templateCompilerOptions } from "@tresjs/core";
 
 // https://vitepress.dev/zh/reference/site-config
 export default defineConfig({
-  title: "bigfish's records",
+  // title: "bigfish's records",
+  title: " ",
   titleTemplate: false,
   description: "a personal record site based on vitepress",
   // TODO fix icon path

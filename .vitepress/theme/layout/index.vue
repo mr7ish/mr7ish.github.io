@@ -1,5 +1,9 @@
 <template>
   <Layout>
+    <template #nav-bar-title-after>
+      <IconSignature />
+    </template>
+
     <template #doc-before>
       <DocBefore />
     </template>
@@ -56,6 +60,7 @@ import { createHeartByClick } from "../utils/heartBurst";
 import MusicPlayer from "../views/music/MusicPlayer.vue";
 import MagLev from "../components/MagLev.vue";
 import TodoIsland from "../components/todo/TodoIsland.vue";
+import IconSignature from "../components/svgs/IconSignature.vue";
 
 const { Layout } = DefaultTheme;
 const { frontmatter }: { frontmatter: Ref<SpecifiedFrontmatter> } = useData();
