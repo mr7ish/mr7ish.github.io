@@ -39,10 +39,10 @@
                 locales="zh-CN"
               />
             </template>
-            <IconTodo
+            <!-- <IconTodo
               v-else
               :color="color"
-            />
+            /> -->
           </div>
           <motion.div class="main">
             <TodoPanel :open="open" />
@@ -80,11 +80,11 @@ const { isDark } = useData();
 const { width: windowWidth } = useWindowSize();
 
 const showSidebarWidth = 960;
-const open = ref(false);
+const open = ref(true);
 
 const animateWidth = computed(() => {
   if (open.value) return props.expandedWidth;
-  if (windowWidth.value < showSidebarWidth) return props.height;
+  // if (windowWidth.value < showSidebarWidth) return props.height;
   return props.initWidth;
 });
 
