@@ -199,7 +199,7 @@ onUnmounted(() => {
   max-height: 30vh;
   overflow-y: auto;
   position: fixed;
-  z-index: var(--z-i-top);
+  z-index: calc(var(--z-i-top) + 1);
   padding: 5px;
   border-radius: 8px;
   background-color: #0e1616;
