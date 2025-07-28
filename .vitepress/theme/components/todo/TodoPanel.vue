@@ -181,7 +181,7 @@ const bgColor = computed(() => (isDark.value ? "#e3e3e3" : "#2F2F31"));
       flex-direction: column;
 
       .list-tab-wrapper {
-        margin: 20px 5px 0;
+        margin: 50px 5px 0;
       }
 
       .list-content-wrapper {
