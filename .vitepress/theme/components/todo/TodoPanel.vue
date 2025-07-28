@@ -170,8 +170,9 @@ const bgColor = computed(() => (isDark.value ? "#e3e3e3" : "#2F2F31"));
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 1rem;
-    padding-bottom: 0;
+    padding: 0 1rem;
+    // padding-top: 0;
+    // padding-bottom: 0;
     position: relative;
 
     .main {
@@ -180,6 +181,7 @@ const bgColor = computed(() => (isDark.value ? "#e3e3e3" : "#2F2F31"));
       flex-direction: column;
 
       .list-tab-wrapper {
+        margin: 20px 5px 0;
       }
 
       .list-content-wrapper {
