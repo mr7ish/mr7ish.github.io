@@ -1,6 +1,66 @@
 <template>
   <div class="todo-panel-wrapper">
-    <motion.div
+    <div class="main-wrapper">
+      <div class="main">
+        <div class="list-tab-wrapper">
+          <ExclusiveTabs
+            :tabs="tabs"
+            v-model:activeTab="activeTab"
+            style="font-size: 0.75rem"
+            :margin="15"
+            :padding="0.3"
+          >
+            <template #tab="{ tabId, tabLabel }">
+              <CustomSelect
+                v-if="tabId === 'custom-list'"
+                v-model="listKey"
+                :placeholder="tabLabel"
+                :options="todoListOptions"
+                :optionsWidth="180"
+                valueToLabel
+              >
+                <template #operates="{ option }">
+                  <IconDelete
+                    :size="25"
+                    color="#ff3b30"
+                    @click.stop="onDelete(option)"
+                  />
+                </template>
+              </CustomSelect>
+            </template>
+          </ExclusiveTabs>
+        </div>
+        <div class="list-content-wrapper">
+          <TodoList
+            :todoList="filteredTodoList"
+            :activeTab="activeTab"
+            :listKey="listKey"
+          />
+        </div>
+      </div>
+      <div class="footer">
+        <div class="operation-wrapper">
+          <div
+            class="left-box"
+            @click="onCreate('item')"
+          >
+            <IconAdd
+              color="#007aff"
+              solid
+            />
+            <span>New Todo</span>
+          </div>
+          <span
+            style="cursor: pointer"
+            @click="onCreate('list')"
+          >
+            Create List
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <motion.div
       class="main-wrapper"
       :animate="{ y: `${y}vh` }"
       :transition="{ type: 'spring' }"
@@ -62,7 +122,7 @@
           </span>
         </div>
       </div>
-    </motion.div>
+    </motion.div> -->
     <TodoCreate
       v-model:open="openCreate"
       :type="createType"
