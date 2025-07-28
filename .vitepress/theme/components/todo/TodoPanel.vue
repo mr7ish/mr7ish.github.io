@@ -83,7 +83,6 @@ import ExclusiveTabs from "../ExclusiveTabs.vue";
 import CustomSelect, { Option } from "../CustomSelect.vue";
 import IconAdd from "../svgs/IconAdd.vue";
 import TodoCreate from "./TodoCreate.vue";
-import { motion } from "motion-v";
 import { removeTodoList, todoList } from "./utils/useTodoStorage";
 import IconDelete from "../svgs/IconDelete.vue";
 import ConfirmDialog from "../ConfirmDialog.vue";
@@ -92,11 +91,11 @@ import TodoList from "./TodoList.vue";
 import { useData } from "vitepress";
 
 type Props = {
-  open?: boolean;
+  // open?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  open: false,
+  // open: false,
 });
 
 const removeTodoListItem = shallowRef<Option>({ label: "", value: "" });

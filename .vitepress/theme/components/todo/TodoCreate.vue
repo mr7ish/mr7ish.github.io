@@ -57,7 +57,6 @@
 </template>
 
 <script setup lang="ts">
-import { motion } from "motion-v";
 import { computed, shallowRef, useTemplateRef, watch } from "vue";
 import VanishingInput from "../VanishingInput.vue";
 import { createTodoItem, createTodoList } from "./utils/useTodoStorage";

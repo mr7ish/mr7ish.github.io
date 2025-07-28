@@ -45,7 +45,7 @@
             />
           </div>
           <motion.div class="main">
-            <TodoPanel :open="open" />
+            <TodoPanel />
           </motion.div>
         </motion.div>
       </div>
@@ -80,7 +80,7 @@ const { isDark } = useData();
 const { width: windowWidth } = useWindowSize();
 
 const showSidebarWidth = 960;
-const open = ref(true);
+const open = ref(false);
 
 const animateWidth = computed(() => {
   if (open.value) return props.expandedWidth;
