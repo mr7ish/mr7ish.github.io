@@ -39,10 +39,10 @@
                 locales="zh-CN"
               />
             </template>
-            <!-- <IconTodo
+            <IconTodo
               v-else
               :color="color"
-            /> -->
+            />
           </div>
           <motion.div class="main">
             <TodoPanel :open="open" />

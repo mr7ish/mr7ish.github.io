@@ -63,11 +63,11 @@
         </div>
       </div>
     </motion.div>
-    <!-- <TodoCreate
+    <TodoCreate
       v-model:open="openCreate"
       :type="createType"
       :options="todoListOptions"
-    /> -->
+    />
     <ConfirmDialog
       v-model:visible="confirmDialogVisible"
       :content="`Are you sure you want to delete the list ${removeTodoListItem.label}?`"
@@ -171,8 +171,6 @@ const bgColor = computed(() => (isDark.value ? "#e3e3e3" : "#2F2F31"));
     flex-direction: column;
     height: 100%;
     padding: 0 1rem;
-    // padding-top: 0;
-    // padding-bottom: 0;
     position: relative;
 
     .main {
@@ -181,7 +179,7 @@ const bgColor = computed(() => (isDark.value ? "#e3e3e3" : "#2F2F31"));
       flex-direction: column;
 
       .list-tab-wrapper {
-        margin: 50px 5px 0;
+        margin: 10px 5px 0;
       }
 
       .list-content-wrapper {
