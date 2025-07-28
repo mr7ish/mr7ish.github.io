@@ -124,6 +124,7 @@
       </div>
     </motion.div> -->
     <TodoCreate
+      v-if="openCreate"
       v-model:open="openCreate"
       :type="createType"
       :options="todoListOptions"

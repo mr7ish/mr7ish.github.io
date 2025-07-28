@@ -1,5 +1,61 @@
 <template>
-  <motion.div
+  <div class="todo-create-wrapper">
+    <div class="header">
+      <span
+        class="operation-label"
+        @click="cancel"
+      >
+        cancel
+      </span>
+      <span class="title">{{ title }}</span>
+      <span
+        class="operation-label"
+        :class="{ disabled }"
+        @click="confirm"
+      >
+        confirm
+      </span>
+    </div>
+    <div class="main">
+      <VanishingInput
+        ref="inputRef"
+        style="transform: scale(0.8)"
+        :placeholders="[
+          'Create Todo List',
+          `Input The ${type === 'list' ? 'List' : 'Item'} Name`,
+          '✨✨✨',
+        ]"
+        :showSubmitButton="false"
+        v-model="inputValue"
+        @submit="onSubmit"
+        @animated="onAnimated"
+      />
+      <template v-if="type === 'item'">
+        <div class="list-select">
+          <CustomSelect
+            :noBorder="false"
+            :outmostCustomStyle="{
+              transform: 'scale(0.8)',
+              width: '100%',
+              height: '3rem',
+              borderRadius: `calc(3rem / 2)`,
+              borderBottom: '1px solid #000',
+              paddingLeft: '2.5rem',
+            }"
+            :optionsCustomStyle="{
+              transform: 'scale(0.8)',
+            }"
+            placeholder="Select A List..."
+            v-model="listKey"
+            :options="options"
+            valueToLabel
+          />
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- <motion.div
     class="todo-create-wrapper"
     :animate="{ y: `${y}vh` }"
     :transition="{ type: 'spring' }"
@@ -57,7 +113,7 @@
         </div>
       </template>
     </div>
-  </motion.div>
+  </motion.div> -->
 </template>
 
 <script setup lang="ts">
