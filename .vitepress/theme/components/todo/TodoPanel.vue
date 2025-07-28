@@ -60,75 +60,14 @@
       </div>
     </div>
 
-    <!-- <motion.div
-      class="main-wrapper"
-      :animate="{ y: `${y}vh` }"
-      :transition="{ type: 'spring' }"
-    >
-      <div class="main">
-        <div class="list-tab-wrapper">
-          <ExclusiveTabs
-            :tabs="tabs"
-            v-model:activeTab="activeTab"
-            style="font-size: 0.75rem"
-            :margin="15"
-            :padding="0.3"
-          >
-            <template #tab="{ tabId, tabLabel }">
-              <CustomSelect
-                v-if="tabId === 'custom-list'"
-                v-model="listKey"
-                :placeholder="tabLabel"
-                :options="todoListOptions"
-                :optionsWidth="180"
-                valueToLabel
-              >
-                <template #operates="{ option }">
-                  <IconDelete
-                    :size="25"
-                    color="#ff3b30"
-                    @click.stop="onDelete(option)"
-                  />
-                </template>
-              </CustomSelect>
-            </template>
-          </ExclusiveTabs>
-        </div>
-        <div class="list-content-wrapper">
-          <TodoList
-            :todoList="filteredTodoList"
-            :activeTab="activeTab"
-            :listKey="listKey"
-          />
-        </div>
-      </div>
-      <div class="footer">
-        <div class="operation-wrapper">
-          <div
-            class="left-box"
-            @click="onCreate('item')"
-          >
-            <IconAdd
-              color="#007aff"
-              solid
-            />
-            <span>New Todo</span>
-          </div>
-          <span
-            style="cursor: pointer"
-            @click="onCreate('list')"
-          >
-            Create List
-          </span>
-        </div>
-      </div>
-    </motion.div> -->
-    <TodoCreate
-      v-if="openCreate"
-      v-model:open="openCreate"
-      :type="createType"
-      :options="todoListOptions"
-    />
+    <transition name="slide-fade">
+      <TodoCreate
+        v-if="openCreate"
+        v-model:open="openCreate"
+        :type="createType"
+        :options="todoListOptions"
+      />
+    </transition>
     <ConfirmDialog
       v-model:visible="confirmDialogVisible"
       :content="`Are you sure you want to delete the list ${removeTodoListItem.label}?`"
@@ -221,6 +160,16 @@ const bgColor = computed(() => (isDark.value ? "#e3e3e3" : "#2F2F31"));
 </script>
 
 <style scoped lang="less">
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(50%);
+  opacity: 0;
+}
+
 .todo-panel-wrapper {
   width: 100%;
   height: 50vh;

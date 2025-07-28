@@ -84,7 +84,7 @@ const open = ref(true);
 
 const animateWidth = computed(() => {
   if (open.value) return props.expandedWidth;
-  // if (windowWidth.value < showSidebarWidth) return props.height;
+  if (windowWidth.value < showSidebarWidth) return props.height;
   return props.initWidth;
 });
 
@@ -100,7 +100,7 @@ const progressValue = computed(() => {
     .map((list) => list.list)
     .flat();
 
-  if(totalTodoItem.length === 0) return 0;
+  if (totalTodoItem.length === 0) return 0;
   return (
     +(
       totalTodoItem.filter((i) => i.completed).length / totalTodoItem.length
