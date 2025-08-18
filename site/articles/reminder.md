@@ -20,3 +20,5 @@ Stable, but it also means stagnation.
 满怀期待，同时接受一切发生。<br>
 
 不要因为结束而哭泣，要为曾经拥有而微笑。<br>
+
+你要好好爱自己，因为有人爱着你。<br>
