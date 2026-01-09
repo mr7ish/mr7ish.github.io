@@ -2,7 +2,7 @@
 createTime: 2026-01-09
 tags:
   - win11
-cover: /wilderness.jpg
+cover: /dark-girl.png
 ---
 
 ## 错误截图
