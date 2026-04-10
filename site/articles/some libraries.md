@@ -45,3 +45,8 @@ import LinkPreview from '../../.vitepress/theme/components/LinkPreview.vue';
 ### 纸屑特效 (confetti)
 
 <LinkPreview url="https://www.kirilv.com/canvas-confetti/" />
+
+### 一些工具库 (microlink)
+
+<LinkPreview url="https://microlink.io/" />
+
