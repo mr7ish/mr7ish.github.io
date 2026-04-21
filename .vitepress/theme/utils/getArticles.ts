@@ -3,7 +3,7 @@ import { deepClone } from "./deepClone";
 import { SpecifiedFrontmatter } from "../../../env";
 
 export default () => {
-  const modules = import.meta.glob("../../../site/articles/*.md", {
+  const modules = import.meta.glob("../../../site/articles/**/*.md", {
     // load modules immediately
     eager: true,
   });
