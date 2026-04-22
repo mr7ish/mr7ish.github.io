@@ -9,8 +9,8 @@
     </template>
     <template #doc-footer-before>
       <RouterTo
-        href="/blogs"
-        text="Go Blogs"
+        href="/blog"
+        text="Go Blog"
       >
         <template #icon> 📚 </template>
       </RouterTo>

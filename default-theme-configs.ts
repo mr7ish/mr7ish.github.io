@@ -2,7 +2,7 @@ import { DefaultTheme } from "vitepress";
 
 export const navConfigs = [
   // { text: "Home", link: "/" },
-  { text: "Blog", link: "/blogs.md" },
+  { text: "Blog", link: "/blog.md" },
   { text: "Gallery", link: "/gallery.md" },
   { text: "Music", link: "/music.md" },
   { text: "Cookbook", link: "/cookbook.md" },

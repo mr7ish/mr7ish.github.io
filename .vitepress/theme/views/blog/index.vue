@@ -1,6 +1,6 @@
 <template>
-  <div class="blogs-container">
-    <div class="blogs-header blogs-wrapper">
+  <div class="blog-container">
+    <div class="blog-header blog-wrapper">
       <div
         class="sort-operation-box"
         @click="
@@ -47,7 +47,7 @@
       />
     </div>
     <article>
-      <div class="blogs-wrapper">
+      <div class="blog-wrapper">
         <BlogCard
           v-for="(sorted, index) in filteredArticles"
           :key="sorted.year + currentTag + isAscending"
@@ -188,11 +188,11 @@ function calcStageSum(
 </script>
 
 <style scoped lang="less">
-.blogs-container {
+.blog-container {
   padding: 2.5rem 1.75rem;
   overflow-x: hidden;
 
-  .blogs-header {
+  .blog-header {
     .sort-operation-box {
       display: flex;
       gap: 0.5rem;
@@ -219,7 +219,7 @@ function calcStageSum(
     }
   }
 
-  .blogs-wrapper {
+  .blog-wrapper {
     max-width: 65ch;
     margin: auto;
   }
