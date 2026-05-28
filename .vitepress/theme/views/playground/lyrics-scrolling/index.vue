@@ -130,16 +130,19 @@ type DemoTrack = {
   lrc: string;
 };
 
+// @ts-ignore
 const musicModules = import.meta.glob<string>("../../../../../site/music/*", {
   eager: true,
   import: "default",
 });
 
+// @ts-ignore
 const coverModules = import.meta.glob<string>("../../../../../site/music/covers/*", {
   eager: true,
   import: "default",
 });
 
+// @ts-ignore
 const lyricModules = import.meta.glob<string>("../../../../../site/music/lyrics/*.txt", {
   eager: true,
   query: "?raw",
