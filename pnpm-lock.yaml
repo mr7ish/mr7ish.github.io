@@ -4,10 +4,21 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@gallery-engine/suite>@gallery-engine/animations': 0.1.1
+  '@gallery-engine/suite>@gallery-engine/core': 0.1.1
+  '@gallery-engine/suite>@gallery-engine/layouts': 0.1.1
+  '@gallery-engine/suite>@gallery-engine/plugins': 0.1.1
+  '@gallery-engine/suite>@gallery-engine/preview': 0.1.1
+  '@gallery-engine/suite>@gallery-engine/shared': 0.1.1
+
 importers:
 
   .:
     dependencies:
+      '@gallery-engine/suite':
+        specifier: 0.1.1
+        version: 0.1.1
       '@number-flow/vue':
         specifier: ^0.4.7
         version: 0.4.7(vue@3.5.34)
@@ -328,6 +339,27 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@gallery-engine/animations@0.1.1':
+    resolution: {integrity: sha512-wX/B7/QLzNx5q9RU2XH8mZwt4JZ7kQb6mIb3Hq7pTwXELeY1ho0M8RO+GrqGKJNM6lKoSq8hBt6JDqeMsuyOBA==}
+
+  '@gallery-engine/core@0.1.1':
+    resolution: {integrity: sha512-VTr6pJbGe0qXwMr3nCQFkpIXw4C+Fkg9NVqxe7a3+CjjqbbCDb1q3SuLP5CP3SOUqUEcZepuyGxcifeXk/feVg==}
+
+  '@gallery-engine/layouts@0.1.1':
+    resolution: {integrity: sha512-4gmLX7xrTtOGAkhMiVO+yRefMilF6KvoH6QMtZ86e1z1FVj7UphMVww0bhAlJYIyZQEPFv1yNxvDAbAFxjl08Q==}
+
+  '@gallery-engine/plugins@0.1.1':
+    resolution: {integrity: sha512-8xG1isc/dLt/ry04oSjpumq3nBAYDW5dRN+8DuFFh1JUeOC3ZnXQ/kQAQs1L1KaEqwnjI8CCyY6Ty50Sn5cLuw==}
+
+  '@gallery-engine/preview@0.1.1':
+    resolution: {integrity: sha512-34/umkRBBX3M2qCKkhmssTd7kF6RT+DtHX3svwgIJiJpFm8DsWWbN9BrHmJ06pQfFiWjwJi4AXLot9LeIzoiNw==}
+
+  '@gallery-engine/shared@0.1.1':
+    resolution: {integrity: sha512-IbtCX/HV+Z3VZFK78Q5C8qdt1O+hahvxmaEvId+kiMwTVqszXyrqBu8th09mT1o85vg8r7C43TRHi9scA9GUGQ==}
+
+  '@gallery-engine/suite@0.1.1':
+    resolution: {integrity: sha512-F/dlkK7Jd3nAOOJ9Dhvnl/mx/xjo9g9vxFbQDnyA6VKKI/TvFEMtOJX/hRxf73MMGiJRSPVOco+UwIeLTVOFZg==}
+
   '@iconify-json/simple-icons@1.2.33':
     resolution: {integrity: sha512-nL5/UmI9x5PQ/AHv6bOaL2pH6twEdEz4pI89efB/K7HFn5etQnxMtGx9DFlOg/sRA2/yFpX8KXvc95CSDv5bJA==}
 
@@ -527,6 +559,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@vitejs/plugin-vue@5.2.3':
     resolution: {integrity: sha512-IYSLEQj4LgZZuoVpdSUCw3dIynTWQgPlaRP6iAvMle4My0HdYwr5g5wQAfwOeHQBmYwEkqF70nRpSilr6PoUDg==}
@@ -1311,6 +1344,27 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@gallery-engine/animations@0.1.1': {}
+
+  '@gallery-engine/core@0.1.1': {}
+
+  '@gallery-engine/layouts@0.1.1': {}
+
+  '@gallery-engine/plugins@0.1.1': {}
+
+  '@gallery-engine/preview@0.1.1': {}
+
+  '@gallery-engine/shared@0.1.1': {}
+
+  '@gallery-engine/suite@0.1.1':
+    dependencies:
+      '@gallery-engine/animations': 0.1.1
+      '@gallery-engine/core': 0.1.1
+      '@gallery-engine/layouts': 0.1.1
+      '@gallery-engine/plugins': 0.1.1
+      '@gallery-engine/preview': 0.1.1
+      '@gallery-engine/shared': 0.1.1
 
   '@iconify-json/simple-icons@1.2.33':
     dependencies:

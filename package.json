@@ -5,6 +5,7 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@gallery-engine/suite": "0.1.1",
     "@number-flow/vue": "^0.4.7",
     "@tresjs/core": "^4.2.5",
     "@vueuse/components": "^13.1.0",

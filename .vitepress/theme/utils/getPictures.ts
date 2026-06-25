@@ -3,6 +3,7 @@ import { getSuffix } from "./getFileSuffix";
 import { shuffleArray } from "./shuffleArray";
 
 export default () => {
+  // @ts-ignore
   const modules: Record<string, { default: string }> = import.meta.glob(
     "../../../site/public/*",
     {
@@ -26,5 +27,5 @@ export default () => {
 };
 
 function whiteList() {
-  return ["png", "jpg", "gif"];
+  return ["png", "jpg", "jpeg", "gif", "webp"];
 }

@@ -1,6 +1,23 @@
 packages:
   - "."
 
+overrides:
+  "@gallery-engine/suite>@gallery-engine/animations": "0.1.1"
+  "@gallery-engine/suite>@gallery-engine/core": "0.1.1"
+  "@gallery-engine/suite>@gallery-engine/layouts": "0.1.1"
+  "@gallery-engine/suite>@gallery-engine/plugins": "0.1.1"
+  "@gallery-engine/suite>@gallery-engine/preview": "0.1.1"
+  "@gallery-engine/suite>@gallery-engine/shared": "0.1.1"
+
 allowBuilds:
   esbuild: true
   vue-demi: true
+
+minimumReleaseAgeExclude:
+  - '@gallery-engine/animations@0.1.1'
+  - '@gallery-engine/core@0.1.1'
+  - '@gallery-engine/layouts@0.1.1'
+  - '@gallery-engine/plugins@0.1.1'
+  - '@gallery-engine/preview@0.1.1'
+  - '@gallery-engine/shared@0.1.1'
+  - '@gallery-engine/suite@0.1.1'
