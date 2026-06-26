@@ -11,12 +11,10 @@ export default () => {
     }
   );
 
-  const pictures = Object.values(modules)
-    .map((i) => ({
-      path: i.default.replace("/public", ""),
-      name: i.default
-        .replace("/public/", "")
-        .replace("." + getSuffix(i.default), ""),
+  const pictures = Object.entries(modules)
+    .map(([sourcePath, image]) => ({
+      path: image.default.replace("/public", ""),
+      name: getPictureName(sourcePath),
     }))
     .filter((i) => whiteList().includes(getSuffix(i.path)));
 
@@ -28,4 +26,11 @@ export default () => {
 
 function whiteList() {
   return ["png", "jpg", "jpeg", "gif", "webp"];
+}
+
+function getPictureName(path: string) {
+  const normalizedPath = decodeURI(path.split("?")[0]);
+  const fileName = normalizedPath.split("/").pop() ?? normalizedPath;
+
+  return fileName.replace(/\.[^/.]+$/, "");
 }
