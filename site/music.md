@@ -4,7 +4,9 @@ sidebar: false
 ---
 
 <script setup>
-import MusicPlayer from '../.vitepress/theme/views/music/MusicPlayer.vue'
+import { defineAsyncComponent } from 'vue'
+
+const MusicPlayer = defineAsyncComponent(() => import('../.vitepress/theme/views/music/MusicPlayer.vue'))
 
 
 </script>

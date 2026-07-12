@@ -6,7 +6,7 @@ import "./style.css";
 import "./style/index.less";
 import "animate.css";
 import CustomLayout from "./layout/index.vue";
-// import BlogsView from "./views/blogs/index.vue";
+// import BlogView from "./views/blog/index.vue";
 
 export default {
   extends: DefaultTheme,
@@ -16,6 +16,6 @@ export default {
     console.log("app =>", app);
     console.log("router =>", router);
     console.log("siteDate =>", siteData);
-    // app.component("BlogsView", BlogsView);
+    // app.component("BlogView", BlogView);
   },
 } satisfies Theme;
