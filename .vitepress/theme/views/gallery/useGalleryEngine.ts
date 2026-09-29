@@ -52,6 +52,7 @@ export const useGalleryEngine = (images: readonly GalleryImage[]) => {
   const renderedCount = ref(0);
   const previewState = shallowRef<PreviewState<GalleryImage>>(createPreviewState(images));
   const zoomState = shallowRef<ZoomState>(createZoomState());
+  const isPreviewDragging = ref(false);
 
   const imageCache = createImageCache({
     maxEntries: Math.max(images.length, 1),
@@ -67,6 +68,7 @@ export const useGalleryEngine = (images: readonly GalleryImage[]) => {
   let animation: AnimationEngine | undefined;
   let resizeFrame = 0;
   let unsubscribes: Unsubscribe[] = [];
+  let previewDragStart: DragSnapshot | undefined;
 
   const render = (): void => {
     const container = containerRef.value;
@@ -203,14 +205,12 @@ export const useGalleryEngine = (images: readonly GalleryImage[]) => {
     resetZoom();
     updatePreviewState(preview?.open(index));
     void nextTick(() => {
-      attachZoom();
       animatePreviewImage();
     });
   };
 
   const closePreview = (): void => {
     resetZoom();
-    detachZoom();
     updatePreviewState(preview?.close());
   };
 
@@ -224,60 +224,91 @@ export const useGalleryEngine = (images: readonly GalleryImage[]) => {
     updatePreviewState(preview?.next());
   };
 
+  const getImageCenterZoomOrigin = (): { x: number; y: number } => ({
+    x: zoomState.value.panX,
+    y: zoomState.value.panY,
+  });
+
   const zoomIn = (): void => {
-    updateZoomState(zoom?.zoomIn());
+    updateZoomState(zoom?.zoomIn(getImageCenterZoomOrigin()));
   };
 
   const zoomOut = (): void => {
-    updateZoomState(zoom?.zoomOut());
+    updateZoomState(zoom?.zoomOut(getImageCenterZoomOrigin()));
   };
 
   const resetZoom = (): void => {
+    previewDragStart = undefined;
+    isPreviewDragging.value = false;
     updateZoomState(zoom?.reset());
   };
 
-  const attachZoom = (): void => {
-    const image = previewImageRef.value;
-
-    if (!image || !zoom) {
-      return;
-    }
-
-    zoom.attach(image);
-  };
-
-  const detachZoom = (): void => {
-    zoom?.detach();
-  };
-
   const onPreviewPointerDown = (event: PointerEvent): void => {
-    if (zoomState.value.zoom <= zoomState.value.minZoom) {
+    if (!event.isPrimary || event.button !== 0) {
       return;
     }
 
-    previewImageRef.value?.setPointerCapture(event.pointerId);
+    event.preventDefault();
+    previewDragStart = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      panX: zoomState.value.panX,
+      panY: zoomState.value.panY,
+    };
+    isPreviewDragging.value = true;
+    previewFigureRef.value?.setPointerCapture(event.pointerId);
+  };
+
+  const onPreviewPointerMove = (event: PointerEvent): void => {
+    const dragStart = previewDragStart;
+
+    if (dragStart?.pointerId !== event.pointerId) {
+      return;
+    }
+
+    event.preventDefault();
+    updateZoomState(
+      zoom?.setPan({
+        x: dragStart.panX + event.clientX - dragStart.startX,
+        y: dragStart.panY + event.clientY - dragStart.startY,
+      })
+    );
   };
 
   const onPreviewPointerUp = (event: PointerEvent): void => {
-    const image = previewImageRef.value;
-
-    if (image?.hasPointerCapture(event.pointerId)) {
-      image.releasePointerCapture(event.pointerId);
-    }
-  };
-
-  const onPreviewWheelFallback = (event: WheelEvent): void => {
-    const point = {
-      x: event.clientX,
-      y: event.clientY,
-    };
-
-    if (event.deltaY < 0) {
-      updateZoomState(zoom?.zoomIn(point));
+    if (previewDragStart?.pointerId !== event.pointerId) {
       return;
     }
 
-    updateZoomState(zoom?.zoomOut(point));
+    if (previewFigureRef.value?.hasPointerCapture(event.pointerId)) {
+      previewFigureRef.value.releasePointerCapture(event.pointerId);
+    }
+
+    previewDragStart = undefined;
+    isPreviewDragging.value = false;
+  };
+
+  const onPreviewWheel = (event: WheelEvent): void => {
+    if (event.deltaY < 0) {
+      zoomIn();
+      return;
+    }
+
+    if (event.deltaY > 0) {
+      zoomOut();
+    }
+  };
+
+  const onPreviewDoubleClick = (event: MouseEvent): void => {
+    event.preventDefault();
+
+    if (zoomState.value.zoom > zoomState.value.minZoom) {
+      resetZoom();
+      return;
+    }
+
+    updateZoomState(zoom?.setZoom(2, getImageCenterZoomOrigin()));
   };
 
   const setLayoutMode = (mode: GalleryLayoutMode): void => {
@@ -385,9 +416,12 @@ export const useGalleryEngine = (images: readonly GalleryImage[]) => {
     containerRef,
     layoutMode,
     nextPreview,
-    onPreviewWheelFallback,
+    onPreviewDoubleClick,
     onPreviewPointerDown,
+    onPreviewPointerMove,
     onPreviewPointerUp,
+    onPreviewWheel,
+    isPreviewDragging,
     previewFigureRef,
     previewImageRef,
     previewState,
@@ -456,6 +490,14 @@ const createZoomState = (): ZoomState => ({
   dragging: false,
   pinching: false,
 });
+
+type DragSnapshot = {
+  readonly pointerId: number;
+  readonly startX: number;
+  readonly startY: number;
+  readonly panX: number;
+  readonly panY: number;
+};
 
 const prefersReducedMotion = (): boolean =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;

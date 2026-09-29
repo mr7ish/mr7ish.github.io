@@ -36,7 +36,7 @@
         v-if="previewState.visible && previewState.item"
         class="gallery-preview"
         @click.self="closePreview"
-        @wheel.self.prevent="onPreviewWheelFallback"
+        @wheel.prevent="onPreviewWheel"
       >
         <div class="gallery-preview__bar">
           <strong>{{ previewState.item.title ?? previewState.item.id }}</strong>
@@ -64,16 +64,21 @@
         >
           Prev
         </button>
-        <figure ref="previewFigureRef" class="gallery-preview__figure">
+        <figure
+          ref="previewFigureRef"
+          class="gallery-preview__figure"
+          @dblclick="onPreviewDoubleClick"
+          @pointerdown="onPreviewPointerDown"
+          @pointermove="onPreviewPointerMove"
+          @pointerup="onPreviewPointerUp"
+          @pointercancel="onPreviewPointerUp"
+        >
           <img
             ref="previewImageRef"
             :src="previewState.item.src"
             :alt="previewState.item.alt ?? ''"
-            :class="{ dragging: zoomState.dragging }"
+            :class="{ dragging: isPreviewDragging }"
             :style="previewImageStyle"
-            @pointerdown="onPreviewPointerDown"
-            @pointerup="onPreviewPointerUp"
-            @pointercancel="onPreviewPointerUp"
           />
           <figcaption v-if="previewState.item.description">
             {{ previewState.item.description }}
@@ -119,9 +124,12 @@ const {
   containerRef,
   layoutMode,
   nextPreview,
+  onPreviewDoubleClick,
   onPreviewPointerDown,
+  onPreviewPointerMove,
   onPreviewPointerUp,
-  onPreviewWheelFallback,
+  onPreviewWheel,
+  isPreviewDragging,
   previewFigureRef,
   previewImageRef,
   previewState,
@@ -345,6 +353,7 @@ function inferImageSize(index: number, name: string): { width: number; height: n
   place-items: center;
   min-width: 0;
   margin: 0;
+  touch-action: none;
 
   img {
     display: block;
